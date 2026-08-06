@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+
+# Downloaded filings. Big, and reproducible by re-running the downloader —
+# so there's no reason to put them in git.
+data/

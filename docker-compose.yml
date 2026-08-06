@@ -1,0 +1,57 @@
+# Two databases, both running locally in containers.
+#
+#   postgres  -> chunks + their embedding vectors. Retrieval by RESEMBLANCE.
+#   neo4j     -> entities + relationships between them. Retrieval by CONNECTION.
+#
+# Start both:   docker compose up -d
+# Stop both:    docker compose down          (data survives)
+# Wipe data:    docker compose down -v       (deletes the volumes below)
+
+services:
+  postgres:
+    # Not the plain `postgres` image — this one ships the pgvector extension
+    # preinstalled, which adds a `vector` column type and similarity operators.
+    image: pgvector/pgvector:pg17
+    container_name: kgrag-postgres
+
+    environment:
+      POSTGRES_USER: kgrag
+      POSTGRES_PASSWORD: localdev
+      POSTGRES_DB: kgrag
+
+    ports:
+      # "HOST:CONTAINER" — the port on your Windows machine, then the port
+      # inside the container. Your Python code connects to localhost:5432 and
+      # Docker forwards it in. Change the left number if 5432 is already taken.
+      - "5432:5432"
+
+    volumes:
+      # Named volume. Without this, `docker compose down` would delete your
+      # entire database, because a container's own filesystem dies with it.
+      - pgdata:/var/lib/postgresql/data
+
+  neo4j:
+    image: neo4j:5
+    container_name: kgrag-neo4j
+
+    environment:
+      # Format is strictly user/password. Neo4j rejects passwords under 8 chars.
+      NEO4J_AUTH: neo4j/localdevpassword
+
+    ports:
+      # 7474 = the browser UI. Open http://localhost:7474 and you get a real
+      #        query console with graph visualization. Genuinely useful — you'll
+      #        live in this during Phase 3 debugging.
+      # 7687 = the "bolt" protocol. This is the one your Python driver uses.
+      #        Two ports because they're two different ways in, not a typo.
+      - "7474:7474"
+      - "7687:7687"
+
+    volumes:
+      - neo4jdata:/data
+
+# Declaring the named volumes referenced above. Docker manages where these
+# actually live on disk; you never need to care.
+volumes:
+  pgdata:
+  neo4jdata:
