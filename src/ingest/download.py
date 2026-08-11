@@ -4,33 +4,42 @@ EDGAR is free and needs no API key, but it has two rules that will get you
 blocked if you ignore them:
 
   1. Every request must send a User-Agent identifying you, including a real
-     contact address. Requests without one get 403 Forbidden. (Try it — the
-     SEC's own documentation page 403s a generic HTTP client.)
+     contact address. Requests without one get 403 Forbidden.
   2. Stay under 10 requests/second. We throttle well below that; nothing here
      is urgent enough to risk an IP ban.
 
-Two endpoints do all the work:
+Endpoints used:
 
   https://www.sec.gov/files/company_tickers.json
       One big ticker -> CIK map. A CIK is EDGAR's permanent company id.
-      Tickers change, companies rename themselves, CIKs never move. Worth
-      noticing now: this is EDGAR's own answer to the entity-resolution
-      problem you'll be solving by hand in Phase 3.
+      Tickers change, companies rename themselves, CIKs never move.
 
   https://data.sec.gov/submissions/CIK##########.json
-      Every filing a company has ever made. Note the CIK is zero-padded to
-      10 digits in THIS url but not in the Archives url below. That
-      inconsistency is EDGAR's, not ours.
+      Every filing a company has ever made. CIK is zero-padded to 10 digits
+      in THIS url but not in the Archives url below. That inconsistency is
+      EDGAR's, not ours.
+
+  https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/index.json
+      Lists every file inside one filing. Used to locate Exhibit 21
+      (the subsidiary list), which is a SEPARATE file from the main 10-K
+      document and is invisible if you only fetch primaryDocument.
+
+Corpus plan (default): per company, the most recent
+  3x 10-K (three fiscal years), 6x 10-Q, 8x 8-K, 2x DEF 14A (proxy
+  statement, where officer and director bios live).
+8 companies x ~19 filings comes to roughly 150 documents, matching the
+project plan.
 
 Run:
-    python src/ingest/download.py --per-company 1 --forms 10-K
-    python src/ingest/download.py --per-company 6
+    python src/ingest/download.py                    # full corpus plan
+    python src/ingest/download.py --form 10-K=1      # override one form count
 """
 
 from __future__ import annotations
 
 import argparse
 import json
+import re
 import time
 from pathlib import Path
 
@@ -42,8 +51,7 @@ load_dotenv()
 
 # Mid-cap biotech. Same sector on purpose: shared auditors, overlapping
 # officers and directors, licensing deals with each other. That density is
-# what makes multi-hop questions have answers. A grab-bag of unrelated
-# companies would produce a graph with nothing to traverse.
+# what makes multi-hop questions have answers.
 TICKERS = [
     "EXEL",  # Exelixis
     "HALO",  # Halozyme
@@ -55,16 +63,33 @@ TICKERS = [
     "NBIX",  # Neurocrine
 ]
 
+# How many of each form type to fetch per company (most recent first).
+DEFAULT_PLAN = {
+    "10-K": 3,
+    "10-Q": 6,
+    "8-K": 8,
+    "DEF 14A": 2,
+}
+
+# Only 10-Ks carry Exhibit 21 (subsidiary lists) worth fetching.
+EXHIBIT_FORMS = {"10-K"}
+# Exhibit 21 files have no reliable type field in index.json, but their
+# filenames follow strong conventions: "...ex211.htm", "ex21_1.htm",
+# "d12345dex211.htm", and some filers spell it out: "exhibit211.htm".
+# Match by name. Known residual ambiguity: EX-2.1 (merger agreements) can
+# also be named "ex21.htm"; acceptable here because we only harvest
+# exhibits from 10-Ks, where EX-2.1 rarely appears as a document.
+EXHIBIT21_PATTERN = re.compile(r"(?:ex|exhibit)[-_]?21", re.IGNORECASE)
+
 TICKER_MAP_URL = "https://www.sec.gov/files/company_tickers.json"
 SUBMISSIONS_URL = "https://data.sec.gov/submissions/CIK{cik:010d}.json"
 ARCHIVE_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/{document}"
+FILING_INDEX_URL = "https://www.sec.gov/Archives/edgar/data/{cik}/{accession}/index.json"
 
 RAW_DIR = Path("data/raw")
 MANIFEST_PATH = RAW_DIR / "manifest.json"
 
-# SEC allows 10/sec. We use ~6/sec. The difference costs us seconds and buys
-# us not having to think about it.
-REQUEST_INTERVAL = 0.17
+REQUEST_INTERVAL = 0.17  # ~6 req/s, well under EDGAR's 10/s limit
 _last_request = 0.0
 
 
@@ -93,9 +118,7 @@ def get(url: str) -> requests.Response:
 
 
 def resolve_ciks(tickers: list[str]) -> dict[str, dict]:
-    """Map tickers to CIKs. The upstream JSON is keyed by meaningless integers
-    ("0", "1", "2"...) rather than by ticker, so we have to walk all ~10k
-    entries. One request, cached to disk for reuse."""
+    """Map tickers to CIKs. Cached to disk after the first call."""
     cache = RAW_DIR / "company_tickers.json"
     if cache.exists():
         data = json.loads(cache.read_text(encoding="utf-8"))
@@ -115,23 +138,24 @@ def resolve_ciks(tickers: list[str]) -> dict[str, dict]:
     return found
 
 
-def list_filings(cik: int, forms: set[str], per_form: int) -> list[dict]:
-    """Recent filings for one company, filtered by form type.
+def list_filings(cik: int, plan: dict[str, int]) -> list[dict]:
+    """Recent filings for one company, up to plan[form] of each form type.
 
-    The response stores filings as PARALLEL ARRAYS -- form[i], filingDate[i],
-    and accessionNumber[i] all describe the same filing. It is not a list of
-    objects. This is a compact format that is easy to misread, so we zip it
-    back into dicts immediately and never think about indices again.
+    The response stores filings as PARALLEL ARRAYS: form[i], filingDate[i],
+    and accessionNumber[i] all describe the same filing. We zip it into
+    dicts immediately and never think about indices again.
     """
     submissions = get(SUBMISSIONS_URL.format(cik=cik)).json()
     recent = submissions["filings"]["recent"]
 
     filings = []
-    counts = {form: 0 for form in forms}
+    counts = {form: 0 for form in plan}
     for i in range(len(recent["form"])):
         form = recent["form"][i]
-        if form not in forms or counts[form] >= per_form:
+        if form not in plan or counts[form] >= plan[form]:
             continue
+        if not recent["primaryDocument"][i]:
+            continue  # rare, but some old filings lack a primary document
         counts[form] += 1
         filings.append(
             {
@@ -149,78 +173,96 @@ def list_filings(cik: int, forms: set[str], per_form: int) -> list[dict]:
     return filings
 
 
-def download(filing: dict, ticker: str) -> Path | None:
-    """Fetch one filing's primary document. Returns None if already on disk.
+def find_exhibit21(cik: int, accession_nodash: str) -> list[str]:
+    """Names of Exhibit 21 files inside a filing, via the filing's index."""
+    try:
+        index = get(FILING_INDEX_URL.format(cik=cik, accession=accession_nodash)).json()
+    except requests.HTTPError:
+        return []
+    items = index.get("directory", {}).get("item", [])
+    return [
+        item["name"]
+        for item in items
+        if EXHIBIT21_PATTERN.search(item.get("name", ""))
+        and item["name"].lower().endswith((".htm", ".html", ".txt"))
+    ]
 
-    Skipping existing files makes this script safe to re-run -- the same
-    property you'll want from MERGE in Neo4j later. Re-running an ingestion
-    pipeline should be boring, not destructive.
+
+def download_document(cik: int, accession_nodash: str, document: str, out_path: Path) -> bool:
+    """Fetch one document if not already on disk. Returns True if downloaded.
+
+    Skipping existing files makes this script safe to re-run, and is also
+    what will make live corpus updates a scheduler away later: re-running
+    only fetches what is new.
     """
-    # The Archives path wants the accession number with dashes stripped, and
-    # the CIK WITHOUT zero-padding. Both differ from the submissions endpoint.
-    accession_nodash = filing["accession"].replace("-", "")
-    url = ARCHIVE_URL.format(
-        cik=filing["cik"],
-        accession=accession_nodash,
-        document=filing["primary_document"],
-    )
-
-    out_dir = RAW_DIR / ticker
-    out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"{filing['form']}_{filing['filing_date']}_{accession_nodash}.htm"
-
     if out_path.exists():
-        return None
-
+        return False
+    url = ARCHIVE_URL.format(cik=cik, accession=accession_nodash, document=document)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_bytes(get(url).content)
-    return out_path
+    return True
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Download SEC filings from EDGAR.")
     parser.add_argument(
-        "--per-company",
-        type=int,
-        default=1,
-        help="How many of EACH form type to fetch per company (default 1).",
-    )
-    parser.add_argument(
-        "--forms",
-        nargs="+",
-        default=["10-K", "10-Q", "8-K"],
-        help="Which form types to fetch.",
+        "--form",
+        action="append",
+        default=[],
+        metavar="FORM=N",
+        help='Override a form count, e.g. --form 10-K=1 --form "DEF 14A=0". '
+        "Repeatable. Unmentioned forms keep their defaults.",
     )
     args = parser.parse_args()
 
-    RAW_DIR.mkdir(parents=True, exist_ok=True)
-    forms = set(args.forms)
+    plan = dict(DEFAULT_PLAN)
+    for override in args.form:
+        form, _, count = override.rpartition("=")
+        plan[form] = int(count)
+    plan = {form: n for form, n in plan.items() if n > 0}
 
+    RAW_DIR.mkdir(parents=True, exist_ok=True)
+
+    print(f"Corpus plan per company: {plan}")
     print(f"Resolving {len(TICKERS)} tickers...")
     companies = resolve_ciks(TICKERS)
 
     manifest = []
     downloaded = 0
     for ticker, info in sorted(companies.items()):
-        filings = list_filings(info["cik"], forms, args.per_company)
+        filings = list_filings(info["cik"], plan)
         print(f"{ticker:<6} {info['name'][:38]:<40} {len(filings)} filings")
 
         for filing in filings:
             filing["ticker"] = ticker
-            path = download(filing, ticker)
-            if path is not None:
+            accession_nodash = filing["accession"].replace("-", "")
+            form_slug = filing["form"].replace(" ", "")
+            stem = f"{form_slug}_{filing['filing_date']}_{accession_nodash}"
+
+            out_path = RAW_DIR / ticker / f"{stem}.htm"
+            if download_document(filing["cik"], accession_nodash, filing["primary_document"], out_path):
                 downloaded += 1
-                print(f"       + {path.name}")
-            else:
-                print(f"       . {filing['form']} {filing['filing_date']} (cached)")
-            filing["raw_path"] = str(
-                RAW_DIR
-                / ticker
-                / f"{filing['form']}_{filing['filing_date']}_{filing['accession'].replace('-', '')}.htm"
-            )
+                print(f"       + {out_path.name}")
+            filing["raw_path"] = str(out_path)
+
+            # Exhibit 21 (subsidiary list) rides along with 10-Ks as a
+            # separate file. Without this, subsidiary data does not exist
+            # in the corpus at all.
+            filing["exhibits"] = []
+            if filing["form"] in EXHIBIT_FORMS:
+                for name in find_exhibit21(filing["cik"], accession_nodash):
+                    ex_path = RAW_DIR / ticker / f"{stem}_EX21_{name}"
+                    if download_document(filing["cik"], accession_nodash, name, ex_path):
+                        downloaded += 1
+                        print(f"       + {ex_path.name}")
+                    filing["exhibits"].append(
+                        {"kind": "EX-21", "document": name, "raw_path": str(ex_path)}
+                    )
+
             manifest.append(filing)
 
     MANIFEST_PATH.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
-    print(f"\n{len(manifest)} filings in manifest, {downloaded} newly downloaded.")
+    print(f"\n{len(manifest)} filings in manifest, {downloaded} files newly downloaded.")
     print(f"Manifest: {MANIFEST_PATH}")
 
 

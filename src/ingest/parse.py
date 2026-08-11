@@ -59,21 +59,28 @@ def main() -> None:
     TEXT_DIR.mkdir(parents=True, exist_ok=True)
 
     for filing in manifest:
-        raw_path = Path(filing["raw_path"])
-        if not raw_path.exists():
-            print(f"  ! missing {raw_path}")
-            continue
+        # Primary document plus any exhibits (e.g. Exhibit 21 subsidiary
+        # lists) that the downloader attached to this filing.
+        paths = [Path(filing["raw_path"])]
+        paths += [Path(ex["raw_path"]) for ex in filing.get("exhibits", [])]
 
-        out_dir = TEXT_DIR / filing["ticker"]
-        out_dir.mkdir(parents=True, exist_ok=True)
-        out_path = out_dir / (raw_path.stem + ".txt")
+        for raw_path in paths:
+            if not raw_path.exists():
+                print(f"  ! missing {raw_path}")
+                continue
 
-        text = html_to_text(raw_path.read_bytes())
-        out_path.write_text(text, encoding="utf-8")
+            out_dir = TEXT_DIR / filing["ticker"]
+            out_dir.mkdir(parents=True, exist_ok=True)
+            out_path = out_dir / (raw_path.stem + ".txt")
+            if out_path.exists():
+                continue
 
-        raw_kb = raw_path.stat().st_size // 1024
-        txt_kb = len(text.encode("utf-8")) // 1024
-        print(f"{filing['ticker']:<6} {raw_path.stem:<45} {raw_kb:>6} KB -> {txt_kb:>5} KB")
+            text = html_to_text(raw_path.read_bytes())
+            out_path.write_text(text, encoding="utf-8")
+
+            raw_kb = raw_path.stat().st_size // 1024
+            txt_kb = len(text.encode("utf-8")) // 1024
+            print(f"{filing['ticker']:<6} {raw_path.stem:<45} {raw_kb:>6} KB -> {txt_kb:>5} KB")
 
     print(f"\nText written to {TEXT_DIR}")
 
