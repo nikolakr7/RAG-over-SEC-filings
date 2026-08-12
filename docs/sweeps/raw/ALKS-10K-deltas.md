@@ -1,0 +1,37 @@
+# ALKS (Alkermes plc) — 10-K deltas vs FY2025 baseline
+
+Covers: FY2024 10-K (filed 2025-02-12, `10-K_2025-02-12_000095017025019011.txt` + EX21) and FY2023 10-K (filed 2024-02-21, `10-K_2024-02-21_000095017024017883.txt` + EX21). Compared against `ALKS-10K-FY2025.md` baseline.
+
+## DEAL DELTAS
+
+- **Avadel/LUMRYZ absent in both older 10-Ks**: zero occurrences of "Avadel" or "LUMRYZ" in either the FY2024 (2025-02-12) or FY2023 (2024-02-21) filing — confirms pre-acquisition landscape (Avadel deal signed Oct 2025, closed Feb 2026). Product portfolio in both older filings = VIVITROL, ARISTADA, ARISTADA INITIO, LYBALVI only (no narcolepsy product).
+- **Janssen arbitration Final Award — fresh in FY2023 10-K** (lines 10424-10434 of 2024-02-21 filing): full narrative of Nov 2021 partial termination → Feb 2022 royalty stoppage → April 2022 arbitration commenced → May 2023 Final Award: $195.4M back royalties (incl. $8.1M interest, received Q2 2023) + future royalties (SUSTENNA to Aug 20, 2024; TRINZA to Q2 2030; HAFYERA to May 2030). FY2023 recorded $486.1M in long-acting INVEGA royalty revenue. FY2024 filing (2025-02-12) treats this as settled history (same royalty ladder, no longer "fresh" news).
+- **Mural Oncology spinoff — fresh in FY2023 10-K**: 38 occurrences vs 28 in FY2024 filing; FY2023 filing describes the Nov 15, 2023 Separation as a current-year event including a goodwill-impairment/allocation test performed Oct 31, 2023 in connection with the Separation (line 5174) and discontinued-ops accounting standup. FY2024 filing treats Mural as prior-year discontinued operations (lease guaranty language re 852 Winter Street Lease/Mural US already retrospective, matching baseline's framing).
+- **Athlone sale to Novo Nordisk**: FY2023 filing (2024-02-21) mentions "Athlone" 28 times as an *active* Ireland R&D/manufacturing facility (subcontracting arrangements for products incl. VUMERITY) — sale not yet agreed (APA dated Dec 13, 2023 not reflected as a completed sale). FY2024 filing (2025-02-12) explicitly states: "In May 2024, we completed the sale of the Athlone Facility to Novo and entered into subcontracting arrangements ... through the end of 2025" (line 3879) — matches baseline's retrospective account.
+- **VIVITROL Teva/Amneal settlement states**: Teva Confidential Settlement and License Agreement (dated Aug 29, 2023) appears identically in both FY2023 and FY2024 filings (exhibit list line ~6448/6477) — no Amneal AG Agreement (Sept 2025) in either, consistent with that being a FY2025-only event per baseline.
+- **Acorda arbitration — earlier states present in both older filings** (identical text, lines ~10442-10467 in FY2024 filing / ~10782-10808 in FY2023 filing): Oct/Nov 2022 arbitration panel ordered Acorda to return money to Alkermes re AMPYRA royalties since July 2020; Jan 2023 Acorda petitioned SDNY to modify seeking ~$66.0M more; Aug 2023 SDNY confirmed award, declined modification; Sept 2023 Acorda appealed to Federal Circuit, Alkermes moved to transfer to Second Circuit; Jan 2024 Federal Circuit denied transfer motion without prejudice, ordered jurisdictional briefing as part of merits appeal — pending decision as of both filings (this is one step earlier than baseline's July 2025 Federal Circuit transfer-to-Second-Circuit resolution).
+
+## SUBSIDIARY DELTAS
+
+- **EX21 lists are identical across FY2023 and FY2024 filings** (both 10 entities, 57 lines): Alkermes Ireland Holdings Limited, Alkermes Pharma Ireland Limited, Daravita Pharma Ireland Limited, Alkermes Finance Ireland (No 3) Limited, Alkermes Science Four Limited, Alkermes Science Five Limited, Alkermes US Holdings Inc. (DE), Alkermes, Inc. (PA), **Alkermes Controlled Therapeutics, Inc.** (PA), Rodin Therapeutics, Inc. (DE).
+- No Avadel entities, no Mural entities (already separated), no Alkermes Finance LLC (created later for the 2026 Credit Agreement) in either older EX21.
+- Note entity-name drift: older EX21s list **"Alkermes Controlled Therapeutics, Inc."** (Pennsylvania) as a subsidiary in its own right, distinct from baseline's narrative reference to "Alkermes Controlled Therapeutics Inc. II" as a legacy Janssen-agreement party — same family name, worth reconciling if building entity nodes.
+
+## LITIGATION DELTAS
+
+- **LYBALVI Paragraph IV ANDA suits (Teva/Apotex/MSN, Aug-Sept 2025) are absent** from both older 10-Ks, as expected (they postdate both filings).
+- **VUMERITY ANDA Litigation present in FY2024 filing only** (not carried into baseline as active): Biogen Inc., Biogen Swiss Manufacturing GmbH and APIL sued Zydus Worldwide DMCC / Zydus Pharmaceuticals (USA) Inc. / Zydus Lifesciences Limited in DE District Court (filed July 2023) over VUMERITY ANDA (Zydus generic diroximel fumarate), triggering a 30-month Hatch-Waxman stay; bench trial scheduled to begin July 28, 2025 (line 13763 of 2025-02-12 filing). Not mentioned in baseline FY2025 10-K — outcome/resolution should be checked in a FY2024/2025 10-Q sweep if not already covered.
+- **INVEGA TRINZA ANDA litigation** present in FY2024 filing at an earlier procedural stage: May 2023 NJ District Court ruled for Janssen; Mylan filed notice of appeal (not yet resolved) — contrasts with baseline's fully resolved state (Federal Circuit affirmed March 2025, mandate issued July 2025).
+- Government Matters in FY2024 filing: "subpoena and civil investigative demands from U.S. state and federal governmental authorities for documents related to VIVITROL" (broader/earlier phrasing than baseline's single-state CID).
+- Product liability: VIVITROL-labeling-inadequacy case already present in FY2024 filing, same general description as baseline.
+
+## PEOPLE DELTAS
+
+- **CFO role was interim in both older filings**: signature pages (FY2024: Feb 12, 2025; FY2023: Feb 21, 2024) show **Blair C. Jackson** as "Executive Vice President, Chief Operating Officer (**Interim Principal Financial Officer**)" — i.e., Jackson was double-hatting as COO and interim CFO in both years. Baseline (FY2025) shows a dedicated CFO, **Joshua Reed**, Senior Vice President — a people delta (permanent CFO appointed sometime between the FY2024 10-K and the FY2025 10-K).
+- **Samuel J. Parisi** — "Vice President, Finance (Interim Principal Accounting Officer)" in both older filings, same interim-title pattern as baseline's "Interim Principal Accounting Officer" (this role stayed interim/unchanged across all three years).
+- **Richard F. Pops** — Chairman and CEO, unchanged across all three filings.
+- **Emily Peterson Alva** — listed as Director on both older signature pages; not named in the baseline director list excerpt (baseline's director list: Cooke, Gaynor, Laurencin, Lurker, McKeon, Snyderman, Wilson, Wright) — possible board turnover between FY2023/24 and FY2025, or baseline excerpt simply cut off before her name (worth a targeted proxy check, not resolved here).
+
+## AUDITOR
+
+- **PricewaterhouseCoopers LLP** — identical across all three years: "We have served as the Company's auditor since 2007." FY2024 filing (2025-02-12): report covers internal control over financial reporting as of December 31, 2024 (line 6006), auditor consent/signature block at lines 6834/7090/7096. FY2023 filing (2024-02-21): covers December 31, 2023 (line 5937), consent/signature at lines 6879/7129/7135. No office-city statement was located within the greeted neighborhoods for the two older filings (baseline states Boston, MA for FY2025); auditor identity and tenure-since-2007 language match baseline exactly in both older years.
