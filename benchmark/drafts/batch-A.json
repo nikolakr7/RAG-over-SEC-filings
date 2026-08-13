@@ -1,0 +1,370 @@
+[
+  {
+    "id": "A01",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Exelixis, and since what year?",
+    "answer": "Ernst & Young LLP, from its San Mateo, California office, has audited Exelixis since 2002.",
+    "ontology_path": "Company(Exelixis) -AUDITED_BY-> Company(Ernst & Young LLP)",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "Ernst & Young LLP ... We have served as the Company’s auditor since 2002. ... San Mateo, California"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A02",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Ultragenyx (RARE), and since what year?",
+    "answer": "Ernst & Young LLP, from its San Mateo, California office, has audited Ultragenyx since 2012.",
+    "ontology_path": "Company(Ultragenyx) -AUDITED_BY-> Company(Ernst & Young LLP)",
+    "evidence": [
+      {"ticker": "RARE", "form": "10-K", "date_filed": "2026-02-18", "quote": "Ernst & Young LLP ... We have served as the Company’s auditor since 2012. ... San Mateo, California"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A03",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Halozyme, and since what year?",
+    "answer": "Ernst & Young LLP, from its San Diego, California office, has audited Halozyme since 2006.",
+    "ontology_path": "Company(Halozyme) -AUDITED_BY-> Company(Ernst & Young LLP)",
+    "evidence": [
+      {"ticker": "HALO", "form": "10-K", "date_filed": "2026-02-17", "quote": "Ernst & Young LLP We have served as the Company’s auditor since 2006. San Diego, California"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A04",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Ionis Pharmaceuticals, and since what year?",
+    "answer": "Ernst & Young LLP, from its San Diego, California office, has audited Ionis since 1989.",
+    "ontology_path": "Company(Ionis) -AUDITED_BY-> Company(Ernst & Young LLP)",
+    "evidence": [
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "Ernst & Young LLP ... We have served as the Company’s auditor since 1989. ... San Diego, California"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A05",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Neurocrine Biosciences, and since what year?",
+    "answer": "Ernst & Young LLP, from its San Diego, California office, has audited Neurocrine since 1992.",
+    "ontology_path": "Company(Neurocrine) -AUDITED_BY-> Company(Ernst & Young LLP)",
+    "evidence": [
+      {"ticker": "NBIX", "form": "10-K", "date_filed": "2026-02-11", "quote": "Ernst & Young LLP We have served as the Company’s auditor since 1992. San Diego, California"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A06",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Sarepta Therapeutics, and since what year?",
+    "answer": "KPMG LLP, from its Boston, Massachusetts office, has audited Sarepta since 2002.",
+    "ontology_path": "Company(Sarepta) -AUDITED_BY-> Company(KPMG LLP)",
+    "evidence": [
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2026-03-02", "quote": "KPMG LLP ... We have served as the Company’s auditor since 2002. ... Boston, Massachusetts"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A07",
+    "category": "single_hop",
+    "question": "Which accounting firm audits Alkermes, and since what year?",
+    "answer": "PricewaterhouseCoopers LLP, from its Boston, Massachusetts office, has audited Alkermes since 2007.",
+    "ontology_path": "Company(Alkermes) -AUDITED_BY-> Company(PricewaterhouseCoopers LLP)",
+    "evidence": [
+      {"ticker": "ALKS", "form": "10-K", "date_filed": "2026-02-25", "quote": "PricewaterhouseCoopers LLP ... Boston, Massachusetts ... We have served as the Company’s auditor since 2007."}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A08",
+    "category": "single_hop",
+    "question": "Arrowhead Pharmaceuticals changed auditors in fiscal 2024. Who audits Arrowhead now, and who audited it before?",
+    "answer": "KPMG LLP (San Diego, CA) has been Arrowhead's auditor since 2024, succeeding Rose, Snyder & Jacobs LLP.",
+    "ontology_path": "Company(Arrowhead) -AUDITED_BY-> Company(KPMG LLP); prior edge -AUDITED_BY-> Company(Rose, Snyder & Jacobs LLP)",
+    "evidence": [
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2025-11-25", "quote": "KPMG LLP We have served as the Company’s auditor since 2024."},
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2025-11-25", "quote": "Rose, Snyder & Jacobs LLP"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A09",
+    "category": "single_hop",
+    "question": "What royalty rate does Exelixis owe to Royalty Pharma on cabozantinib product sales?",
+    "answer": "Exelixis owes a 3% royalty to Royalty Pharma on total net sales of any product containing cabozantinib.",
+    "ontology_path": "Company(Exelixis) -OWES_ROYALTY_TO-> Company(Royalty Pharma)",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "consistent with our historical agreement with GSK, we are required to pay a 3% royalty to Royalty Pharma on total net sales of any product containing cabozantinib, including net sales by Ipsen."}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A10",
+    "category": "single_hop",
+    "question": "Who did Ultragenyx sell its European Crysvita royalty interest to, and when?",
+    "answer": "Ultragenyx sold the interest to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019.",
+    "ontology_path": "Company(Ultragenyx) -PARTY_TO-> Agreement(royalty_purchase) <-PARTY_TO- Company(RPI Finance Trust)",
+    "evidence": [
+      {"ticker": "RARE", "form": "10-K", "date_filed": "2026-02-18", "quote": "We subsequently sold this interest to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019."}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A11",
+    "category": "single_hop",
+    "question": "When did Alkermes complete its acquisition of Avadel Pharmaceuticals?",
+    "answer": "Alkermes completed the Avadel acquisition on February 12, 2026.",
+    "ontology_path": "Company(Alkermes) -PARTY_TO{role: acquirer}-> Agreement(acquisition) <-PARTY_TO{role: acquired}- Company(Avadel)",
+    "evidence": [
+      {"ticker": "ALKS", "form": "10-K", "date_filed": "2026-02-25", "quote": "Also on February 12, 2026, in connection with completion of the Avadel Acquisition and our entry into the Credit Agreement, we terminated the Bridge Credit Agreement"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A12",
+    "category": "single_hop",
+    "question": "What role does Richard F. Pops hold at Alkermes?",
+    "answer": "Richard F. Pops is Chief Executive Officer and Chairman of Alkermes.",
+    "ontology_path": "Person(Richard F. Pops) -OFFICER_OF{role: Chief Executive Officer and Chairman}-> Company(Alkermes)",
+    "evidence": [
+      {"ticker": "ALKS", "form": "DEF14A", "date_filed": "2026-04-06", "quote": "Richard F. Pops Chief Executive Officer and Chairman"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A13",
+    "category": "single_hop",
+    "question": "What did Ionis receive when it sold a minority interest in its future SPINRAZA and pelacarsen royalties to Royalty Pharma, and when was the deal dated?",
+    "answer": "Ionis received a $500 million upfront payment plus up to $625 million of potential future payments; the Royalty Purchase Agreement (via Akcea) with Royalty Pharma Investments 2019 ICAV is dated January 9, 2023.",
+    "ontology_path": "Company(Ionis) -PARTY_TO-> Agreement(royalty_purchase) <-PARTY_TO- Company(Royalty Pharma)",
+    "evidence": [
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "we sold a minority interest in our future SPINRAZA and pelacarsen royalties to Royalty Pharma for a $500 million upfront payment and $625 million of potential future payments"},
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "Royalty Purchase Agreement by and between the Registrant, Akcea Therapeutics, Inc. and Royalty Pharma Investments 2019 ICAV dated as of January 9, 2023"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A14",
+    "category": "single_hop",
+    "question": "How much did Arrowhead receive (up to) from Royalty Pharma for its future olpasiran royalty interest, and when was the deal signed?",
+    "answer": "Up to $410.0 million, under a November 2022 agreement between Arrowhead and Royalty Pharma covering Arrowhead's future royalty interest in olpasiran (licensed to Amgen in 2016).",
+    "ontology_path": "Company(Arrowhead) -PARTY_TO-> Agreement(royalty_purchase) <-PARTY_TO- Company(Royalty Pharma)",
+    "evidence": [
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2025-11-25", "quote": "In November 2022, the Company and Royalty Pharma entered into the Royalty Pharma Agreement, pursuant to which Royalty Pharma agreed to pay up to $410.0 million in cash"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A15",
+    "category": "single_hop",
+    "question": "When did Neurocrine Biosciences complete its acquisition of Soleno Therapeutics?",
+    "answer": "Neurocrine completed the acquisition of Soleno on May 18, 2026, for aggregate cash consideration of approximately $2.9 billion.",
+    "ontology_path": "Company(Neurocrine) -PARTY_TO{role: acquirer}-> Agreement(acquisition) <-PARTY_TO{role: acquired}- Company(Soleno)",
+    "evidence": [
+      {"ticker": "NBIX", "form": "8-K", "date_filed": "2026-05-18", "quote": "The Company completed the acquisition of Soleno on May 18, 2026, by causing Purchaser to merge with and into Soleno"},
+      {"ticker": "NBIX", "form": "8-K", "date_filed": "2026-05-18", "quote": "The aggregate cash paid by the Company and Purchaser in the Offer and the Merger was approximately $2.9 billion"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A16",
+    "category": "single_hop",
+    "question": "When did Sarepta and Arrowhead Pharmaceuticals sign their exclusive license and collaboration agreement, and when did it become effective?",
+    "answer": "Sarepta and Arrowhead signed the agreement on November 25, 2024; it became effective February 7, 2025, after HSR waiting period expiration.",
+    "ontology_path": "Company(Sarepta) -PARTY_TO-> Agreement(collaboration_license) <-PARTY_TO- Company(Arrowhead)",
+    "evidence": [
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2026-03-02", "quote": "On November 25, 2024, the Company and Arrowhead Pharmaceuticals, Inc. (“Arrowhead”) entered into an exclusive global license and collaboration agreement ... which became effective as of February 7, 2025"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A17",
+    "category": "single_hop",
+    "question": "In what month and year did the FDA approve CABOMETYX for neuroendocrine tumors (pNET and epNET)?",
+    "answer": "March 2025.",
+    "ontology_path": "Drug(CABOMETYX) -APPROVED_FOR{jurisdiction: FDA}-> Indication(neuroendocrine tumors)",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "In March 2025, we announced that the FDA approved CABOMETYX for the treatment of adult and pediatric patients 12 years of age and older with previously treated ... pNET and epNET"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "A18",
+    "category": "single_hop",
+    "question": "What patent is at issue in the Ionis v. Arrowhead litigation over plozasiran, and where were the dueling lawsuits filed?",
+    "answer": "U.S. Patent No. 9,593,333. Arrowhead sued for declaratory judgment in the District of Delaware (Sept 10, 2025); Ionis sued for infringement in the Central District of California (Sept 11, 2025).",
+    "ontology_path": "Company(Ionis) -PARTY_TO-> LegalCase <-PARTY_TO- Company(Arrowhead); LegalCase -COVERS-> Compound(plozasiran)",
+    "evidence": [
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "On September 10, 2025, Arrowhead Pharmaceuticals, Inc. ... filed a lawsuit in the District of Delaware ... seeking a declaratory judgment that our patent US9,593,333 is invalid or not infringed"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B01",
+    "category": "aggregation",
+    "question": "How many of the 8 corpus companies are audited by Ernst & Young LLP?",
+    "answer": "5 of 8: Exelixis, Ultragenyx, Halozyme, Ionis, and Neurocrine.",
+    "ontology_path": "count(Company -AUDITED_BY-> Company(Ernst & Young LLP)) over the 8 corpus companies",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "Ernst & Young LLP ... We have served as the Company’s auditor since 2002."},
+      {"ticker": "RARE", "form": "10-K", "date_filed": "2026-02-18", "quote": "Ernst & Young LLP ... We have served as the Company’s auditor since 2012."},
+      {"ticker": "HALO", "form": "10-K", "date_filed": "2026-02-17", "quote": "Ernst & Young LLP We have served as the Company’s auditor since 2006."},
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "Ernst & Young LLP ... We have served as the Company’s auditor since 1989."},
+      {"ticker": "NBIX", "form": "10-K", "date_filed": "2026-02-11", "quote": "Ernst & Young LLP We have served as the Company’s auditor since 1992."}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B02",
+    "category": "aggregation",
+    "question": "Which corpus companies have sold or owe royalty streams to Royalty Pharma entities (including RPI Finance Trust)?",
+    "answer": "4 of 8: Exelixis (owes cabozantinib royalty), Ionis (sold SPINRAZA/pelacarsen royalty interest), Arrowhead (sold olpasiran royalty interest), and Ultragenyx (sold Crysvita European royalty to RPI Finance Trust, a Royalty Pharma affiliate).",
+    "ontology_path": "collect(Company -OWES_ROYALTY_TO-> Company(Royalty Pharma family)) over the 8 corpus companies",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "we are required to pay a 3% royalty to Royalty Pharma on total net sales of any product containing cabozantinib"},
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "we sold a minority interest in our future SPINRAZA and pelacarsen royalties to Royalty Pharma for a $500 million upfront payment"},
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2025-11-25", "quote": "the Company and Royalty Pharma entered into the Royalty Pharma Agreement, pursuant to which Royalty Pharma agreed to pay up to $410.0 million in cash"},
+      {"ticker": "RARE", "form": "10-K", "date_filed": "2026-02-18", "quote": "We subsequently sold this interest to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019."}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B03",
+    "category": "aggregation",
+    "question": "How many corpus companies completed a corporate acquisition described in these filings (2025-2026)?",
+    "answer": "3: Halozyme (Elektrofi, closed Nov 18, 2025), Alkermes (Avadel, closed Feb 12, 2026), and Neurocrine (Soleno, closed May 18, 2026).",
+    "ontology_path": "count(Company -PARTY_TO{role: acquirer}-> Agreement(type: acquisition)) over the 8 corpus companies",
+    "evidence": [
+      {"ticker": "HALO", "form": "10-K", "date_filed": "2026-02-17", "quote": "the Company completed the acquisition of Elektrofi, Inc. (“Elektrofi”) on November 18, 2025, for total consideration of $810.4 million"},
+      {"ticker": "ALKS", "form": "10-K", "date_filed": "2026-02-25", "quote": "in connection with completion of the Avadel Acquisition and our entry into the Credit Agreement, we terminated the Bridge Credit Agreement"},
+      {"ticker": "NBIX", "form": "8-K", "date_filed": "2026-05-18", "quote": "The Company completed the acquisition of Soleno on May 18, 2026"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B04",
+    "category": "aggregation",
+    "question": "How many distinct accounting firms serve as auditor across the 8 corpus companies, counting Arrowhead's former auditor?",
+    "answer": "4: Ernst & Young LLP, KPMG LLP, PricewaterhouseCoopers LLP, and Rose, Snyder & Jacobs LLP (Arrowhead's auditor before KPMG).",
+    "ontology_path": "count(distinct Company objects of AUDITED_BY edges) over the 8 corpus companies, including former (status=former) edges",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "Ernst & Young LLP"},
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2026-03-02", "quote": "KPMG LLP ... We have served as the Company’s auditor since 2002."},
+      {"ticker": "ALKS", "form": "10-K", "date_filed": "2026-02-25", "quote": "PricewaterhouseCoopers LLP"},
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2025-11-25", "quote": "Rose, Snyder & Jacobs LLP"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B05",
+    "category": "aggregation",
+    "question": "How many other corpus companies appear in Neurocrine's 2025 executive-compensation peer group?",
+    "answer": "5: Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx.",
+    "ontology_path": "count(Company -PEER_OF-> Company) intersected with corpus companies, for Neurocrine's peer group",
+    "evidence": [
+      {"ticker": "NBIX", "form": "DEF14A", "date_filed": "2026-04-15", "quote": "Alkermes plc (ALKS)"},
+      {"ticker": "NBIX", "form": "DEF14A", "date_filed": "2026-04-15", "quote": "Exelixis, Inc. (EXEL)"},
+      {"ticker": "NBIX", "form": "DEF14A", "date_filed": "2026-04-15", "quote": "Ionis Pharmaceuticals, Inc. (IONS)"},
+      {"ticker": "NBIX", "form": "DEF14A", "date_filed": "2026-04-15", "quote": "Sarepta Therapeutics, Inc. (SRPT)"},
+      {"ticker": "NBIX", "form": "DEF14A", "date_filed": "2026-04-15", "quote": "Ultragenyx Pharmaceutical Inc (RARE)"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B06",
+    "category": "aggregation",
+    "question": "How many other corpus companies appear in Ionis's 2025 executive-compensation peer group?",
+    "answer": "6: Alkermes, Exelixis, Halozyme, Neurocrine, Sarepta, and Ultragenyx.",
+    "ontology_path": "count(Company -PEER_OF-> Company) intersected with corpus companies, for Ionis's peer group",
+    "evidence": [
+      {"ticker": "IONS", "form": "DEF14A", "date_filed": "2026-04-23", "quote": "Alkermes (ALKS)"},
+      {"ticker": "IONS", "form": "DEF14A", "date_filed": "2026-04-23", "quote": "Exelixis (EXEL)"},
+      {"ticker": "IONS", "form": "DEF14A", "date_filed": "2026-04-23", "quote": "Halozyme Therapeutics (HALO)"},
+      {"ticker": "IONS", "form": "DEF14A", "date_filed": "2026-04-23", "quote": "Neurocrine Biosciences (NBIX)"},
+      {"ticker": "IONS", "form": "DEF14A", "date_filed": "2026-04-23", "quote": "Sarepta Therapeutics (SRPT)"},
+      {"ticker": "IONS", "form": "DEF14A", "date_filed": "2026-04-23", "quote": "Ultragenyx Pharmaceutical (RARE)"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B07",
+    "category": "aggregation",
+    "question": "How many other corpus companies appear in Halozyme's 2025 executive-compensation peer group?",
+    "answer": "6: Alkermes, Exelixis, Ionis, Neurocrine, Sarepta, and Ultragenyx.",
+    "ontology_path": "count(Company -PEER_OF-> Company) intersected with corpus companies, for Halozyme's peer group",
+    "evidence": [
+      {"ticker": "HALO", "form": "DEF14A", "date_filed": "2026-03-23", "quote": "Alkermes"},
+      {"ticker": "HALO", "form": "DEF14A", "date_filed": "2026-03-23", "quote": "Exelixis"},
+      {"ticker": "HALO", "form": "DEF14A", "date_filed": "2026-03-23", "quote": "Ionis Pharmaceuticals"},
+      {"ticker": "HALO", "form": "DEF14A", "date_filed": "2026-03-23", "quote": "Neurocrine Biosciences"},
+      {"ticker": "HALO", "form": "DEF14A", "date_filed": "2026-03-23", "quote": "Sarepta Therapeutics"},
+      {"ticker": "HALO", "form": "DEF14A", "date_filed": "2026-03-23", "quote": "Ultragenyx Pharmaceuticals"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B08",
+    "category": "aggregation",
+    "question": "How many people simultaneously hold officer or director roles at two different corpus companies, per the proxies?",
+    "answer": "2: Richard F. Pops (Alkermes CEO/Chairman and Neurocrine director since April 1998), and Douglas Ingram (Sarepta CEO since June 2017 and Arrowhead director from February 2025 to March 2026).",
+    "ontology_path": "count(distinct Person with two OFFICER_OF edges to different corpus companies)",
+    "evidence": [
+      {"ticker": "NBIX", "form": "DEF14A", "date_filed": "2026-04-15", "quote": "has served on the Board of Directors since April 1998. Mr. Pops is the Chairman and Chief Executive Officer of Alkermes plc."},
+      {"ticker": "SRPT", "form": "DEF14A", "date_filed": "2026-04-24", "quote": "has served as our Chief Executive Officer and a member of our Board since June 2017"},
+      {"ticker": "SRPT", "form": "DEF14A", "date_filed": "2026-04-24", "quote": "Mr. Ingram previously served on the board of Arrowhead Pharmaceuticals, Inc. from February 2025 to March 2026."},
+      {"ticker": "ARWR", "form": "DEF14A", "date_filed": "2026-01-27", "quote": "Douglas Ingram, a current director, is not standing for re-election and will retire from the Board at the annual meeting"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B09",
+    "category": "aggregation",
+    "question": "How many separate royalty purchase agreements has Ultragenyx entered into for its Crysvita royalties?",
+    "answer": "3, for $320 million, $500 million, and $400 million respectively.",
+    "ontology_path": "count(Company(Ultragenyx) -PARTY_TO-> Agreement(type: royalty_purchase, covers: Crysvita))",
+    "evidence": [
+      {"ticker": "RARE", "form": "10-K", "date_filed": "2026-02-18", "quote": "the Company has entered into three royalty purchase agreements under which the Company sold its rights to receive royalty payments arising from the net sales of Crysvita ... in exchange for $320 million, $500 million and $400 million"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B10",
+    "category": "aggregation",
+    "question": "How many separate generic/follow-on challengers has Exelixis faced over CABOMETYX, per the FY2025 10-K's Legal Proceedings note?",
+    "answer": "4: MSN Pharmaceuticals, Sun Pharmaceutical Industries, Azurity Pharmaceuticals, and Handa Oncology.",
+    "ontology_path": "count(distinct Company -PARTY_TO-> LegalCase -COVERS-> Drug(CABOMETYX))",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "MSN ANDA Litigation"},
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "Sun ANDA Litigation"},
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "Azurity 505(b)(2) NDA Litigation"},
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "we received a notice letter regarding a 505(b)(2) New Drug Application submitted to the FDA by Handa Oncology, LLC"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B11",
+    "category": "aggregation",
+    "question": "How many corpus companies share the same San Diego, California Ernst & Young LLP audit office?",
+    "answer": "3: Halozyme, Neurocrine, and Ionis, all audited by Ernst & Young LLP's San Diego office.",
+    "ontology_path": "count(Company -AUDITED_BY{office: San Diego, CA}-> Company(Ernst & Young LLP)) over the 8 corpus companies",
+    "evidence": [
+      {"ticker": "HALO", "form": "10-K", "date_filed": "2026-02-17", "quote": "We have served as the Company’s auditor since 2006. San Diego, California"},
+      {"ticker": "NBIX", "form": "10-K", "date_filed": "2026-02-11", "quote": "We have served as the Company’s auditor since 1992. San Diego, California"},
+      {"ticker": "IONS", "form": "10-K", "date_filed": "2026-02-26", "quote": "We have served as the Company’s auditor since 1989. San Diego, California"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "B12",
+    "category": "aggregation",
+    "question": "How many corpus companies share the same San Mateo, California Ernst & Young LLP audit office?",
+    "answer": "2: Exelixis and Ultragenyx, both audited by Ernst & Young LLP's San Mateo office.",
+    "ontology_path": "count(Company -AUDITED_BY{office: San Mateo, CA}-> Company(Ernst & Young LLP)) over the 8 corpus companies",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-K", "date_filed": "2026-02-10", "quote": "We have served as the Company’s auditor since 2002. San Mateo, California"},
+      {"ticker": "RARE", "form": "10-K", "date_filed": "2026-02-18", "quote": "We have served as the Company’s auditor since 2012. ... San Mateo, California"}
+    ],
+    "verified": false
+  }
+]
