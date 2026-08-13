@@ -62,7 +62,9 @@ data/text/ before citing in the benchmark.
 
 - NBIX peer group names: ALKS, EXEL, IONS, SRPT, RARE
 - IONS peer group names: ALKS, EXEL, HALO, NBIX, SRPT, RARE (6 of 8)
-- HALO peer group names: ALKS, EXEL, IONS, NBIX, SRPT
+- HALO peer group names: ALKS, EXEL, IONS, NBIX, SRPT, RARE (6 of 8;
+  the events-people sweep undercounted at 5; corrected against primary text
+  during question drafting)
 
 ## Royalty Pharma: counterparty to HALF the corpus
 
