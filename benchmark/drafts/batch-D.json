@@ -1,0 +1,149 @@
+[
+  {
+    "id": "D01",
+    "category": "single_hop",
+    "question": "Who led Neurocrine before its current CEO, and when did the handoff happen?",
+    "answer": "Kevin Gorman, Ph.D., retired as CEO effective October 11, 2024. Kyle Gano, Ph.D., Neurocrine's former Chief Business Development and Strategy Officer, succeeded him as CEO and joined the Board that same day; Gorman remained on the Board.",
+    "ontology_path": "Person(Kevin Gorman) -OFFICER_OF{role: CEO, end_date: 2024-10-11, status: former}-> Company(NBIX); Person(Kyle Gano) -OFFICER_OF{role: CEO, start_date: 2024-10-11, status: active}-> Company(NBIX)",
+    "evidence": [
+      {"ticker": "NBIX", "form": "10-Q", "date_filed": "2024-10-30", "quote": "Kevin Gorman, Ph.D., retired as Chief Executive Officer (CEO) effective October 11, 2024. Kyle Gano, Ph.D. ... succeeded Dr. Gorman in the CEO role"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D02",
+    "category": "multi_hop_2",
+    "question": "What happened to Neurocrine's epilepsy collaboration with Idorsia?",
+    "answer": "Neurocrine licensed NBI-827104 from Idorsia in 2020 to develop and commercialize it for a rare pediatric epilepsy. In the fourth quarter of 2024 Neurocrine gave Idorsia written notice of termination, and the FY2024 10-K confirms the termination became effective in January 2025; the deal is no longer mentioned in the FY2025 10-K.",
+    "ontology_path": "Agreement(NBIX-Idorsia License, type: license) -PARTY_TO-> Company(NBIX), Company(Idorsia); -COVERS-> Compound(NBI-827104); {start_date: 2020, end_date: 2025-01, status: terminated}",
+    "evidence": [
+      {"ticker": "NBIX", "form": "10-Q", "date_filed": "2024-10-30", "quote": "In 2020, we entered into a collaboration and license agreement with Idorsia, pursuant to which we acquired the exclusive rights to develop and commercialize NBI-827104"},
+      {"ticker": "NBIX", "form": "10-K", "date_filed": "2025-02-10", "quote": "Provided Idorsia Pharmaceuticals Ltd. with written notice of termination of the license agreement to develop and commercialize NBI-827104. The termination became effective in January 2025."}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D03",
+    "category": "aggregation",
+    "question": "Have any new generic challengers to CABOMETYX emerged since Exelixis's last annual report?",
+    "answer": "Yes, two, both first disclosed in the Q2 2026 10-Q (filed August 5, 2026), after the FY2025 10-K (filed February 10, 2026): Intas Pharmaceuticals/Accord Healthcare sent an ANDA Paragraph IV notice for cabozantinib tablets, which Exelixis sued over on July 6, 2026; and Almatica Pharma sent a 505(b)(2) notice letter for cabozantinib tablets in May 2026.",
+    "ontology_path": "LegalCase(Exelixis v. Accord) -PARTY_TO-> Company(EXEL), Company(Accord Healthcare/Intas Pharmaceuticals); -COVERS-> Drug(CABOMETYX); LegalCase(Almatica 505(b)(2) matter) -PARTY_TO-> Company(EXEL), Company(Almatica Pharma); -COVERS-> Drug(CABOMETYX); both filtered to notice/filed dates after the FY2025 10-K's date_filed (2026-02-10)",
+    "evidence": [
+      {"ticker": "EXEL", "form": "10-Q", "date_filed": "2026-08-05", "quote": "In May 2026, we received a notice letter regarding an ANDA submitted to the FDA by Intas Pharmaceuticals Ltd. and Accord Healthcare, Inc. (collectively, Accord)"},
+      {"ticker": "EXEL", "form": "10-Q", "date_filed": "2026-08-05", "quote": "On July 6, 2026, we filed a complaint in the Delaware District Court for patent infringement against Accord ... arising from Accord's ANDA filing with the FDA"},
+      {"ticker": "EXEL", "form": "10-Q", "date_filed": "2026-08-05", "quote": "In May 2026, we received a notice letter regarding a 505(b)(2) NDA submitted to the FDA by Almatica Pharma, LLC (Almatica), requesting approval to market cabozantinib tablets"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D04",
+    "category": "multi_hop_2",
+    "question": "How did Sarepta's description of ELEVIDYS change between its FY2024 and FY2025 annual reports?",
+    "answer": "The FY2024 10-K (filed February 28, 2025) describes ELEVIDYS simply as an FDA-approved gene therapy for ambulatory Duchenne patients, with no safety caveats. The FY2025 10-K (filed March 2, 2026) discloses two non-ambulatory patient deaths from acute liver failure (announced March and June 2025), a suspension of all U.S. ELEVIDYS shipments effective July 22, 2025, and a boxed warning added in November 2025.",
+    "ontology_path": "Drug(ELEVIDYS) -APPROVED_FOR{jurisdiction: FDA, approved_date: 2024-06, label}-> Indication(Duchenne muscular dystrophy); compare label/status of this edge as described across Filing(SRPT FY2024 10-K) -FILED_BY-> Company(SRPT) vs Filing(SRPT FY2025 10-K) -FILED_BY-> Company(SRPT)",
+    "evidence": [
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2025-02-28", "quote": "ELEVIDYS, an AAV-based gene therapy, was approved by the FDA in June 2024 for the treatment of ambulatory patients at least four years old with Duchenne"},
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2026-03-02", "quote": "On March 18, 2025, Sarepta announced that a non-ambulatory patient with Duchenne passed away following treatment with ELEVIDYS after having suffered from ALF"},
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2026-03-02", "quote": "we temporarily suspended all shipments of ELEVIDYS in the U.S., effective July 22, 2025 ... (the \"ELEVIDYS Suspension\")"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D05",
+    "category": "single_hop",
+    "question": "When Arrowhead filed its FY2024 annual report, what had just happened with Sarepta?",
+    "answer": "One day earlier, on November 25, 2024, Arrowhead entered into an Exclusive License and Collaboration Agreement with Sarepta Therapeutics plus a related $325.0 million Stock Purchase Agreement. The FY2024 10-K, filed November 26, 2024, describes the private placement as still subject to customary closing conditions and expected to close concurrently with the collaboration agreement.",
+    "ontology_path": "Agreement(Arrowhead-Sarepta Collaboration Agreement, type: collaboration_license) -PARTY_TO-> Company(ARWR), Company(SRPT); {start_date: 2024-11-25, status: pending}",
+    "evidence": [
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2024-11-26", "quote": "On November 25, 2024, the Company entered into an Exclusive License and Collaboration Agreement ... with Sarepta Therapeutics, Inc. ... for the co-development and commercialization of multiple clinical and preclinical programs"},
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2024-11-26", "quote": "The Stock Purchase Agreement contains customary representations and warranties ... and customary conditions to closing"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D06",
+    "category": "multi_hop_2",
+    "question": "Has VUMERITY, which Alkermes licenses to Biogen, faced generic challenges?",
+    "answer": "Yes. Alkermes's FY2024 10-K (filed February 12, 2025) discloses that Biogen and Alkermes Pharma Ireland sued Zydus in July 2023 over an ANDA for generic diroximel fumarate (VUMERITY) capsules, with a bench trial set for July 28, 2025. The Q3 2025 10-Q (filed October 28, 2025) reports the parties settled on July 21, 2025, with Zydus receiving a license to sell a generic VUMERITY near patent expiration and the case dismissed; the litigation is no longer mentioned in the FY2025 10-K.",
+    "ontology_path": "LegalCase(Biogen/APIL v. Zydus, VUMERITY ANDA Litigation) -PARTY_TO-> Company(Biogen), Company(Alkermes Pharma Ireland Limited), Company(Zydus); -COVERS-> Drug(VUMERITY); {filed_date: 2023-07, end_date: 2025-07-21, status: resolved}",
+    "evidence": [
+      {"ticker": "ALKS", "form": "10-K", "date_filed": "2025-02-12", "quote": "Biogen Inc. ... and Alkermes Pharma Ireland Limited filed a patent infringement lawsuit ... against Zydus ... following the filing by Zydus of an ANDA ... for VUMERITY"},
+      {"ticker": "ALKS", "form": "10-Q", "date_filed": "2025-10-28", "quote": "On July 21, 2025, the parties entered into a confidential settlement agreement, pursuant to which Zydus was granted a license under the VUMERITY patents"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D07",
+    "category": "multi_hop_3",
+    "question": "How have the milestone payments under the Sarepta-Arrowhead deal played out since signing?",
+    "answer": "Sarepta and Arrowhead signed their collaboration on November 25, 2024. Arrowhead hit the first of two DM1 milestones on August 13, 2025, triggering a $100.0 million payment (half cash, half Arrowhead stock), per Sarepta's Q3 2025 10-Q. Arrowhead's own FY2025 10-K (filed November 25, 2025) reports it earned the second $200.0 million DM1 milestone on November 20, 2025; Sarepta's FY2025 10-K instead dates that second milestone to November 24, 2025 and notes it was settled in January 2026.",
+    "ontology_path": "Agreement(Arrowhead-Sarepta Collaboration Agreement) -PARTY_TO-> Company(ARWR), Company(SRPT); milestone payment events tracked as dated facts against the Agreement over time (temporal trio)",
+    "evidence": [
+      {"ticker": "SRPT", "form": "10-Q", "date_filed": "2025-11-06", "quote": "On August 13, 2025, Arrowhead achieved the first of two Arrowhead DM1 Milestones"},
+      {"ticker": "SRPT", "form": "10-Q", "date_filed": "2025-11-06", "quote": "$100.0 million milestone payment to Arrowhead, triggered by Arrowhead's achievement of the first of two predetermined enrollment targets ... for the DM1 program"},
+      {"ticker": "ARWR", "form": "10-K", "date_filed": "2025-11-25", "quote": "On November 20, 2025, the Company earned a $200.0 million milestone payment from Sarepta. The milestone was earned when Arrowhead achieved the second development milestone event"},
+      {"ticker": "SRPT", "form": "10-K", "date_filed": "2026-03-02", "quote": "On November 24, 2025, Arrowhead achieved the second of two Arrowhead DM1 Milestones, totaling $200.0 million. In January 2026, the Company settled the payment"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D08",
+    "category": "single_hop",
+    "question": "What was Ultragenyx's most recent Crysvita royalty sale, and when was it first disclosed?",
+    "answer": "In November 2025, Ultragenyx sold OMERS the right to an additional 25% of future Crysvita royalty payments on U.S./Canada net sales, starting January 1, 2028, for $400.0 million upfront. It was first disclosed as a Subsequent Event in Ultragenyx's Q3 2025 10-Q, filed November 5, 2025.",
+    "ontology_path": "Agreement(2025 OMERS Royalty Purchase Agreement, type: royalty_purchase) -PARTY_TO-> Company(RARE), Company(OMERS); -COVERS-> Drug(Crysvita); {start_date: 2025-11, status: pending, effective 2028-01-01}",
+    "evidence": [
+      {"ticker": "RARE", "form": "10-Q", "date_filed": "2025-11-05", "quote": "In November 2025, the Company entered into a Royalty Purchase Agreement with OMERS ... OMERS paid $400.0 million ... in exchange for the right to receive an additional 25% of future royalty payments, starting on January 1, 2028"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D09",
+    "category": "single_hop",
+    "question": "Is Alkermes's long-time CEO staying on?",
+    "answer": "No. Richard F. Pops notified the board on February 24, 2026 that he will retire as CEO effective July 31, 2026, after 35 years in the role. Blair C. Jackson, currently EVP and COO, was appointed to succeed him as CEO effective August 1, 2026.",
+    "ontology_path": "Person(Richard Pops) -OFFICER_OF{role: Chairman & CEO, end_date: 2026-07-31, status: pending}-> Company(ALKS); Person(Blair Jackson) -OFFICER_OF{role: CEO, start_date: 2026-08-01, status: pending}-> Company(ALKS)",
+    "evidence": [
+      {"ticker": "ALKS", "form": "8-K", "date_filed": "2026-02-25", "quote": "On February 24, 2026, Richard F. Pops, Chairman and Chief Executive Officer of Alkermes plc ... notified the Company's board ... of his decision to retire ... effective July 31, 2026, following a distinguished 35 years of service"},
+      {"ticker": "ALKS", "form": "8-K", "date_filed": "2026-02-25", "quote": "the Board appointed Blair C. Jackson, the Company's current Executive Vice President, Chief Operating Officer, to serve as the Company's Chief Executive Officer, effective August 1, 2026"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D10",
+    "category": "multi_hop_2",
+    "question": "How did Ionis's big cardiomyopathy trial for eplontersen turn out?",
+    "answer": "It missed. Ionis announced on July 9, 2026 that the Phase 3 CARDIO-TTRansform trial of eplontersen in ATTR-CM patients did not meet its primary composite endpoint of CV mortality and recurrent CV events versus placebo, though a prespecified monotherapy subgroup showed a nominally significant benefit. The next day, Ionis reaffirmed that its full-year 2026 financial guidance was unchanged.",
+    "ontology_path": "Compound(eplontersen) -IN_DEVELOPMENT_FOR{phase: 3, label: \"CARDIO-TTRansform trial for ATTR-CM\", status: primary endpoint not met}-> Indication(transthyretin amyloid cardiomyopathy); Filing(IONS 8-K 2026-07-09) -FILED_BY-> Company(IONS); Filing(IONS 8-K 2026-07-10) -FILED_BY-> Company(IONS)",
+    "evidence": [
+      {"ticker": "IONS", "form": "8-K", "date_filed": "2026-07-09", "quote": "the CARDIO-TTRansform Phase 3 trial for eplontersen in patients with ATTR-CM did not meet the primary efficacy endpoint of the composite outcome of CV mortality and recurrent CV clinical events"},
+      {"ticker": "IONS", "form": "8-K", "date_filed": "2026-07-09", "quote": "a prespecified subgroup analysis of patients treated with eplontersen monotherapy compared to placebo, a nominally significant hazard ratio of 0.71 was observed"},
+      {"ticker": "IONS", "form": "8-K", "date_filed": "2026-07-10", "quote": "Ionis Pharmaceuticals, Inc. ... is reaffirming its previously announced financial guidance for the fiscal year ending December 31, 2026, which remains unchanged"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D11",
+    "category": "single_hop",
+    "question": "How did Arrowhead's shareholders vote on executive pay in 2026?",
+    "answer": "They rejected it. At Arrowhead's Annual Meeting on March 19, 2026, the advisory Say-on-Pay Proposal failed: 41,625,740 shares voted for versus 59,963,903 against (plus 256,341 abstentions), the only one of four proposals that did not pass.",
+    "ontology_path": "Filing(ARWR 8-K 2026-03-20) -FILED_BY-> Company(ARWR); shareholder vote outcome on executive compensation (no dedicated ontology entity for votes; captured as filing content)",
+    "evidence": [
+      {"ticker": "ARWR", "form": "8-K", "date_filed": "2026-03-20", "quote": "each proposal passed, including the election of each director, other than the Say-on-Pay Proposal"},
+      {"ticker": "ARWR", "form": "8-K", "date_filed": "2026-03-20", "quote": "Advisory Vote to Approve Executive Compensation: 41,625,740 FOR; 59,963,903 AGAINST; 256,341 ABSTAIN; 17,955,558 NON-VOTES"}
+    ],
+    "verified": false
+  },
+  {
+    "id": "D12",
+    "category": "multi_hop_2",
+    "question": "How did Neurocrine finance the Soleno acquisition?",
+    "answer": "Shortly before closing the Soleno acquisition on May 18, 2026, Neurocrine entered a new $1.0 billion, five-year senior secured revolving credit facility with JPMorgan Chase Bank as administrative agent, dated May 14, 2026; it drew $600.0 million under the facility in May 2026 and repaid it in June 2026.",
+    "ontology_path": "Company(NBIX) -PARTY_TO{role: acquirer}-> Agreement(Soleno acquisition, type: acquisition) <-PARTY_TO{role: acquired}- Company(Soleno); {end_date: 2026-05-18, status: completed}. Separately, Filing(NBIX 10-Q 2026-07-31) -FILED_BY-> Company(NBIX) discloses Agreement(2026 Credit Facility, type: supply/financing) -PARTY_TO-> Company(NBIX), Company(JPMorgan Chase Bank); {start_date: 2026-05-14, status: active}",
+    "evidence": [
+      {"ticker": "NBIX", "form": "8-K", "date_filed": "2026-05-18", "quote": "The Company completed the acquisition of Soleno on May 18, 2026, by causing Purchaser to merge with and into Soleno"},
+      {"ticker": "NBIX", "form": "10-Q", "date_filed": "2026-07-31", "quote": "On May 14, 2026, we entered into a credit agreement with the lenders party thereto and JPMorgan Chase Bank, N.A., as administrative agent, providing for a $1.0 billion senior secured revolving credit facility"}
+    ],
+    "verified": false
+  }
+]

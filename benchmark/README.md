@@ -25,8 +25,18 @@ notice, which can flatter measured accuracy relative to fully human-authored
 questions. The human verification pass mitigates wrong answers, not this
 selection effect.
 
-Final distribution: 19 single_hop, 19 multi_hop_2, 17 multi_hop_3,
-13 aggregation, 12 out_of_scope.
+Final distribution: 20 single_hop, 21 multi_hop_2, 16 multi_hop_3,
+11 aggregation, 12 out_of_scope.
+
+Evidence-source diversity (added after review flagged latest-10-K
+concentration): 12 redundant latest-10-K questions were swapped for
+temporal and form-diverse ones. Evidence now spans 10-K (109 quotes),
+DEF14A (27), 8-K (12), and 10-Q (11), with quotes from 2024, 2025, and
+2026 filings; temporal questions exercise the ontology's status/date
+machinery (deal terminations, CEO successions, before/after contrasts,
+facts that exist only in quarterlies). One question deliberately captures
+two filers dating the same milestone differently (SRPT: Nov 24, 2025 vs
+ARWR: Nov 20, 2025).
 
 Post-draft rephrase-and-audit pass (before human verification): questions
 rewritten from clue-style phrasing to natural information needs, with the
