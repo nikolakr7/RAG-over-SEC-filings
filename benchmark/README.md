@@ -25,9 +25,18 @@ notice, which can flatter measured accuracy relative to fully human-authored
 questions. The human verification pass mitigates wrong answers, not this
 selection effect.
 
-Final distribution: 16 single_hop, 23 multi_hop_2, 17 multi_hop_3,
-12 aggregation, 12 out_of_scope. Heavier on multi-hop than the original
-targets, deliberately: multi-hop is what this project measures.
+Final distribution: 19 single_hop, 19 multi_hop_2, 17 multi_hop_3,
+13 aggregation, 12 out_of_scope.
+
+Post-draft rephrase-and-audit pass (before human verification): questions
+rewritten from clue-style phrasing to natural information needs, with the
+rule that specificity lives in the answer, not the question; hop labels
+re-audited against EVIDENCE DISPERSION (a question is multi-hop only if its
+supporting facts live in separate passages; two questions whose facts
+co-occur in one proxy-bio paragraph were reclassified to single_hop); four
+cross-category near-duplicates cut and replaced with freshly grep-verified
+questions; one evidence attribution bug fixed (a Halozyme quote mislabeled
+as Ionis).
 
 ## Schema (one object per question in questions.json)
 

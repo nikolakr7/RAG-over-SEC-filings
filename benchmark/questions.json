@@ -82,7 +82,7 @@
   {
     "id": "q006",
     "category": "single_hop",
-    "question": "Arrowhead Pharmaceuticals changed auditors in fiscal 2024. Who audits Arrowhead now, and who audited it before?",
+    "question": "Who is Arrowhead Pharmaceuticals' current auditor, and did the company use a different auditor before?",
     "answer": "KPMG LLP (San Diego, CA) has been Arrowhead's auditor since 2024, succeeding Rose, Snyder & Jacobs LLP.",
     "ontology_path": "Company(Arrowhead) -AUDITED_BY-> Company(KPMG LLP); prior edge -AUDITED_BY-> Company(Rose, Snyder & Jacobs LLP)",
     "evidence": [
@@ -244,7 +244,7 @@
   {
     "id": "q015",
     "category": "single_hop",
-    "question": "In what month and year did the FDA approve CABOMETYX for neuroendocrine tumors (pNET and epNET)?",
+    "question": "When did the FDA approve CABOMETYX for neuroendocrine tumors?",
     "answer": "March 2025.",
     "ontology_path": "Drug(CABOMETYX) -APPROVED_FOR{jurisdiction: FDA}-> Indication(neuroendocrine tumors)",
     "evidence": [
@@ -275,6 +275,66 @@
   },
   {
     "id": "q017",
+    "category": "single_hop",
+    "question": "Does anyone on Neurocrine's board also lead another company in this corpus?",
+    "answer": "Richard F. Pops, Chairman and CEO of Alkermes plc. He joined Alkermes as CEO in February 1991 and has served as Alkermes Chairman of the Board since 2011, while sitting on Neurocrine's board since April 1998.",
+    "ontology_path": "Person(Richard F. Pops) -OFFICER_OF{role:'Chairman & CEO', start_date:1991}-> Company(ALKS); Person(Richard F. Pops) -OFFICER_OF{role:'director', start_date:1998-04}-> Company(NBIX)",
+    "evidence": [
+      {
+        "ticker": "NBIX",
+        "form": "DEF14A",
+        "date_filed": "2026-04-15",
+        "quote": "has served on the Board of Directors since April 1998. Mr. Pops is the Chairman and Chief Executive Officer of Alkermes plc. He joined Alkermes as Chief Executive Officer in February 1991."
+      },
+      {
+        "ticker": "ALKS",
+        "form": "DEF14A",
+        "date_filed": "2026-04-06",
+        "quote": "Richard F. Pops has served as Chairman of the Board since 2011."
+      }
+    ],
+    "verified": false
+  },
+  {
+    "id": "q018",
+    "category": "single_hop",
+    "question": "Has Sarepta's CEO held a board role at any other company in this corpus, and what prompted it?",
+    "answer": "Douglas S. Ingram, Sarepta's Chief Executive Officer, joined Arrowhead Pharmaceuticals' board effective February 2025, appointed by Arrowhead in connection with the Arrowhead Collaboration Agreement between the two companies.",
+    "ontology_path": "Person(Douglas S. Ingram) -OFFICER_OF{role:'Chief Executive Officer'}-> Company(SRPT); Person(Douglas S. Ingram) -OFFICER_OF{role:'director', start_date:2025-02}-> Company(ARWR)",
+    "evidence": [
+      {
+        "ticker": "SRPT",
+        "form": "10-K",
+        "date_filed": "2026-03-02",
+        "quote": "/s/ Douglas S. Ingram ... Chief Executive Officer"
+      },
+      {
+        "ticker": "SRPT",
+        "form": "10-K",
+        "date_filed": "2026-03-02",
+        "quote": "In connection with the Arrowhead Collaboration Agreement, Arrowhead appointed the Company's CEO, Douglas Ingram, as a director, effective February 2025."
+      }
+    ],
+    "verified": false
+  },
+  {
+    "category": "single_hop",
+    "question": "Who commercializes cabozantinib outside the United States?",
+    "answer": "Ipsen holds all territories outside the U.S. and Japan; Takeda holds Japan.",
+    "ontology_path": "Company(EXEL) -PARTY_TO-> Agreement{territory} <-PARTY_TO- Company(Ipsen|Takeda)",
+    "evidence": [
+      {
+        "ticker": "EXEL",
+        "form": "10-K",
+        "date_filed": "2026-02-10",
+        "quote": "Ipsen is responsible for all territories outside of the U.S. and Japan, and Takeda is responsible for the Japanese market"
+      }
+    ],
+    "verified": false,
+    "id": "q019"
+  },
+  {
+    "id": "q020",
     "category": "multi_hop_2",
     "question": "Do Exelixis and Halozyme share an auditor? Do they share an audit office?",
     "answer": "Same firm, different offices: Ernst & Young LLP audits both, but Exelixis from San Mateo, California and Halozyme from San Diego, California.",
@@ -296,9 +356,9 @@
     "verified": false
   },
   {
-    "id": "q018",
+    "id": "q021",
     "category": "multi_hop_2",
-    "question": "Exelixis and which other corpus company share the same audit firm and the same city office, Ernst & Young LLP's San Mateo, California practice, and since what years?",
+    "question": "Which other company in the corpus uses the same audit firm and office as Exelixis, and since when has each relationship run?",
     "answer": "Ultragenyx Pharmaceutical, Inc. (ticker RARE). Ernst & Young LLP has audited Exelixis from San Mateo, California since 2002, and has audited Ultragenyx from the same San Mateo office since 2012.",
     "ontology_path": "Company(EXEL) -AUDITED_BY{office:'San Mateo, CA', start_year:2002}-> Company(Ernst & Young LLP) <-AUDITED_BY{office:'San Mateo, CA', start_year:2012}- Company(RARE)",
     "evidence": [
@@ -318,9 +378,9 @@
     "verified": false
   },
   {
-    "id": "q019",
+    "id": "q022",
     "category": "multi_hop_2",
-    "question": "Which two corpus companies are both audited by Ernst & Young LLP out of its San Diego, California office, and since what years has each relationship run?",
+    "question": "Halozyme and Neurocrine both use Ernst & Young as their auditor. Are they served by the same office?",
     "answer": "Halozyme Therapeutics and Neurocrine Biosciences. E&Y has served as Halozyme's auditor since 2006 and as Neurocrine's auditor since 1992, both signing from San Diego, California.",
     "ontology_path": "Company(HALO) -AUDITED_BY{office:'San Diego, CA', start_year:2006}-> Company(Ernst & Young LLP) <-AUDITED_BY{office:'San Diego, CA', start_year:1992}- Company(NBIX)",
     "evidence": [
@@ -340,75 +400,9 @@
     "verified": false
   },
   {
-    "id": "q020",
-    "category": "multi_hop_2",
-    "question": "A person who has served on Neurocrine Biosciences' board since April 1998 is Chairman and CEO of which other corpus company, and since when has he held each role?",
-    "answer": "Richard F. Pops, Chairman and CEO of Alkermes plc. He joined Alkermes as CEO in February 1991 and has served as Alkermes Chairman of the Board since 2011, while sitting on Neurocrine's board since April 1998.",
-    "ontology_path": "Person(Richard F. Pops) -OFFICER_OF{role:'Chairman & CEO', start_date:1991}-> Company(ALKS); Person(Richard F. Pops) -OFFICER_OF{role:'director', start_date:1998-04}-> Company(NBIX)",
-    "evidence": [
-      {
-        "ticker": "NBIX",
-        "form": "DEF14A",
-        "date_filed": "2026-04-15",
-        "quote": "has served on the Board of Directors since April 1998. Mr. Pops is the Chairman and Chief Executive Officer of Alkermes plc. He joined Alkermes as Chief Executive Officer in February 1991."
-      },
-      {
-        "ticker": "ALKS",
-        "form": "DEF14A",
-        "date_filed": "2026-04-06",
-        "quote": "Richard F. Pops has served as Chairman of the Board since 2011."
-      }
-    ],
-    "verified": false
-  },
-  {
-    "id": "q021",
-    "category": "multi_hop_2",
-    "question": "Sarepta's CEO joined the board of directors of which other corpus company in early 2025, and in connection with what agreement?",
-    "answer": "Douglas S. Ingram, Sarepta's Chief Executive Officer, joined Arrowhead Pharmaceuticals' board effective February 2025, appointed by Arrowhead in connection with the Arrowhead Collaboration Agreement between the two companies.",
-    "ontology_path": "Person(Douglas S. Ingram) -OFFICER_OF{role:'Chief Executive Officer'}-> Company(SRPT); Person(Douglas S. Ingram) -OFFICER_OF{role:'director', start_date:2025-02}-> Company(ARWR)",
-    "evidence": [
-      {
-        "ticker": "SRPT",
-        "form": "10-K",
-        "date_filed": "2026-03-02",
-        "quote": "/s/ Douglas S. Ingram ... Chief Executive Officer"
-      },
-      {
-        "ticker": "SRPT",
-        "form": "10-K",
-        "date_filed": "2026-03-02",
-        "quote": "In connection with the Arrowhead Collaboration Agreement, Arrowhead appointed the Company's CEO, Douglas Ingram, as a director, effective February 2025."
-      }
-    ],
-    "verified": false
-  },
-  {
-    "id": "q022",
-    "category": "multi_hop_2",
-    "question": "An Ionis director previously served as President of Janssen Biotech Inc.; which other corpus company received a $195.4 million arbitration award against Janssen after Janssen partially terminated a technology license?",
-    "answer": "Alkermes. Ionis director Michael Yang was previously President of Janssen Biotech. Separately, Alkermes won a $195.4 million arbitration award against Janssen after Janssen's November 2021 partial termination of the NANOCRYSTAL license underlying the INVEGA products.",
-    "ontology_path": "Person(Michael Yang) -OFFICER_OF{status:former, role:'President'}-> Company(Janssen Biotech); Person(Michael Yang) -OFFICER_OF{role:director}-> Company(IONS); LegalCase(ALKS v. Janssen arbitration) -PARTY_TO- Company(Janssen); LegalCase -PARTY_TO- Company(ALKS)",
-    "evidence": [
-      {
-        "ticker": "IONS",
-        "form": "DEF14A",
-        "date_filed": "2026-04-23",
-        "quote": "Mr. Yang joined Acadia from Janssen Pharmaceutical Companies of Johnson & Johnson, where he served as President of Janssen Biotech Inc."
-      },
-      {
-        "ticker": "ALKS",
-        "form": "10-K",
-        "date_filed": "2026-02-25",
-        "quote": "the arbitral tribunal ... issued a final award ... the Company was due back royalties of $195.4 million, inclusive of $8.1 million in late-payment interest"
-      }
-    ],
-    "verified": false
-  },
-  {
     "id": "q023",
     "category": "multi_hop_2",
-    "question": "What did Sarepta surrender to pay half of its first $100 million DM1 milestone obligation to Arrowhead, and when?",
+    "question": "How did Sarepta pay the first $100 million milestone it owed Arrowhead, and when?",
     "answer": "On August 13, 2025, after Arrowhead hit the first DM1 milestone, Sarepta transferred about 2.7 million shares of Arrowhead common stock (valued at roughly $50 million) back to Arrowhead and paid the remaining $50 million in cash.",
     "ontology_path": "Company(SRPT) -PARTY_TO{role:licensee}-> Agreement(Arrowhead Collaboration Agreement) <-PARTY_TO{role:licensor}- Company(ARWR)",
     "evidence": [
@@ -430,7 +424,7 @@
   {
     "id": "q024",
     "category": "multi_hop_2",
-    "question": "Which U.S. patent is at the center of dueling September 2025 lawsuits between Ionis and Arrowhead, and in which courts were the competing complaints filed?",
+    "question": "How do Ionis's and Arrowhead's own filings each describe the patent fight between the two companies that began in September 2025?",
     "answer": "U.S. Patent No. 9,593,333 (\"the '333 patent\"), covering APOCIII modulation. Ionis sued Arrowhead for infringement over plozasiran, and Arrowhead filed a declaratory-judgment suit; Ionis's suit was filed in the Central District of California.",
     "ontology_path": "Company(IONS) -PARTY_TO{role:plaintiff}-> LegalCase(Ionis v. Arrowhead) <-PARTY_TO{role:plaintiff/counterclaimant}- Company(ARWR)",
     "evidence": [
@@ -452,29 +446,7 @@
   {
     "id": "q025",
     "category": "multi_hop_2",
-    "question": "Which company ended up holding Arrowhead's hepatitis B asset after Janssen's license on it ended, and when did that final licensing deal happen?",
-    "answer": "GSK. Arrowhead's ARO-HBV/JNJ-3989 (now daplusiran/tomligisiran, GSK5637608) had been licensed to Janssen since October 2018; on December 11, 2023, GSK signed the GSK-HBV Agreement receiving worldwide exclusive rights to the same asset.",
-    "ontology_path": "Company(ARWR) -PARTY_TO- Agreement(Janssen HBV license, 2018) -PARTY_TO- Company(Janssen); Company(ARWR) -PARTY_TO- Agreement(GSK-HBV Agreement, 2023) -PARTY_TO- Company(GSK)",
-    "evidence": [
-      {
-        "ticker": "ARWR",
-        "form": "10-K",
-        "date_filed": "2023-11-29",
-        "quote": "Chronic hepatitis B virus - JNJ-3989 (formerly ARO-HBV, out-licensed to Janssen"
-      },
-      {
-        "ticker": "ARWR",
-        "form": "10-K",
-        "date_filed": "2024-11-26",
-        "quote": "On December 11, 2023, GSK and the Company entered into the GSK-HBV Agreement ... Daplusiran/tomligisiran had previously been licensed to Janssen in October 2018."
-      }
-    ],
-    "verified": false
-  },
-  {
-    "id": "q026",
-    "category": "multi_hop_2",
-    "question": "Exelixis's cabozantinib royalty obligation traces from GSK to Royalty Pharma and back to GSK; what are the three steps and dates in that chain?",
+    "question": "Who receives the royalty Exelixis pays on cabozantinib sales, and how has that changed hands over time?",
     "answer": "October 2002: Exelixis agreed to pay GSK a 3% cabozantinib royalty. Effective January 1, 2021, Royalty Pharma acquired GSK's royalty rights. The U.S. leg of that royalty reverts back to GSK after September 2026.",
     "ontology_path": "Company(EXEL) -OWES_ROYALTY_TO{start_date:2002}-> Company(GSK); Company(EXEL) -OWES_ROYALTY_TO{start_date:2021-01-01}-> Company(Royalty Pharma); Company(EXEL) -OWES_ROYALTY_TO{start_date:2026-09, status:pending}-> Company(GSK)",
     "evidence": [
@@ -494,9 +466,9 @@
     "verified": false
   },
   {
-    "id": "q027",
+    "id": "q026",
     "category": "multi_hop_2",
-    "question": "Besides Exelixis, name two corpus companies that monetized future royalty streams through a Royalty Pharma entity, and what royalty each sold.",
+    "question": "What exactly did Ionis and Ultragenyx each sell to Royalty Pharma entities, and for how much?",
     "answer": "Ultragenyx (RARE) sold its European Crysvita royalty to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019. Ionis sold a minority interest in its future SPINRAZA and pelacarsen royalties to Royalty Pharma in a $500 million deal.",
     "ontology_path": "Company(RARE) -OWES_ROYALTY_TO- Company(RPI Finance Trust/Royalty Pharma); Company(IONS) -OWES_ROYALTY_TO- Company(Royalty Pharma)",
     "evidence": [
@@ -516,9 +488,9 @@
     "verified": false
   },
   {
-    "id": "q028",
+    "id": "q027",
     "category": "multi_hop_2",
-    "question": "Halozyme's ENHANZE collaboration earns royalties from a Bristol Myers Squibb product; which other corpus company also has a BMS collaboration, on which drug combination?",
+    "question": "How are Halozyme and Exelixis each connected to Bristol Myers Squibb?",
     "answer": "Exelixis. Halozyme lists Bristol Myers Squibb Company as an ENHANZE licensing partner earning royalties on a BMS product (Opdivo Qvantig). Exelixis's CABOMETYX is approved for RCC in combination with BMS's nivolumab (OPDIVO).",
     "ontology_path": "Company(HALO) -PARTY_TO- Agreement(ENHANZE license) -PARTY_TO- Company(BMS); Company(EXEL) -PARTY_TO- Agreement(cabo+nivolumab combination) -PARTY_TO- Company(BMS)",
     "evidence": [
@@ -538,9 +510,9 @@
     "verified": false
   },
   {
-    "id": "q029",
+    "id": "q028",
     "category": "multi_hop_2",
-    "question": "Takeda Pharmaceutical licenses assets from two corpus companies in opposite directions; describe each deal and which company is the licensor in each.",
+    "question": "Takeda has deals with both Exelixis and Neurocrine. In each case, who is licensing what to whom?",
     "answer": "Exelixis is the licensor: its January 2017 collaboration gave Takeda exclusive Japan commercialization rights to cabozantinib. Neurocrine is the licensee: it in-licensed osavampator from Takeda in 2020, taking worldwide rights except Japan.",
     "ontology_path": "Company(EXEL) -PARTY_TO{role:licensor}-> Agreement(Takeda Collaboration, 2017) <-PARTY_TO{role:licensee}- Company(Takeda); Company(NBIX) -PARTY_TO{role:licensee}-> Agreement(osavampator license, 2020) <-PARTY_TO{role:licensor}- Company(Takeda)",
     "evidence": [
@@ -560,9 +532,9 @@
     "verified": false
   },
   {
-    "id": "q030",
+    "id": "q029",
     "category": "multi_hop_2",
-    "question": "Which five corpus companies appear in both Neurocrine's and Halozyme's 2025 executive-compensation peer groups?",
+    "question": "Which companies appear in both Neurocrine's and Halozyme's executive-compensation peer groups?",
     "answer": "Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx (RARE). Neurocrine's 2025 peer group names Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx; Halozyme's 2025 peer group separately lists Alkermes, Exelixis, Ionis Pharmaceuticals, Neurocrine, Sarepta, and Ultragenyx.",
     "ontology_path": "Company(NBIX) -PEER_OF-> Company(ALKS|EXEL|IONS|SRPT|RARE); Company(HALO) -PEER_OF-> Company(ALKS|EXEL|IONS|SRPT|RARE)",
     "evidence": [
@@ -582,9 +554,9 @@
     "verified": false
   },
   {
-    "id": "q031",
+    "id": "q030",
     "category": "multi_hop_2",
-    "question": "Janssen is a counterparty to two corpus companies through very different relationship types; name both companies and describe each relationship.",
+    "question": "How is Janssen connected to Halozyme and to Alkermes?",
     "answer": "Halozyme has a Hypercon collaboration and license agreement with Janssen (from the Elektrofi acquisition). Alkermes and Janssen went to arbitration, resulting in a $195.4 million award to Alkermes after Janssen partially terminated the NANOCRYSTAL/INVEGA license.",
     "ontology_path": "Company(HALO) -PARTY_TO- Agreement(Hypercon license) <-PARTY_TO- Company(Janssen); Company(ALKS) -PARTY_TO- LegalCase(ALKS v. Janssen arbitration) <-PARTY_TO- Company(Janssen)",
     "evidence": [
@@ -604,9 +576,9 @@
     "verified": false
   },
   {
-    "id": "q032",
+    "id": "q031",
     "category": "multi_hop_2",
-    "question": "Roche is a collaboration partner of two corpus companies through different technologies; which companies, and what does each collaboration cover?",
+    "question": "How are Exelixis and Halozyme each partnered with Roche?",
     "answer": "Exelixis collaborates with Roche to combine cabozantinib with Roche's atezolizumab (an anti-PD-L1 antibody). Halozyme licenses its ENHANZE technology to Roche, earning royalties on Roche products including Phesgo, whose Japan approval came via Roche Group member Chugai.",
     "ontology_path": "Company(EXEL) -PARTY_TO- Agreement(cabo+atezolizumab collaboration) <-PARTY_TO- Company(Roche); Company(HALO) -PARTY_TO- Agreement(ENHANZE license) <-PARTY_TO- Company(Roche)",
     "evidence": [
@@ -626,31 +598,9 @@
     "verified": false
   },
   {
-    "id": "q033",
+    "id": "q032",
     "category": "multi_hop_2",
-    "question": "Biogen commercializes a flagship drug for one corpus company and licenses a drug from another; name both companies and drugs.",
-    "answer": "Biogen is responsible for commercializing Ionis's SPINRAZA worldwide. Separately, Alkermes granted Biogen a worldwide exclusive license to develop, manufacture, and commercialize VUMERITY.",
-    "ontology_path": "Company(IONS) -PARTY_TO- Agreement(SPINRAZA collaboration) <-PARTY_TO- Company(Biogen); Company(ALKS) -PARTY_TO{role:licensor}-> Agreement(VUMERITY license) <-PARTY_TO{role:licensee}- Company(Biogen)",
-    "evidence": [
-      {
-        "ticker": "IONS",
-        "form": "10-K",
-        "date_filed": "2026-02-26",
-        "quote": "Our partner, Biogen, is responsible for commercializing SPINRAZA worldwide."
-      },
-      {
-        "ticker": "ALKS",
-        "form": "10-K",
-        "date_filed": "2026-02-25",
-        "quote": "Under a license and collaboration agreement with Biogen, we granted Biogen a worldwide, exclusive, sublicensable license to develop, manufacture and commercialize VUMERITY"
-      }
-    ],
-    "verified": false
-  },
-  {
-    "id": "q034",
-    "category": "multi_hop_2",
-    "question": "Which two corpus companies each have a current officer or director whose earlier career included Bristol-Myers Squibb, one now serving as CFO and the other as a director?",
+    "question": "Do Alkermes and Arrowhead have any leadership connections to Bristol-Myers Squibb?",
     "answer": "Alkermes' CFO (appointed September 2025) held finance and operations roles at Bristol-Myers Squibb earlier in his career. Arrowhead director Dr. Olukotun spent the first 20 years of his career at Pfizer, Bristol-Myers Squibb, and Mallinckrodt.",
     "ontology_path": "Person(Reed) -OFFICER_OF{status:former}-> Company(BMS); Person(Reed) -OFFICER_OF{role:CFO}-> Company(ALKS); Person(Olukotun) -OFFICER_OF{status:former}-> Company(BMS); Person(Olukotun) -OFFICER_OF{role:director}-> Company(ARWR)",
     "evidence": [
@@ -670,9 +620,9 @@
     "verified": false
   },
   {
-    "id": "q035",
+    "id": "q033",
     "category": "multi_hop_2",
-    "question": "Halozyme's ENHANZE agreement groups Baxalta US Inc. under the Takeda name; which other corpus company separately has its own direct license agreement with Takeda?",
+    "question": "Why does Baxalta US appear under the Takeda name in Halozyme's ENHANZE agreement, and which other corpus company has its own direct Takeda deal?",
     "answer": "Exelixis. Halozyme's ENHANZE collaborations list \"Takeda Pharmaceuticals International AG and Baxalta US Inc. ('Takeda')\" as one counterparty, showing Baxalta folded into Takeda; Exelixis independently licenses cabozantinib to Takeda for Japan under a 2017 collaboration agreement.",
     "ontology_path": "Company(Baxalta US Inc.) -SUBSIDIARY_OF-> Company(Takeda); Company(HALO) -PARTY_TO- Agreement(ENHANZE license) <-PARTY_TO- Company(Baxalta/Takeda); Company(EXEL) -PARTY_TO- Agreement(Takeda Collaboration, 2017) <-PARTY_TO- Company(Takeda)",
     "evidence": [
@@ -692,31 +642,9 @@
     "verified": false
   },
   {
-    "id": "q036",
+    "id": "q034",
     "category": "multi_hop_2",
-    "question": "Alkermes now owes a royalty to Jazz Pharmaceuticals on LUMRYZ; how did Alkermes come to owe this, and what is the royalty rate?",
-    "answer": "Alkermes acquired Avadel Pharmaceuticals under a Transaction Agreement dated October 22, 2025. Avadel had separately settled with Jazz in October 2025, agreeing Jazz would receive a 3.85% royalty on LUMRYZ narcolepsy net sales from October 1, 2025 - an obligation Alkermes inherited.",
-    "ontology_path": "Company(ALKS) -PARTY_TO{role:acquirer}-> Agreement(Avadel acquisition, 2025-10-22) <-PARTY_TO{role:acquired}- Company(Avadel); Company(Avadel) -OWES_ROYALTY_TO{royalty_rate:'3.85%', start_date:2025-10-01}-> Company(Jazz)",
-    "evidence": [
-      {
-        "ticker": "ALKS",
-        "form": "10-K",
-        "date_filed": "2026-02-25",
-        "quote": "Transaction Agreement, dated as of October 22, 2025 by and among Alkermes plc and Avadel Pharmaceuticals plc."
-      },
-      {
-        "ticker": "ALKS",
-        "form": "10-K",
-        "date_filed": "2026-02-25",
-        "quote": "Pursuant to the settlement and license agreement entered into between Jazz and Avadel in October 2025 ... from October 1, 2025, Jazz receives a royalty of 3.85% ... on net sales of LUMRYZ sold for narcolepsy"
-      }
-    ],
-    "verified": false
-  },
-  {
-    "id": "q037",
-    "category": "multi_hop_2",
-    "question": "What total upfront consideration did Sarepta pay Arrowhead at the close of their November 2024 collaboration, and how much revenue did Arrowhead recognize under that same agreement in fiscal 2025?",
+    "question": "What did Sarepta pay Arrowhead when their collaboration closed, and how much revenue did Arrowhead recognize from the deal in fiscal 2025?",
     "answer": "Sarepta paid $500.0 million in cash plus a $325.0 million equity investment (11,926,301 Arrowhead shares) at the February 7, 2025 closing. Arrowhead recorded $696.8 million in revenue under the Sarepta Collaboration Agreement during the year ended September 30, 2025.",
     "ontology_path": "Company(SRPT) -PARTY_TO{role:licensee}-> Agreement(Sarepta Collaboration Agreement, 2024-11-25) <-PARTY_TO{role:licensor}- Company(ARWR)",
     "evidence": [
@@ -742,9 +670,9 @@
     "verified": false
   },
   {
-    "id": "q038",
+    "id": "q035",
     "category": "multi_hop_2",
-    "question": "Roche has separate collaboration agreements covering flagship products of two corpus companies; name the companies and each product covered.",
+    "question": "Compare Roche's roles in its partnerships with Sarepta and with Exelixis: what does Roche get in each?",
     "answer": "Sarepta's Roche Collaboration Agreement covers ELEVIDYS, giving Roche a right of first negotiation on any third-party U.S. license. Exelixis has a Roche collaboration combining cabozantinib with Roche's atezolizumab across several clinical trials.",
     "ontology_path": "Company(SRPT) -PARTY_TO- Agreement(Roche Collaboration Agreement) <-PARTY_TO- Company(Roche); Company(EXEL) -PARTY_TO- Agreement(Roche combination studies) <-PARTY_TO- Company(Roche)",
     "evidence": [
@@ -764,9 +692,9 @@
     "verified": false
   },
   {
-    "id": "q039",
+    "id": "q036",
     "category": "multi_hop_2",
-    "question": "Takeda signed 50/50-style development deals with two corpus companies in the same year, 2020; name the companies, the assets, and the commercial split in each.",
+    "question": "In 2020 Takeda struck deals with both Arrowhead and Neurocrine. What does each deal cover, and how are rights or profits split?",
     "answer": "Arrowhead: Takeda's October 7, 2020 Exclusive License and Co-Funding Agreement co-develops fazirsiran, with 50/50 U.S. profit-sharing. Neurocrine: osavampator was in-licensed from Takeda in 2020, with Neurocrine holding worldwide rights except Japan, where Takeda retains rights.",
     "ontology_path": "Company(ARWR) -PARTY_TO- Agreement(Takeda License Agreement, 2020-10-07) <-PARTY_TO- Company(Takeda); Company(NBIX) -PARTY_TO- Agreement(osavampator license, 2020) <-PARTY_TO- Company(Takeda)",
     "evidence": [
@@ -786,7 +714,51 @@
     "verified": false
   },
   {
-    "id": "q040",
+    "category": "multi_hop_2",
+    "question": "Halozyme has two separate agreements with Takeda signed 18 years apart. What does each cover?",
+    "answer": "September 2007: a worldwide exclusive collaboration and license for combinations of rHuPH20 with GAMMAGARD LIQUID (the HYQVIA franchise). December 2025: a new global collaboration and exclusive license giving Takeda access to ENHANZE for use with vedolizumab (ENTYVIO).",
+    "ontology_path": "Company(HALO) -PARTY_TO-> Agreement(2007) <-PARTY_TO- Company(Takeda); Company(HALO) -PARTY_TO-> Agreement(2025) <-PARTY_TO- Company(Takeda)",
+    "evidence": [
+      {
+        "ticker": "HALO",
+        "form": "10-K",
+        "date_filed": "2026-02-17",
+        "quote": "In September 2007, we and Takeda entered into a collaboration and license agreement under which Takeda obtained a worldwide, exclusive license to develop and commercialize product combinations of rHuPH20 with GAMMAGARD LIQUID"
+      },
+      {
+        "ticker": "HALO",
+        "form": "10-K",
+        "date_filed": "2026-02-17",
+        "quote": "In December 2025, we and Takeda entered into a new global collaboration and exclusive license agreement which provides Takeda with access to ENHANZE for use with vedolizumab, marketed globally as ENTYVIO"
+      }
+    ],
+    "verified": false,
+    "id": "q037"
+  },
+  {
+    "category": "multi_hop_2",
+    "question": "How did Neurocrine's osavampator arrangement with Takeda change in January 2025?",
+    "answer": "Originally in-licensed from Takeda in 2020 with worldwide rights except Japan under a profit-and-loss-sharing structure, the deal was amended and restated in January 2025: profit-sharing converted to a royalty-bearing license, and Takeda reacquired exclusive rights in Japan.",
+    "ontology_path": "Company(NBIX) -PARTY_TO-> Agreement(2020 Takeda license, amended 2025-01) <-PARTY_TO- Company(Takeda)",
+    "evidence": [
+      {
+        "ticker": "NBIX",
+        "form": "10-K",
+        "date_filed": "2026-02-11",
+        "quote": "Osavampator was in-licensed from Takeda Pharmaceutical Company Limited (Takeda) in 2020, and we have exclusive worldwide rights to develop and commercialize osavampator, except in Japan"
+      },
+      {
+        "ticker": "NBIX",
+        "form": "10-K",
+        "date_filed": "2026-02-11",
+        "quote": "In January 2025, we and Takeda amended and restated the exclusive license agreement (the Restated Takeda Agreement) to, among other things, reflect the conversion from sharing operating profits and losses"
+      }
+    ],
+    "verified": false,
+    "id": "q038"
+  },
+  {
+    "id": "q039",
     "category": "multi_hop_3",
     "question": "Is any ENHANZE collaboration partner of Halozyme majority-owned by a company that formerly collaborated with Exelixis?",
     "answer": "Yes. ViiV Healthcare, an ENHANZE partner since June 2021, is majority owned by GlaxoSmithKline (GSK). GSK had a product development and commercialization collaboration with Exelixis established in October 2002, now historical; a 3% cabozantinib royalty obligation survives it.",
@@ -820,9 +792,9 @@
     "verified": false
   },
   {
-    "id": "q041",
+    "id": "q040",
     "category": "multi_hop_3",
-    "question": "Which company shares both an auditor firm and an audit office city with Ionis Pharmaceuticals, and what is that company's flagship drug-delivery technology platform?",
+    "question": "Which corpus company is audited from the same Ernst & Young office as Ionis, and what technology platform does that company license to partners?",
     "answer": "Halozyme Therapeutics. Both Ionis and Halozyme are audited by Ernst & Young LLP out of the San Diego, California office (Ionis since 1989, Halozyme since 2006). Halozyme's flagship platform is ENHANZE, its proprietary drug-delivery technology.",
     "ontology_path": "Company(IONS) -AUDITED_BY{office}-> Company(E&Y) <-AUDITED_BY{office}- Company(HALO) -USES_TECHNOLOGY/OWNS-> Technology(ENHANZE)",
     "evidence": [
@@ -854,9 +826,9 @@
     "verified": false
   },
   {
-    "id": "q042",
+    "id": "q041",
     "category": "multi_hop_3",
-    "question": "Royalty Pharma bought a share of Ionis's future SPINRAZA and pelacarsen royalties. Royalty Pharma also owns Exelixis's cabozantinib royalty stream, originally bought from GSK. Does Royalty Pharma keep that cabozantinib royalty forever?",
+    "question": "Royalty Pharma holds royalty interests originating from both Ionis and Exelixis. Does it keep the Exelixis stream permanently?",
     "answer": "No. In a January 2023 deal, Royalty Pharma paid Ionis $500 million upfront for a minority interest in future SPINRAZA and pelacarsen royalties. Separately, effective January 1, 2021, Royalty Pharma acquired Exelixis's cabozantinib royalty from GSK, but the U.S. leg of that royalty reverts back to GSK after September 2026.",
     "ontology_path": "Company(IONS) -PARTY_TO-> Agreement(royalty monetization) <-PARTY_TO- Company(Royalty Pharma) -PARTY_TO-> Agreement(cabozantinib royalty purchase) <-PARTY_TO- Company(EXEL); Company(Royalty Pharma) -OWES_ROYALTY_TO{territory: US, status: pending}-> Company(GSK)",
     "evidence": [
@@ -882,7 +854,7 @@
     "verified": false
   },
   {
-    "id": "q043",
+    "id": "q042",
     "category": "multi_hop_3",
     "question": "Arrowhead's HBV RNAi candidate has changed corporate hands twice. Who licensed it first, what happened to that license, and who holds the asset today?",
     "answer": "Arrowhead first out-licensed the compound (then called ARO-HBV) to Janssen Pharmaceuticals in October 2018, and it became known as JNJ-3989. That license ended and rights returned to Arrowhead, which on December 11, 2023 out-licensed the same compound, now GSK5637608 (daplusiran/tomligisiran), to GSK, which holds it today.",
@@ -910,9 +882,9 @@
     "verified": false
   },
   {
-    "id": "q044",
+    "id": "q043",
     "category": "multi_hop_3",
-    "question": "Sarepta's CEO also sits on Arrowhead's board. Does Arrowhead have a direct collaboration agreement with Sarepta itself, and what did it involve?",
+    "question": "Sarepta's CEO spent a year on Arrowhead's board. Is there also a direct deal between the two companies, and what were its headline terms?",
     "answer": "Yes. Douglas Ingram, President and CEO of Sarepta Therapeutics, is also an Arrowhead director. Arrowhead and Sarepta entered a licensing and collaboration agreement on November 25, 2024: Arrowhead received $325.0 million from a stock purchase at closing and a $500.0 million upfront cash payment.",
     "ontology_path": "Person(Ingram) -OFFICER_OF{role: President & CEO}-> Company(SRPT); Person(Ingram) -OFFICER_OF{role: director}-> Company(ARWR); Company(ARWR) -PARTY_TO-> Agreement(Nov 2024 collaboration) <-PARTY_TO- Company(SRPT)",
     "evidence": [
@@ -938,9 +910,9 @@
     "verified": false
   },
   {
-    "id": "q045",
+    "id": "q044",
     "category": "multi_hop_3",
-    "question": "An Ionis director previously ran Janssen Biotech. Does Janssen have a collaboration agreement with Halozyme, and what marketed product does it cover?",
+    "question": "An Ionis director used to run Janssen Biotech. Does Janssen also do business with any other company in this corpus?",
     "answer": "Yes. Ionis director Michael Yang was President of Janssen Biotech Inc. (a Johnson & Johnson company). Janssen is a Halozyme ENHANZE partner: Janssen's DARZALEX FASPRO (daratumumab and hyaluronidase-fihj) is co-formulated with ENHANZE technology.",
     "ontology_path": "Person(Yang) -OFFICER_OF{role: director}-> Company(IONS); Person(Yang) -OFFICER_OF{role: President, former}-> Company(Janssen Biotech); Company(Janssen) -PARTY_TO-> Agreement(ENHANZE) <-PARTY_TO- Company(HALO) -COVERS-> Drug(DARZALEX FASPRO)",
     "evidence": [
@@ -966,9 +938,9 @@
     "verified": false
   },
   {
-    "id": "q046",
+    "id": "q045",
     "category": "multi_hop_3",
-    "question": "A Halozyme director spent 30 years at Bristol-Myers Squibb. Does BMS have a collaboration with Exelixis, and what does it cover?",
+    "question": "A Halozyme director spent over a decade in senior roles at Bristol-Myers Squibb. Is BMS commercially connected to any other corpus company?",
     "answer": "Yes. Halozyme director Bernadette Connaughton served at Bristol-Myers Squibb Pharmaceutical Company from 2004 to 2017. BMS collaborates with Exelixis: CABOMETYX is approved for use in combination with BMS's nivolumab (OPDIVO) for advanced renal cell carcinoma.",
     "ontology_path": "Person(Connaughton) -OFFICER_OF{role: director}-> Company(HALO); Person(Connaughton) -OFFICER_OF{status: former}-> Company(BMS); Company(BMS) -PARTY_TO-> Agreement(cabo/nivolumab combination) <-PARTY_TO- Company(EXEL) -COVERS-> Drug(CABOMETYX)",
     "evidence": [
@@ -988,9 +960,9 @@
     "verified": false
   },
   {
-    "id": "q047",
+    "id": "q046",
     "category": "multi_hop_3",
-    "question": "An Ionis director previously worked at GSK. GSK's ViiV Healthcare subsidiary is a Halozyme ENHANZE partner. What does that ViiV-Halozyme agreement cover?",
+    "question": "An Ionis director previously worked at GSK, and GSK's ViiV subsidiary partners with a corpus company. Which one, and what does that partnership cover?",
     "answer": "Ionis director Allene M. Diaz was Senior Vice President, R&D Portfolio Management at GlaxoSmithKline from September 2019 to June 2020. ViiV Healthcare, majority owned by GSK, has a global collaboration and license agreement with Halozyme giving ViiV exclusive access to Halozyme's ENHANZE drug delivery technology.",
     "ontology_path": "Person(Diaz) -OFFICER_OF{role: director}-> Company(IONS); Person(Diaz) -OFFICER_OF{status: former}-> Company(GSK); Company(ViiV) -SUBSIDIARY_OF-> Company(GSK); Company(ViiV) -PARTY_TO-> Agreement(ENHANZE license) <-PARTY_TO- Company(HALO)",
     "evidence": [
@@ -1007,16 +979,16 @@
         "quote": "ViiV Healthcare (the global specialist HIV Company majority owned by GlaxoSmithKline) (\"ViiV\")"
       },
       {
-        "ticker": "IONS",
+        "ticker": "HALO",
         "form": "10-K",
-        "date_filed": "2026-02-26",
+        "date_filed": "2026-02-17",
         "quote": "we and ViiV expanded the existing global collaboration and license agreement, providing ViiV exclusive access to our ENHANZE drug delivery technology"
       }
     ],
     "verified": false
   },
   {
-    "id": "q048",
+    "id": "q047",
     "category": "multi_hop_3",
     "question": "Neurocrine licensed osavampator from Takeda. Does Takeda also have a deal with Halozyme, and what drug does that deal involve?",
     "answer": "Yes. Neurocrine's osavampator came from a 2020 exclusive license agreement with Takeda. Separately, in December 2025 Takeda and Halozyme entered a global collaboration and exclusive license agreement giving Takeda access to ENHANZE for use with vedolizumab, marketed as ENTYVIO.",
@@ -1038,7 +1010,7 @@
     "verified": false
   },
   {
-    "id": "q049",
+    "id": "q048",
     "category": "multi_hop_3",
     "question": "Sarepta and Arrowhead are both audited by KPMG LLP, though from different offices. Do the two companies also have a direct business relationship with each other?",
     "answer": "Yes. KPMG audits Sarepta from its Boston, Massachusetts office (since 2002) and Arrowhead from its San Diego, California office (since 2024). The two also have a direct deal: a licensing and collaboration agreement signed November 25, 2024.",
@@ -1066,9 +1038,9 @@
     "verified": false
   },
   {
-    "id": "q050",
+    "id": "q049",
     "category": "multi_hop_3",
-    "question": "Alkermes won a $195.4 million arbitration award against Janssen. Janssen is also a Halozyme ENHANZE partner. Does Halozyme's new CFO have any connection to Janssen's corporate parent?",
+    "question": "What are Janssen's connections to Alkermes and to Halozyme, including at the leadership level?",
     "answer": "Yes. Alkermes's 2023 arbitration award against Janssen was $195.4 million over INVEGA royalties. Janssen co-formulates DARZALEX FASPRO with Halozyme's ENHANZE technology. Halozyme's incoming CFO, Darren Snellgrove, spent 27 years at Johnson & Johnson (Janssen's parent), including as CFO of Janssen Alzheimer Immunotherapy.",
     "ontology_path": "Company(ALKS) -PARTY_TO-> LegalCase(Janssen arbitration) <-PARTY_TO- Company(Janssen); Company(Janssen) -PARTY_TO-> Agreement(ENHANZE) <-PARTY_TO- Company(HALO); Person(Snellgrove) -OFFICER_OF{status: former}-> Company(J&J); Person(Snellgrove) -OFFICER_OF{role: CFO}-> Company(HALO)",
     "evidence": [
@@ -1094,7 +1066,7 @@
     "verified": false
   },
   {
-    "id": "q051",
+    "id": "q050",
     "category": "multi_hop_3",
     "question": "After Alkermes acquired Avadel, which company does Alkermes now owe royalties to on LUMRYZ, at what rate, and for treatment of what condition?",
     "answer": "Alkermes completed the Avadel Acquisition on February 12, 2026, gaining LUMRYZ. Under the October 2025 Jazz-Avadel settlement and license agreement, Jazz receives a 3.85% royalty on net sales of LUMRYZ, an FDA-approved once-at-bedtime treatment for cataplexy or excessive daytime sleepiness in narcolepsy patients.",
@@ -1122,7 +1094,7 @@
     "verified": false
   },
   {
-    "id": "q052",
+    "id": "q051",
     "category": "multi_hop_3",
     "question": "Exelixis has a profit-sharing collaboration with Genentech over cobimetinib. Is Genentech also a Halozyme ENHANZE partner, and which of its products uses that technology?",
     "answer": "Yes. Exelixis shares U.S. profits and losses on cobimetinib (COTELLIC) with Genentech. Genentech/Roche is also a Halozyme ENHANZE partner: Phesgo, co-formulated with ENHANZE, is one of Roche's marketed products cited among Halozyme's royalty-paying partner products.",
@@ -1144,9 +1116,9 @@
     "verified": false
   },
   {
-    "id": "q053",
+    "id": "q052",
     "category": "multi_hop_3",
-    "question": "A Neurocrine director is also chairman and CEO of another corpus company. That company won a nine-figure arbitration award against a pharma giant; who was it against, and how much?",
+    "question": "One of Neurocrine's directors runs Alkermes. Has Alkermes been through any major legal fight recently, and how did it end?",
     "answer": "Richard F. Pops, a Neurocrine director since April 1998, is Chairman and CEO of Alkermes. Alkermes won a $195.4 million arbitration award against Janssen in May 2023 over back royalties on the long-acting INVEGA products.",
     "ontology_path": "Person(Pops) -OFFICER_OF{role: director}-> Company(NBIX); Person(Pops) -OFFICER_OF{role: Chairman & CEO}-> Company(ALKS); Company(ALKS) -PARTY_TO-> LegalCase(Janssen arbitration) <-PARTY_TO- Company(Janssen)",
     "evidence": [
@@ -1166,9 +1138,9 @@
     "verified": false
   },
   {
-    "id": "q054",
+    "id": "q053",
     "category": "multi_hop_3",
-    "question": "Alkermes licenses VUMERITY to Biogen. Ionis also has a Biogen collaboration, over a different drug. What is Ionis's Biogen-partnered drug, and what royalty range does Ionis earn on it?",
+    "question": "Biogen works with both Alkermes and Ionis. What drug does each partnership cover, and what royalties does Ionis earn on its drug?",
     "answer": "Alkermes granted Biogen a worldwide exclusive license to develop, manufacture and commercialize VUMERITY. Separately, Ionis and Biogen have collaborated since 2012 on SPINRAZA, on which Ionis earns tiered royalties ranging from 11 percent to 15 percent of sales.",
     "ontology_path": "Company(ALKS) -PARTY_TO-> Agreement(VUMERITY license) <-PARTY_TO- Company(Biogen); Company(Biogen) -PARTY_TO-> Agreement(SPINRAZA collaboration, 2012) <-PARTY_TO- Company(IONS); Company(Biogen) -OWES_ROYALTY_TO{royalty_rate: 11-15%}-> Company(IONS)",
     "evidence": [
@@ -1194,7 +1166,7 @@
     "verified": false
   },
   {
-    "id": "q055",
+    "id": "q054",
     "category": "multi_hop_3",
     "question": "Exelixis collaborates with a company it calls 'Merck.' Halozyme is suing a company it also calls 'Merck' over Keytruda subcutaneous patents. Is this the same legal entity in both filings?",
     "answer": "No. Exelixis's 10-K defines its zanzalintinib collaborator as 'MSD International Business GmbH, known as Merck within the United States and Canada.' Halozyme's 10-K names the Keytruda SC litigation defendant as 'Merck Sharp & Dohme Corp.' The filings name two distinct legal entities under the same shorthand, both ultimately part of the Merck & Co. corporate family.",
@@ -1216,9 +1188,9 @@
     "verified": false
   },
   {
-    "id": "q056",
+    "id": "q055",
     "category": "multi_hop_3",
-    "question": "Which company shares both an auditor firm and audit office city with Exelixis, and what indication does that company's flagship marketed product treat?",
+    "question": "Which company shares both its audit firm and office city with Exelixis, and what disease does that company's lead product treat?",
     "answer": "Ultragenyx (RARE). Both Exelixis and Ultragenyx are audited by Ernst & Young LLP from the San Mateo, California office. Ultragenyx's flagship marketed product, Crysvita, is approved for X-Linked Hypophosphatemia (XLH) and Tumor-Induced Osteomalacia (TIO).",
     "ontology_path": "Company(EXEL) -AUDITED_BY{office: San Mateo}-> Company(E&Y) <-AUDITED_BY{office: San Mateo}- Company(RARE); Drug(Crysvita) -APPROVED_FOR-> Indication(X-Linked Hypophosphatemia)",
     "evidence": [
@@ -1244,7 +1216,7 @@
     "verified": false
   },
   {
-    "id": "q057",
+    "id": "q056",
     "category": "aggregation",
     "question": "As of its FY2025 10-K, which companies had Exelixis sued over generic or 505(b)(2) versions of CABOMETYX in litigation consolidated for the November 2026 trial?",
     "answer": "Three: MSN, Sun, and Azurity. Their cases were consolidated for a trial scheduled November 2, 2026 (the 'Consolidated Litigation').",
@@ -1260,7 +1232,7 @@
     "verified": false
   },
   {
-    "id": "q058",
+    "id": "q057",
     "category": "aggregation",
     "question": "How many of the 8 corpus companies are audited by Ernst & Young LLP?",
     "answer": "5 of 8: Exelixis, Ultragenyx, Halozyme, Ionis, and Neurocrine.",
@@ -1300,7 +1272,7 @@
     "verified": false
   },
   {
-    "id": "q059",
+    "id": "q058",
     "category": "aggregation",
     "question": "Which corpus companies have sold or owe royalty streams to Royalty Pharma entities (including RPI Finance Trust)?",
     "answer": "4 of 8: Exelixis (owes cabozantinib royalty), Ionis (sold SPINRAZA/pelacarsen royalty interest), Arrowhead (sold olpasiran royalty interest), and Ultragenyx (sold Crysvita European royalty to RPI Finance Trust, a Royalty Pharma affiliate).",
@@ -1334,7 +1306,7 @@
     "verified": false
   },
   {
-    "id": "q060",
+    "id": "q059",
     "category": "aggregation",
     "question": "How many corpus companies completed a corporate acquisition described in these filings (2025-2026)?",
     "answer": "3: Halozyme (Elektrofi, closed Nov 18, 2025), Alkermes (Avadel, closed Feb 12, 2026), and Neurocrine (Soleno, closed May 18, 2026).",
@@ -1362,7 +1334,7 @@
     "verified": false
   },
   {
-    "id": "q061",
+    "id": "q060",
     "category": "aggregation",
     "question": "How many distinct accounting firms serve as auditor across the 8 corpus companies, counting Arrowhead's former auditor?",
     "answer": "4: Ernst & Young LLP, KPMG LLP, PricewaterhouseCoopers LLP, and Rose, Snyder & Jacobs LLP (Arrowhead's auditor before KPMG).",
@@ -1396,7 +1368,7 @@
     "verified": false
   },
   {
-    "id": "q062",
+    "id": "q061",
     "category": "aggregation",
     "question": "How many other corpus companies appear in Ionis's 2025 executive-compensation peer group?",
     "answer": "6: Alkermes, Exelixis, Halozyme, Neurocrine, Sarepta, and Ultragenyx.",
@@ -1442,7 +1414,7 @@
     "verified": false
   },
   {
-    "id": "q063",
+    "id": "q062",
     "category": "aggregation",
     "question": "How many other corpus companies appear in Halozyme's 2025 executive-compensation peer group?",
     "answer": "6: Alkermes, Exelixis, Ionis, Neurocrine, Sarepta, and Ultragenyx.",
@@ -1488,9 +1460,9 @@
     "verified": false
   },
   {
-    "id": "q064",
+    "id": "q063",
     "category": "aggregation",
-    "question": "How many people simultaneously hold officer or director roles at two different corpus companies, per the proxies?",
+    "question": "Do any individuals hold officer or director roles at two different corpus companies at the same time?",
     "answer": "2: Richard F. Pops (Alkermes CEO/Chairman and Neurocrine director since April 1998), and Douglas Ingram (Sarepta CEO since June 2017 and Arrowhead director from February 2025 to March 2026).",
     "ontology_path": "count(distinct Person with two OFFICER_OF edges to different corpus companies)",
     "evidence": [
@@ -1522,7 +1494,7 @@
     "verified": false
   },
   {
-    "id": "q065",
+    "id": "q064",
     "category": "aggregation",
     "question": "How many separate royalty purchase agreements has Ultragenyx entered into for its Crysvita royalties?",
     "answer": "3, for $320 million, $500 million, and $400 million respectively.",
@@ -1538,7 +1510,7 @@
     "verified": false
   },
   {
-    "id": "q066",
+    "id": "q065",
     "category": "aggregation",
     "question": "How many separate generic/follow-on challengers has Exelixis faced over CABOMETYX, per the FY2025 10-K's Legal Proceedings note?",
     "answer": "4: MSN Pharmaceuticals, Sun Pharmaceutical Industries, Azurity Pharmaceuticals, and Handa Oncology.",
@@ -1572,7 +1544,7 @@
     "verified": false
   },
   {
-    "id": "q067",
+    "id": "q066",
     "category": "aggregation",
     "question": "How many corpus companies share the same San Diego, California Ernst & Young LLP audit office?",
     "answer": "3: Halozyme, Neurocrine, and Ionis, all audited by Ernst & Young LLP's San Diego office.",
@@ -1600,7 +1572,7 @@
     "verified": false
   },
   {
-    "id": "q068",
+    "id": "q067",
     "category": "aggregation",
     "question": "How many corpus companies share the same San Mateo, California Ernst & Young LLP audit office?",
     "answer": "2: Exelixis and Ultragenyx, both audited by Ernst & Young LLP's San Mateo office.",
@@ -1622,13 +1594,52 @@
     "verified": false
   },
   {
+    "id": "q068",
+    "category": "aggregation",
+    "question": "Which other corpus companies does Neurocrine name in its executive-compensation peer group?",
+    "answer": "5: Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx.",
+    "ontology_path": "count(Company -PEER_OF-> Company) intersected with corpus companies, for Neurocrine's peer group",
+    "evidence": [
+      {
+        "ticker": "NBIX",
+        "form": "DEF14A",
+        "date_filed": "2026-04-15",
+        "quote": "Alkermes plc (ALKS)"
+      },
+      {
+        "ticker": "NBIX",
+        "form": "DEF14A",
+        "date_filed": "2026-04-15",
+        "quote": "Exelixis, Inc. (EXEL)"
+      },
+      {
+        "ticker": "NBIX",
+        "form": "DEF14A",
+        "date_filed": "2026-04-15",
+        "quote": "Ionis Pharmaceuticals, Inc. (IONS)"
+      },
+      {
+        "ticker": "NBIX",
+        "form": "DEF14A",
+        "date_filed": "2026-04-15",
+        "quote": "Sarepta Therapeutics, Inc. (SRPT)"
+      },
+      {
+        "ticker": "NBIX",
+        "form": "DEF14A",
+        "date_filed": "2026-04-15",
+        "quote": "Ultragenyx Pharmaceutical Inc (RARE)"
+      }
+    ],
+    "verified": false
+  },
+  {
     "id": "q069",
     "category": "out_of_scope",
     "question": "Which accounting firm audits Vertex Pharmaceuticals?",
     "answer": "REFUSE: Vertex Pharmaceuticals is not in the corpus. The corpus covers filings from EXEL, HALO, SRPT, ALKS, IONS, RARE, ARWR, and NBIX only. The system should decline and state that no evidence exists for this company.",
     "ontology_path": null,
-    "evidence": [],
-    "verified": false
+    "evidence": []
   },
   {
     "id": "q070",
