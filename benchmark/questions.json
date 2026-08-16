@@ -99,7 +99,7 @@
         "quote": "Richard F. Pops Chief Executive Officer and Chairman"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q007",
@@ -121,7 +121,7 @@
         "quote": "Royalty Purchase Agreement by and between the Registrant, Akcea Therapeutics, Inc. and Royalty Pharma Investments 2019 ICAV dated as of January 9, 2023"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q008",
@@ -137,12 +137,12 @@
         "quote": "In November 2022, the Company and Royalty Pharma entered into the Royalty Pharma Agreement, pursuant to which Royalty Pharma agreed to pay up to $410.0 million in cash"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q009",
     "category": "single_hop",
-    "question": "When did Neurocrine Biosciences complete its acquisition of Soleno Therapeutics?",
+    "question": "When did Neurocrine Biosciences complete its acquisition of Soleno Therapeutics, and what did it pay?",
     "answer": "Neurocrine completed the acquisition of Soleno on May 18, 2026, for aggregate cash consideration of approximately $2.9 billion.",
     "ontology_path": "Company(Neurocrine) -PARTY_TO{role: acquirer}-> Agreement(acquisition) <-PARTY_TO{role: acquired}- Company(Soleno)",
     "evidence": [
@@ -159,7 +159,7 @@
         "quote": "The aggregate cash paid by the Company and Purchaser in the Offer and the Merger was approximately $2.9 billion"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q010",
@@ -175,7 +175,7 @@
         "quote": "On November 25, 2024, the Company and Arrowhead Pharmaceuticals, Inc. (“Arrowhead”) entered into an exclusive global license and collaboration agreement ... which became effective as of February 7, 2025"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q011",
@@ -191,12 +191,12 @@
         "quote": "In March 2025, we announced that the FDA approved CABOMETYX for the treatment of adult and pediatric patients 12 years of age and older with previously treated ... pNET and epNET"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q012",
     "category": "single_hop",
-    "question": "What patent is at issue in the Ionis v. Arrowhead litigation over plozasiran, and where were the dueling lawsuits filed?",
+    "question": "What patent is at issue in the Ionis v. Arrowhead litigation over plozasiran, and when and where were the dueling lawsuits filed?",
     "answer": "U.S. Patent No. 9,593,333. Arrowhead sued for declaratory judgment in the District of Delaware (Sept 10, 2025); Ionis sued for infringement in the Central District of California (Sept 11, 2025).",
     "ontology_path": "Company(Ionis) -PARTY_TO-> LegalCase <-PARTY_TO- Company(Arrowhead); LegalCase -COVERS-> Compound(plozasiran)",
     "evidence": [
@@ -207,13 +207,13 @@
         "quote": "On September 10, 2025, Arrowhead Pharmaceuticals, Inc. ... filed a lawsuit in the District of Delaware ... seeking a declaratory judgment that our patent US9,593,333 is invalid or not infringed"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q013",
     "category": "single_hop",
     "question": "Does anyone on Neurocrine's board also lead another company in this corpus?",
-    "answer": "Richard F. Pops, Chairman and CEO of Alkermes plc. He joined Alkermes as CEO in February 1991 and has served as Alkermes Chairman of the Board since 2011, while sitting on Neurocrine's board since April 1998.",
+    "answer": "Yes. Richard F. Pops, Chairman and CEO of Alkermes plc. He joined Alkermes as CEO in February 1991 and has served as Alkermes Chairman of the Board since 2011, while sitting on Neurocrine's board since April 1998.",
     "ontology_path": "Person(Richard F. Pops) -OFFICER_OF{role:'Chairman & CEO', start_date:1991}-> Company(ALKS); Person(Richard F. Pops) -OFFICER_OF{role:'director', start_date:1998-04}-> Company(NBIX)",
     "evidence": [
       {
@@ -229,13 +229,13 @@
         "quote": "Richard F. Pops has served as Chairman of the Board since 2011."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q014",
     "category": "single_hop",
     "question": "Has Sarepta's CEO held a board role at any other company in this corpus, and what prompted it?",
-    "answer": "Douglas S. Ingram, Sarepta's Chief Executive Officer, joined Arrowhead Pharmaceuticals' board effective February 2025, appointed by Arrowhead in connection with the Arrowhead Collaboration Agreement between the two companies.",
+    "answer": "Yes. Douglas S. Ingram, Sarepta's Chief Executive Officer, joined Arrowhead Pharmaceuticals' board effective February 2025, appointed by Arrowhead in connection with the Arrowhead Collaboration Agreement between the two companies.",
     "ontology_path": "Person(Douglas S. Ingram) -OFFICER_OF{role:'Chief Executive Officer'}-> Company(SRPT); Person(Douglas S. Ingram) -OFFICER_OF{role:'director', start_date:2025-02}-> Company(ARWR)",
     "evidence": [
       {
@@ -251,7 +251,7 @@
         "quote": "In connection with the Arrowhead Collaboration Agreement, Arrowhead appointed the Company's CEO, Douglas Ingram, as a director, effective February 2025."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "category": "single_hop",
@@ -266,7 +266,7 @@
         "quote": "Ipsen is responsible for all territories outside of the U.S. and Japan, and Takeda is responsible for the Japanese market"
       }
     ],
-    "verified": false,
+    "verified": true,
     "id": "q015"
   },
   {
@@ -283,13 +283,14 @@
         "quote": "Kevin Gorman, Ph.D., retired as Chief Executive Officer (CEO) effective October 11, 2024. Kyle Gano, Ph.D. ... succeeded Dr. Gorman in the CEO role"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q017",
     "category": "single_hop",
     "question": "When Arrowhead filed its FY2024 annual report, what had just happened with Sarepta?",
     "answer": "One day earlier, on November 25, 2024, Arrowhead entered into an Exclusive License and Collaboration Agreement with Sarepta Therapeutics plus a related $325.0 million Stock Purchase Agreement. The FY2024 10-K, filed November 26, 2024, describes the private placement as still subject to customary closing conditions and expected to close concurrently with the collaboration agreement.",
+    "required_core": "Arrowhead had just signed a license and collaboration agreement with Sarepta, one day before filing.",
     "ontology_path": "Agreement(Arrowhead-Sarepta Collaboration Agreement, type: collaboration_license) -PARTY_TO-> Company(ARWR), Company(SRPT); {start_date: 2024-11-25, status: pending}",
     "evidence": [
       {
@@ -305,7 +306,7 @@
         "quote": "The Stock Purchase Agreement contains customary representations and warranties ... and customary conditions to closing"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q018",
@@ -321,14 +322,15 @@
         "quote": "In November 2025, the Company entered into a Royalty Purchase Agreement with OMERS ... OMERS paid $400.0 million ... in exchange for the right to receive an additional 25% of future royalty payments, starting on January 1, 2028"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q019",
     "category": "single_hop",
     "question": "Is Alkermes's long-time CEO staying on?",
     "answer": "No. Richard F. Pops notified the board on February 24, 2026 that he will retire as CEO effective July 31, 2026, after 35 years in the role. Blair C. Jackson, currently EVP and COO, was appointed to succeed him as CEO effective August 1, 2026.",
-    "ontology_path": "Person(Richard Pops) -OFFICER_OF{role: Chairman & CEO, end_date: 2026-07-31, status: pending}-> Company(ALKS); Person(Blair Jackson) -OFFICER_OF{role: CEO, start_date: 2026-08-01, status: pending}-> Company(ALKS)",
+    "required_core": "No. Richard Pops is retiring as CEO of Alkermes, effective July 31, 2026.",
+    "ontology_path": "Person(Richard Pops) -OFFICER_OF{role: CEO, end_date: 2026-07-31, status: pending}-> Company(ALKS); Person(Blair Jackson) -OFFICER_OF{role: CEO, start_date: 2026-08-01, status: pending}-> Company(ALKS)",
     "evidence": [
       {
         "ticker": "ALKS",
@@ -343,13 +345,14 @@
         "quote": "the Board appointed Blair C. Jackson, the Company's current Executive Vice President, Chief Operating Officer, to serve as the Company's Chief Executive Officer, effective August 1, 2026"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q020",
     "category": "single_hop",
     "question": "How did Arrowhead's shareholders vote on executive pay in 2026?",
-    "answer": "They rejected it. At Arrowhead's Annual Meeting on March 19, 2026, the advisory Say-on-Pay Proposal failed: 41,625,740 shares voted for versus 59,963,903 against (plus 256,341 abstentions), the only one of four proposals that did not pass.",
+    "answer": "They rejected it. At Arrowhead's Annual Meeting on March 19, 2026, the advisory Say-on-Pay Proposal failed: 41,625,740 shares voted for versus 59,963,903 against (plus 256,341 abstentions and 17,955,558 non-votes), the only one of four proposals that did not pass.",
+    "required_core": "They rejected it. At Arrowhead's Annual Meeting on March 19, 2026, the advisory Say-on-Pay Proposal failed: 41,625,740 shares voted for versus 59,963,903 against.",
     "ontology_path": "Filing(ARWR 8-K 2026-03-20) -FILED_BY-> Company(ARWR); shareholder vote outcome on executive compensation (no dedicated ontology entity for votes; captured as filing content)",
     "evidence": [
       {
@@ -365,7 +368,7 @@
         "quote": "Advisory Vote to Approve Executive Compensation: 41,625,740 FOR; 59,963,903 AGAINST; 256,341 ABSTAIN; 17,955,558 NON-VOTES"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q021",
@@ -393,7 +396,7 @@
     "id": "q022",
     "category": "multi_hop_2",
     "question": "Which other company in the corpus uses the same audit firm and office as Exelixis, and since when has each relationship run?",
-    "answer": "Ultragenyx Pharmaceutical, Inc. (ticker RARE). Ernst & Young LLP has audited Exelixis from San Mateo, California since 2002, and has audited Ultragenyx from the same San Mateo office since 2012.",
+    "answer": "Ultragenyx Pharmaceutical, Inc. Ernst & Young LLP has audited Exelixis from San Mateo, California since 2002, and has audited Ultragenyx from the same San Mateo office since 2012.",
     "ontology_path": "Company(EXEL) -AUDITED_BY{office:'San Mateo, CA', start_year:2002}-> Company(Ernst & Young LLP) <-AUDITED_BY{office:'San Mateo, CA', start_year:2012}- Company(RARE)",
     "evidence": [
       {
@@ -409,29 +412,30 @@
         "quote": "/s/ Ernst & Young LLP ... San Mateo, California ... We have served as the Company's auditor since 2012."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q023",
     "category": "multi_hop_2",
     "question": "Halozyme and Neurocrine both use Ernst & Young as their auditor. Are they served by the same office?",
-    "answer": "Halozyme Therapeutics and Neurocrine Biosciences. E&Y has served as Halozyme's auditor since 2006 and as Neurocrine's auditor since 1992, both signing from San Diego, California.",
+    "answer": "Yes. E&Y has served as Halozyme's auditor since 2006 and as Neurocrine's auditor since 1992, both signing from San Diego, California.",
+    "required_core": "Yes. E&Y's San Diego office serves both Halozyme and Neurocrine.",
     "ontology_path": "Company(HALO) -AUDITED_BY{office:'San Diego, CA', start_year:2006}-> Company(Ernst & Young LLP) <-AUDITED_BY{office:'San Diego, CA', start_year:1992}- Company(NBIX)",
     "evidence": [
       {
         "ticker": "HALO",
         "form": "10-K",
         "date_filed": "2026-02-17",
-        "quote": "We have served as the Company's auditor since 2006. San Diego, California"
+        "quote": "/s/ Ernst & Young LLP ... We have served as the Company's auditor since 2006. San Diego, California"
       },
       {
         "ticker": "NBIX",
         "form": "10-K",
         "date_filed": "2026-02-11",
-        "quote": "/s/ Ernst & Young LLP We have served as the Company's auditor since 1992. San Diego, California"
+        "quote": "/s/ Ernst & Young LLP ... We have served as the Company's auditor since 1992. San Diego, California"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q024",
@@ -453,13 +457,14 @@
         "quote": "a $100.0 million milestone payment from Sarepta Therapeutics, Inc. was triggered ... The Company received $53.2 million of Arrowhead common stock and $50.0 million cash from Sarepta"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q025",
     "category": "multi_hop_2",
     "question": "How do Ionis's and Arrowhead's own filings each describe the patent fight between the two companies that began in September 2025?",
-    "answer": "U.S. Patent No. 9,593,333 (\"the '333 patent\"), covering APOCIII modulation. Ionis sued Arrowhead for infringement over plozasiran, and Arrowhead filed a declaratory-judgment suit; Ionis's suit was filed in the Central District of California.",
+    "answer": "Ionis's FY2025 10-K says Ionis filed a patent-infringement claim against Arrowhead in September 2025 over Arrowhead's commercialization of plozasiran, and describes Arrowhead as having filed a separate lawsuit seeking to invalidate that same patent. Arrowhead's FY2025 10-K records the other side: Ionis filed a complaint in the Central District of California alleging infringement of U.S. Patent No. 9,593,333.",
+    "required_core": "Ionis's filing describes suing Arrowhead for infringement over plozasiran; Arrowhead's filing records Ionis's complaint over U.S. Patent No. 9,593,333 in the Central District of California.",
     "ontology_path": "Company(IONS) -PARTY_TO{role:plaintiff}-> LegalCase(Ionis v. Arrowhead) <-PARTY_TO{role:plaintiff/counterclaimant}- Company(ARWR)",
     "evidence": [
       {
@@ -475,14 +480,14 @@
         "quote": "Ionis Pharmaceuticals, Inc. (\"Ionis\") filed a complaint for patent infringement against the Company in the United States District Court for the Central District of California alleging patent infringement of United States Patent No. 9,593,333"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q026",
     "category": "multi_hop_2",
     "question": "Who receives the royalty Exelixis pays on cabozantinib sales, and how has that changed hands over time?",
     "answer": "October 2002: Exelixis agreed to pay GSK a 3% cabozantinib royalty. Effective January 1, 2021, Royalty Pharma acquired GSK's royalty rights. The U.S. leg of that royalty reverts back to GSK after September 2026.",
-    "ontology_path": "Company(EXEL) -OWES_ROYALTY_TO{start_date:2002}-> Company(GSK); Company(EXEL) -OWES_ROYALTY_TO{start_date:2021-01-01}-> Company(Royalty Pharma); Company(EXEL) -OWES_ROYALTY_TO{start_date:2026-09, status:pending}-> Company(GSK)",
+    "ontology_path": "Company(EXEL) -OWES_ROYALTY_TO{start_date:2002, end_date:2021-01-01, status:ended}-> Company(GSK); Company(EXEL) -OWES_ROYALTY_TO{territory:non-US, start_date:2021-01-01, status:active}-> Company(Royalty Pharma); Company(EXEL) -OWES_ROYALTY_TO{territory:US, start_date:2021-01-01, end_date:2026-09, status:active}-> Company(Royalty Pharma); Company(EXEL) -OWES_ROYALTY_TO{territory:US, start_date:2026-09, status:pending}-> Company(GSK)",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -497,14 +502,15 @@
         "quote": "Royalty Pharma plc ... acquired from GSK all rights ... for the U.S. market through September 2026, after which time U.S. royalties will revert back to GSK"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q027",
     "category": "multi_hop_2",
     "question": "What exactly did Ionis and Ultragenyx each sell to Royalty Pharma entities, and for how much?",
-    "answer": "Ultragenyx (RARE) sold its European Crysvita royalty to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019. Ionis sold a minority interest in its future SPINRAZA and pelacarsen royalties to Royalty Pharma in a $500 million deal.",
-    "ontology_path": "Company(RARE) -OWES_ROYALTY_TO- Company(RPI Finance Trust/Royalty Pharma); Company(IONS) -OWES_ROYALTY_TO- Company(Royalty Pharma)",
+    "answer": "Ultragenyx sold its European Crysvita royalty interest to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019 for $320 million. Ionis sold a minority interest in its future SPINRAZA and pelacarsen royalties to Royalty Pharma under an agreement dated January 9, 2023, for $500 million upfront plus up to $625 million in potential milestone payments.",
+    "required_core": "Ultragenyx sold a Crysvita royalty interest to RPI Finance Trust for $320 million; Ionis sold a minority interest in SPINRAZA and pelacarsen royalties to Royalty Pharma for $500 million upfront.",
+    "ontology_path": "Company(RARE) -PARTY_TO{role: seller}-> Agreement(royalty_purchase, 2019-12) <-PARTY_TO{role: buyer}- Company(RPI Finance Trust); Company(IONS) -PARTY_TO{role: seller}-> Agreement(royalty_purchase, 2023-01-09) <-PARTY_TO{role: buyer}- Company(RPI Finance Trust)",
     "evidence": [
       {
         "ticker": "RARE",
@@ -517,16 +523,23 @@
         "form": "10-K",
         "date_filed": "2026-02-26",
         "quote": "we sold a minority interest in our future SPINRAZA and pelacarsen royalties to Royalty Pharma for a $500 million upfront payment"
+      },
+      {
+        "ticker": "IONS",
+        "form": "10-K",
+        "date_filed": "2026-02-26",
+        "quote": "Royalty Purchase Agreement by and between the Registrant, Akcea Therapeutics, Inc. and Royalty Pharma Investments 2019 ICAV dated as of January 9, 2023"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q028",
     "category": "multi_hop_2",
     "question": "How are Halozyme and Exelixis each connected to Bristol Myers Squibb?",
-    "answer": "Exelixis. Halozyme lists Bristol Myers Squibb Company as an ENHANZE licensing partner earning royalties on a BMS product (Opdivo Qvantig). Exelixis's CABOMETYX is approved for RCC in combination with BMS's nivolumab (OPDIVO).",
-    "ontology_path": "Company(HALO) -PARTY_TO- Agreement(ENHANZE license) -PARTY_TO- Company(BMS); Company(EXEL) -PARTY_TO- Agreement(cabo+nivolumab combination) -PARTY_TO- Company(BMS)",
+    "answer": "Halozyme lists Bristol Myers Squibb as an ENHANZE collaboration and licensing partner and earns royalties on one commercial BMS product. Exelixis's CABOMETYX is approved for advanced renal cell carcinoma in combination with BMS's nivolumab (OPDIVO).",
+    "required_core": "Halozyme: BMS is an ENHANZE licensing partner. Exelixis: CABOMETYX is approved in combination with BMS's nivolumab (OPDIVO).",
+    "ontology_path": "Company(HALO) -PARTY_TO-> Agreement(ENHANZE license) <-PARTY_TO- Company(BMS); Company(EXEL) -PARTY_TO-> Agreement(cabo+nivolumab combination) <-PARTY_TO- Company(BMS)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -541,14 +554,15 @@
         "quote": "as CABOMETYX® (cabozantinib) tablets for advanced renal cell carcinoma (RCC) (both alone and in combination with Bristol-Myers Squibb Company's (BMS) nivolumab (OPDIVO®))"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q029",
     "category": "multi_hop_2",
     "question": "Which companies appear in both Neurocrine's and Halozyme's executive-compensation peer groups?",
-    "answer": "Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx (RARE). Neurocrine's 2025 peer group names Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx; Halozyme's 2025 peer group separately lists Alkermes, Exelixis, Ionis Pharmaceuticals, Neurocrine, Sarepta, and Ultragenyx.",
-    "ontology_path": "Company(NBIX) -PEER_OF-> Company(ALKS|EXEL|IONS|SRPT|RARE); Company(HALO) -PEER_OF-> Company(ALKS|EXEL|IONS|SRPT|RARE)",
+    "answer": "Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx. Neurocrine's 2025 peer group names Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx; Halozyme's 2025 peer group separately lists Alkermes, Exelixis, Ionis, Neurocrine, Sarepta, and Ultragenyx.",
+    "required_core": "Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx appear in both peer groups.",
+    "ontology_path": "Company(NBIX) -PEER_OF{year: 2025}-> Company(X); Company(HALO) -PEER_OF{year: 2025}-> Company(X); return X named by both",
     "evidence": [
       {
         "ticker": "NBIX",
@@ -563,7 +577,7 @@
         "quote": "2025 Peer Group Acadia Pharmaceuticals Alkermes ... Exelixis ... Ionis Pharmaceuticals ... Neurocrine Biosciences ... Sarepta Therapeutics Ultragenyx Pharmaceuticals"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q030",
@@ -1640,7 +1654,7 @@
     "answer": "REFUSE: Vertex Pharmaceuticals is not in the corpus. The corpus covers filings from EXEL, HALO, SRPT, ALKS, IONS, RARE, ARWR, and NBIX only. The system should decline and state that no evidence exists for this company.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q070",
@@ -1649,7 +1663,7 @@
     "answer": "REFUSE: Biogen is not a filer in this corpus. It appears only as a counterparty (Ionis's SPINRAZA collaborator since 2012, Alkermes's VUMERITY licensee). Its own auditor and financial statements are not part of any of the 8 tracked companies' SEC filings. Verified: a grep for 'Biogen' plus auditor terms (Ernst & Young/KPMG/PwC/'independent registered') across the full corpus returns zero hits.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q071",
@@ -1658,7 +1672,7 @@
     "answer": "REFUSE: Roche/Genentech is not a filer in this corpus; it appears only as a counterparty (Exelixis's cobimetinib and atezolizumab partner, Halozyme's largest ENHANZE partner). No EX-21 or any SEC filing by Roche exists in data/text/, which only contains filings for the 8 tracked tickers. Verified: no Roche Exhibit 21 pattern found anywhere in the corpus.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q072",
@@ -1667,7 +1681,7 @@
     "answer": "REFUSE: Alnylam is not a filer in this corpus. It appears only in passing, inside Arrowhead's 10-K, as the original 2007 counterparty to a Roche RNAi patent license that Roche later assigned to Arrowhead. Alnylam's own filings, including any Exhibit 21 subsidiary list, are outside this corpus.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q073",
@@ -1676,7 +1690,7 @@
     "answer": "REFUSE: SEC filings (10-K, 10-Q, 8-K, DEF14A) do not contain third-party analyst price targets or ratings; they are not a category of information companies are required to disclose about themselves. Verified: a corpus-wide grep for 'price target' and rating terms ('Buy rating', 'Overweight rating') found no genuine analyst-rating hits; the only 'price target' matches were unrelated references to government 'most-favored-nation price targets' for drug pricing policy.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q074",
@@ -1685,7 +1699,7 @@
     "answer": "REFUSE: SEC filings do not contain verbatim earnings-call transcripts or spoken remarks; 10-Ks and 10-Qs report written, formal disclosures only. Verified: corpus mentions of 'earnings call' are limited to a handful of boilerplate references to the event occurring (e.g., an executive's performance-review bullet noting preparation for 'the Company's annual earnings call'), never quoted remarks.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q075",
@@ -1694,7 +1708,7 @@
     "answer": "REFUSE: SEC filings never disclose individual clinical trial patient names or identities; only aggregate enrollment counts, endpoints, and statistical results are reported, consistent with patient privacy requirements. Verified: a grep for named-patient patterns in Ionis's filings returns zero hits.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q076",
@@ -1703,7 +1717,7 @@
     "answer": "REFUSE: this event postdates the corpus window. The trial date of November 2, 2026 is confirmed in Exelixis's FY2025 10-K, but the corpus's latest Exelixis filing (a 10-Q dated August 5, 2026) predates the trial, so no outcome exists in the available filings.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q077",
@@ -1712,7 +1726,7 @@
     "answer": "REFUSE: this event postdates the corpus window. Exelixis's FY2025 10-K confirms the FDA accepted the NDA with a PDUFA target action date of December 3, 2026, but the corpus's latest Exelixis filing is dated August 5, 2026, before that date, so the outcome is not available.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q078",
@@ -1721,7 +1735,7 @@
     "answer": "REFUSE: this event postdates the corpus window, which runs through August 2026. Neurocrine's acquisition of Soleno Therapeutics closed May 18, 2026 and is documented in 10-Qs/8-Ks, but any 2027 regulatory developments fall entirely outside the filings available.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q079",
@@ -1730,7 +1744,7 @@
     "answer": "REFUSE: this is a genuine gap in the corpus, not a missing document. Halozyme's FY2025 10-K (filed Feb 17, 2026) describes a German court preliminary injunction against Merck Sharp & Dohme Corp. in December 2025, but the litigation narrative disappears entirely from Halozyme's subsequent 2026 10-Qs, including the most recent one dated August 6, 2026. Verified: a grep for 'Merck Sharp' or 'Keytruda' in that 10-Q returns zero hits. No resolution is stated anywhere in the corpus.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q080",
@@ -1739,6 +1753,6 @@
     "answer": "REFUSE: SEC periodic filings do not generally report a company's closing stock price for the filing date itself; that is market data, not a disclosure requirement of Item content. Verified: a grep for 'closing price' in Exelixis's August 5, 2026 10-Q returns zero hits.",
     "ontology_path": null,
     "evidence": [],
-    "verified": false
+    "verified": true
   }
 ]
