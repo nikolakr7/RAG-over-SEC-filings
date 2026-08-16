@@ -113,7 +113,7 @@ expressed with CONSOLIDATED_INTO edges to a LegalCase instance representing
 the consolidated matter (DECISIONS.md #9); per-party involvement (Sun
 settling Dec 2025) lives on PARTY_TO edges while the case stays active.
 
-## Relationship types (13)
+## Relationship types (14)
 
 Format per entry: domain -> range, meaning, properties, corpus example.
 
@@ -232,3 +232,15 @@ Exelixis -OWES_ROYALTY_TO{royalty_rate: "3%", territory: "US",
 start_date: 2026-09, status: pending}-> GSK.
 Also: Ipsen -OWES_ROYALTY_TO{royalty_rate: "22-26% tiered", basis: "ex-US
 net sales of cabozantinib products"}-> Exelixis.
+
+### PEER_OF
+Company -> Company. The subject names the object in its disclosed
+executive-compensation peer group (DEF 14A). Directed: NBIX naming HALO a
+peer does not imply the reverse. Peer groups are set annually and change,
+so `year` is required. Distinct from competition: peers are comparables
+for pay-setting (size, sector, stock profile), and need not compete for a
+single patient. Added during the benchmark sanity-check (DECISIONS.md #19).
+Properties: year, source_chunk_id
+Examples: Neurocrine -PEER_OF{year: 2025}-> Alkermes; Neurocrine
+-PEER_OF{year: 2025}-> Ultragenyx (Neurocrine's 2025 group names five corpus
+companies; Ionis's names six).
