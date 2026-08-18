@@ -52,9 +52,9 @@ DONE:
 
 IN PROGRESS: the user is hand-verifying all 80 questions (flag
 `verified: true` only after seeing each quote in the primary file). As of
-this handoff q001-q041 and the out-of-scope set q069-q080 are verified:
-true (53 of 80); q042-q068 (27 questions: the multi_hop_3 and aggregation
-sets) remain, and the user is going in order. The verified set q001-q029
+this handoff q001-q057 and the out-of-scope set q069-q080 are verified:
+true (69 of 80); q058-q068 (11 questions: the aggregation set) remain,
+and the user is going in order. The verified set q001-q029
 was re-checked and repaired on 2026-08-16 (quote hygiene, one wrong path
 counterparty, temporal wording per DECISIONS #24, all paths normalized
 per #23). Verification is finding real defects at a steady rate, which is
