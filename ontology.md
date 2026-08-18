@@ -5,13 +5,17 @@ Changes after freeze require a DECISIONS.md entry.
 
 ## Global conventions
 
-1. **Temporal trio.** Anything that unfolds in time (Agreement and LegalCase
-   nodes, and every dated edge) carries `start_date`, `end_date` (empty until
-   it ends), and `status`. Nothing is ever deleted for changing state
-   (DECISIONS.md #3).
+1. **Temporal trio.** Anything that unfolds in time (Agreement, LegalCase and
+   Payment nodes, and every dated edge) carries `end_date` (empty until it
+   ends), `status`, and a start marker named for what it marks: dated edges
+   use `start_date`; Agreement uses `signing_date` (execution) and
+   `effective_date` (when it takes effect, e.g. after HSR clearance, or the
+   closing of an acquisition; when a filing gives one date it is both);
+   LegalCase uses `filed_date`; Payment uses `date` (DECISIONS.md #25).
+   Nothing is ever deleted for changing state (DECISIONS.md #3).
 2. **Provenance.** Every relationship carries `source_chunk_id`. Reified event
-   nodes (Agreement, LegalCase) carry it too (DECISIONS.md #8). Plain entity
-   nodes don't; their facts arrive via edges.
+   nodes (Agreement, LegalCase, Payment) carry it too (DECISIONS.md #8).
+   Plain entity nodes don't; their facts arrive via edges.
 3. **Names.** Every node has one canonical `name` plus `aliases[]`. Regional
    brand variants, parenthetical shorthands, and former names are aliases,
    never separate nodes (DECISIONS.md #7).
@@ -19,7 +23,7 @@ Changes after freeze require a DECISIONS.md entry.
    neighboring type it is most confusable with, so an extractor (human or LLM)
    can decide borderline cases.
 
-## Entity types (9)
+## Entity types (10)
 
 ### Company
 A legal business entity of any kind: drugmaker, auditor, royalty buyer,
@@ -63,16 +67,26 @@ Exelixis, not here)
 
 ### Agreement
 A formal arrangement between companies (collaboration, license, option,
-supply, asset purchase, acquisition, royalty purchase) reified as a node so
-parties, covered assets, territory, and dates attach to one identifiable
-thing (DECISIONS.md #2, #5).
-Properties: name, type (collaboration | license | option | supply |
-asset_purchase | acquisition | royalty_purchase | ...), territory,
-start_date, end_date, status, source_chunk_id
-Example: Exelixis-Invenra collaboration & license (type: collaboration_license;
-start_date: 2018-05; status: active)
+supply, asset purchase, acquisition, royalty purchase, stock purchase)
+reified as a node so parties, covered assets, territory, and dates attach to
+one identifiable thing (DECISIONS.md #2, #5). Not a discrete cash or stock
+event under it (that is Payment).
+Properties: name, type (collaboration | license | collaboration_license |
+option | supply | asset_purchase | acquisition | royalty_purchase |
+stock_purchase | credit_facility | ...), territory, signing_date,
+effective_date, end_date, status, source_chunk_id
+Examples: Exelixis-Invenra collaboration & license (type:
+collaboration_license; signing_date: 2018-05; status: active).
+Sarepta-Arrowhead exclusive license and collaboration (type:
+collaboration_license; signing_date: 2024-11-25; effective_date: 2025-02-07,
+after HSR clearance; status: active). Neurocrine-Soleno acquisition (type:
+acquisition; effective_date: 2026-05-18, the closing; status: completed).
+Arrowhead-Sarepta Stock Purchase Agreement (type: stock_purchase; roles
+issuer/purchaser; DECISIONS.md #27).
 Note: ongoing royalty obligations are OWES_ROYALTY_TO edges, not Agreement
-properties (DECISIONS.md #10).
+properties (DECISIONS.md #10). Discrete payments made or triggered under an
+agreement are Payment nodes (DECISIONS.md #29); contingent "up to" amounts
+that have not been triggered stay in text.
 
 ### Indication
 A disease or medical condition that a drug treats or is being developed to
@@ -105,6 +119,9 @@ Properties:
   trial_date      scheduled trial, if set
   end_date        empty until the whole matter resolves
   status          active | resolved
+  patents[]       patents at issue, as identified in the filing
+                  (e.g. "U.S. Patent No. 9,593,333"; "'039 Patent" when the
+                  filing uses only the short form) (DECISIONS.md #26)
   notice_date     OPEN: Paragraph IV notice date, ANDA cases only
   source_chunk_id
 Example: Exelixis v. MSN II. Delaware, filed 2022, ruling Oct 2024, MSN
@@ -112,18 +129,44 @@ appealed to CAFC Nov 2024, so still active, no end_date. Consolidation is
 expressed with CONSOLIDATED_INTO edges to a LegalCase instance representing
 the consolidated matter (DECISIONS.md #9); per-party involvement (Sun
 settling Dec 2025) lives on PARTY_TO edges while the case stays active.
+An arbitration (Alkermes v. Janssen, 2022-2023) is a LegalCase too; its
+award is a Payment node PAID_UNDER it.
 
-## Relationship types (14)
+### Payment
+A discrete transfer of cash or stock that was made or triggered under an
+Agreement or LegalCase: an upfront payment, a milestone, an annual fee, an
+acquisition's consideration, an arbitration award. Reified so payer, payee,
+amount, date, form and trigger attach to one thing (DECISIONS.md #29). NOT a
+recurring royalty obligation (that is an OWES_ROYALTY_TO edge) and NOT a
+contingent "up to" amount that has not been triggered (that stays in text
+on the Agreement's chunks). One node per payment event, even when two
+filers date it differently (the graph keeps both dates via source chunks).
+Properties: name, kind (upfront | milestone | annual_fee | consideration |
+award | ...), amount, form (cash | stock | mixed), date, trigger, status
+(triggered | paid), source_chunk_id
+Example: first Arrowhead DM1 milestone (kind: milestone; amount: $100.0M;
+form: mixed, ~2.7M Arrowhead shares (~$50.0M) plus $50.0M cash; date:
+2025-08-13; status: paid), Sarepta -PARTY_TO{role: payer}-> it
+<-PARTY_TO{role: payee}- Arrowhead, and it -PAID_UNDER-> the
+Sarepta-Arrowhead collaboration agreement.
+
+## Relationship types (16)
 
 Format per entry: domain -> range, meaning, properties, corpus example.
 
 ### PARTY_TO
-Company -> Agreement | LegalCase. A party's involvement in a deal or case.
+Company -> Agreement | LegalCase | Payment. A party's involvement in a deal,
+case, or payment event. `role` is required and carries the direction of the
+dealing (DECISIONS.md #20, #23): licensor/licensee, seller/buyer,
+acquirer/acquired, issuer/purchaser, collaborator, plaintiff/defendant,
+claimant/respondent (arbitration), payer/payee (Payment).
 Properties: role, status, start_date, end_date, source_chunk_id
 Examples: Sun -PARTY_TO{role: defendant, status: settled,
 end_date: 2025-12-30}-> [Consolidated Litigation].
 Halozyme -PARTY_TO{role: acquirer}-> [Elektrofi merger agreement]
 <-PARTY_TO{role: acquired}- Elektrofi.
+Sarepta -PARTY_TO{role: payer}-> [first Arrowhead DM1 milestone]
+<-PARTY_TO{role: payee}- Arrowhead.
 OPEN: Person could join the domain if employment agreements ever matter;
 for now OFFICER_OF dates cover everything people-related.
 
@@ -139,11 +182,28 @@ Examples: [Exelixis-Ipsen 2016 agreement] -COVERS-> cabozantinib.
 
 ### SUBSIDIARY_OF
 Company -> Company. The subject is a subsidiary (or majority-owned unit) of
-the object.
+the object, and the filing says so ("wholly owned subsidiary", "majority
+owned by"). A looser stated relationship ("an affiliate of", "a member of
+the X Group") is AFFILIATE_OF, not this (DECISIONS.md #30).
 Properties: start_date, end_date, status, source_chunk_id
 Examples: Halozyme Hypercon, Inc. -SUBSIDIARY_OF{start_date: 2025-11-18}->
 Halozyme Therapeutics. ViiV Healthcare -SUBSIDIARY_OF{status: active}-> GSK
 (majority ownership).
+
+### AFFILIATE_OF
+Company -> Company. The filing states that the subject is an affiliate,
+vehicle, or group member of the object without stating ownership. Keeps
+legal entities distinct (a Company is any legal business entity) while
+letting one hop reach the family, which "Royalty Pharma entities" style
+questions need. Not SUBSIDIARY_OF (ownership stated) and not an alias
+(aliases are names for the same entity, DECISIONS.md #7).
+Properties: basis (the filing's phrase), start_date, end_date, status,
+source_chunk_id
+Examples: RPI Finance Trust -AFFILIATE_OF{basis: "an affiliate of Royalty
+Pharma"}-> Royalty Pharma. Chugai -AFFILIATE_OF{basis: "a member of the
+Roche Group"}-> Roche. Royalty Pharma Investments 2019 ICAV
+-AFFILIATE_OF{basis: referred to as "Royalty Pharma" by Ionis}-> Royalty
+Pharma.
 
 ### AUDITED_BY
 Company -> Company. The subject's financial statements are audited by the
@@ -216,6 +276,15 @@ case (which is an ordinary LegalCase instance, not a separate type).
 Properties: date, source_chunk_id
 Example: [Exelixis v. MSN I] -CONSOLIDATED_INTO{date: 2025-08-08}->
 [Consolidated Litigation].
+
+### PAID_UNDER
+Payment -> Agreement | LegalCase. The deal or case that gives rise to the
+payment event. Every Payment has exactly one PAID_UNDER edge; the parties
+attach to the Payment via PARTY_TO{role: payer | payee}.
+Properties: source_chunk_id
+Examples: [first Arrowhead DM1 milestone] -PAID_UNDER-> [Sarepta-Arrowhead
+collaboration agreement]. [Alkermes-Janssen Final Award back royalties,
+$195.4M] -PAID_UNDER-> [Alkermes v. Janssen arbitration].
 
 ### OWES_ROYALTY_TO
 Company -> Company. An ongoing royalty obligation from subject to object,
