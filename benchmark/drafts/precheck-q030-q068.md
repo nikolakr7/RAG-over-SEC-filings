@@ -228,6 +228,13 @@ Refs: ev1 ARWR/10-K_2025-11-25:3684; ev2 :5727; ev3 :1665
   December 11, 2023. The only Janssen termination sentence in the corpus
   is about ARO-PNPLA3 (April 7, 2023), a different asset. Either soften
   to what the filings state or accept as a labeled inference.
+- APPLIED 2026-08-16: answer softened to what the filings state (Janssen
+  license dated 2018-10-03; FY2023 10-K still shows JNJ-3989 out-licensed
+  to and developed by Janssen; FY2025 10-K says only "had previously been
+  licensed to Janssen"; GSK-HBV Agreement 2023-12-11, worldwide exclusive
+  license). Quotes added from ARWR/10-K_2023-11-29:1522, 2656 and
+  10-K_2025-11-25:1665; required_core added; path per #23 with one
+  Compound node carrying the aliases ARO-HBV / JNJ-3989 / GSK5637608.
 
 ## q045  MEDIUM
 Refs: ev1 ARWR/DEF14A_2025-01-29:517; ev2 ARWR/10-K_2025-11-25:3346; ev3 :3346
@@ -241,6 +248,13 @@ Refs: ev1 ARWR/DEF14A_2025-01-29:517; ev2 ARWR/10-K_2025-11-25:3346; ev3 :3346
   expected to be appointed to the board before our 2025 Annual
   Meeting"). Weak evidence for "director"; replace with the q064 quotes.
 - Consistent with verified q014 (joined effective February 2025).
+- APPLIED 2026-08-16: answer now "served on Arrowhead's board from
+  February 2025 to March 2026" (and CEO, President until July 2025); the
+  Jan 2025 nominee-bio quote replaced by SRPT DEF14A_2026-04-24:990-991
+  (CEO since June 2017; Arrowhead board Feb 2025 to Mar 2026);
+  required_core added; path per #23 with the collaboration Agreement, the
+  Stock Purchase Agreement, and two Payment nodes ($500.0M upfront,
+  $325.0M share purchase) PAID_UNDER them.
 
 ## q046  MEDIUM
 Refs: ev1 IONS/DEF14A_2026-04-23:933; ev2 :933; ev3 HALO/10-K_2026-02-17:1979
@@ -249,6 +263,17 @@ Refs: ev1 IONS/DEF14A_2026-04-23:933; ev2 :933; ev3 HALO/10-K_2026-02-17:1979
   RISPERDAL CONSTA supply, arbitration; q030/q050 material). A system
   naming Alkermes would fail. Add required_core accepting Halozyme or
   Alkermes, or widen the answer to name both.
+- APPLIED 2026-08-16: user pluralized the question; answer now names
+  Halozyme (ENHANZE licensee, DARZALEX FASPRO) and Alkermes (NANOCRYSTAL
+  license behind the long-acting INVEGA products; Janssen arrangements
+  ~9%/17%/31% of ALKS revenue 2025/2024/2023) with ALKS/10-K_2026-02-25:
+  10173 and 2419 quotes and the HALO partner-list quote (1879); Yang
+  quote given subject identity ("Michael Yang, age 64, ..."); required_
+  core added; path per #23. Entity note: HALO's partner is Janssen
+  Biotech, Inc.; ALKS defines "Janssen" as Janssen Pharmaceutica N.V.
+  with Janssen Pharmaceuticals, Inc., Janssen International and
+  affiliates; the answer and path keep the two entities distinct
+  (Janssen Biotech -AFFILIATE_OF-> Johnson & Johnson from Yang's bio).
 
 ## q047  OK
 Refs: ev1 IONS/DEF14A_2026-04-23:937; ev2 HALO/10-K_2026-02-17:1879; ev3 :2011
@@ -279,6 +304,17 @@ Refs: ev1 ALKS/10-K_2025-02-12:10764 (fragment "the Tribunal" matched at
   interest related to 2022 U.S. net sales of the long-acting INVEGA
   products". Same fix applies to q053 ev2 (identical quote).
 - Near-duplicate of q030 (see there).
+- APPLIED 2026-08-16 (user accepts the q030 near-duplicate): "Yes."
+  dropped; Alkermes half now leads with the NanoCrystal/INVEGA license
+  and the partial termination before the award; stitched "the Tribunal"
+  quote replaced by the clean multi-fragment quote at ALKS/10-K_2025-02-
+  12:10764 (that filing spells it "NanoCrystal"); Snellgrove is CFO since
+  June 8, 2026 (DECISIONS #24) and the 8-K quote now carries his name,
+  role and effective date; "Janssen's parent" wording dropped (not stated
+  in the 8-K); required_core added; path per #23 with Payment(award)
+  PAID_UNDER the arbitration LegalCase and Snellgrove's OFFICER_OF edges.
+  q030's path labels aligned to the same two Janssen entities (Janssen
+  Biotech, Inc. for HALO; Janssen Pharmaceutica N.V. for ALKS).
 
 ## q051  OK
 Refs: ev1 ALKS/10-K_2026-02-25:8577; ev2 :2318; ev3 :2318
@@ -296,10 +332,28 @@ Refs: ev1 EXEL/10-K_2026-02-10:4347; ev2 HALO/10-K_2026-02-17:2813
 - "which of its products uses that technology": Phesgo is one of
   several (Herceptin SC/Hylecta, MabThera SC, Ocrevus Zunovo, Tecentriq
   Hybreza). Add required_core accepting any Roche ENHANZE product.
+- APPLIED 2026-08-16: answer now goes through Roche explicitly (EXEL
+  "Genentech, Inc. (a member of the Roche Group)" quoted at 1519; HALO
+  partner list names Roche, 1879); Phesgo/ENHANZE approval sentence
+  quoted (1935-1939), Herceptin/MabThera by Roche (2813) and OCREVUS
+  ZUNOVO with ENHANZE (1951) quoted so the required_core can accept any
+  of them; path per #23 with Genentech -AFFILIATE_OF-> Roche (basis: the
+  EXEL phrase), the two Agreements with roles, USES_TECHNOLOGY, OWNS and
+  OWES_ROYALTY_TO.
 
 ## q053  LOW
 Refs: ev1 NBIX/DEF14A_2026-04-15:721; ev2 ALKS/10-K_2025-02-12:10764
 - ev2 stitched-quote fix as in q050.
+- APPLIED 2026-08-16: stitched quote replaced by the clean 10764 quote
+  (now also carrying "which amount the Company received from Janssen in
+  the second quarter of 2023" for "how did it end"); Pops per DECISIONS
+  #24 (Chairman; CEO until July 31, 2026) with the 8-K quote; NBIX quote
+  now starts with his name; answer names the fight (partial termination
+  of the NanoCrystal/INVEGA license) before the award; required_core
+  added; path per #23 with Payment(award) PAID_UNDER the LegalCase.
+  Note: the corpus also carries a smaller Alkermes-Acorda arbitration
+  (award Oct 2022, confirmed Aug 2023, appeal still moving in 2025), so
+  the Janssen matter is "the major" fight that ended, not the only fight.
 
 ## q054  LOW
 Refs: ev1 ALKS/10-K_2026-02-25:2421; ev2 IONS/10-K_2026-02-26:787; ev3 :789
@@ -317,6 +371,14 @@ Refs: ev1 EXEL/10-K_2026-02-10:1684; ev2 HALO/10-K_2026-02-17:2746
   required_core to the two entity names.
 - Good entity-resolution test question otherwise (see HANDOFF "three
   distinct Merck entities").
+- APPLIED 2026-08-16: "corporate family" sentence trimmed; answer now
+  says the two filings use one shorthand for two legal entities, that
+  Exelixis separately uses "Merck & Co., Inc." for pembrolizumab (quote
+  added, EXEL/10-K_2026-02-10:1692), and that nothing in either filing
+  states how they relate (grep-verified: no filing pairs MSD or Merck
+  Sharp & Dohme with Merck & Co.; HALO never equates Keytruda with
+  pembrolizumab). required_core added; path per #23 with two distinct
+  Company nodes (aliases: Merck) and no edge between them.
 
 ## q056  LOW
 Refs: ev1 EXEL/10-K_2026-02-10:7281; ev2 RARE/10-K_2026-02-18:4180; ev3 :1855
@@ -324,11 +386,20 @@ Refs: ev1 EXEL/10-K_2026-02-10:7281; ev2 RARE/10-K_2026-02-18:4180; ev3 :1855
   Approved Products; it does not call it the lead product). Either name
   Crysvita in the question or accept.
 - Near-duplicate of verified q022 plus one hop; flag for the user.
+- APPLIED 2026-08-18 after the user's verification: user accepted "lead
+  product" as is; required_core added (Crysvita for XLH, also TIO); path
+  per #23 (AUDITED_BY join, OWNS, one APPROVED_FOR edge per indication).
+- APPLIED: left "lead product" in because inferring that Crysvita is the lead product is quite obvious. Doesn't need quote, not concerning.
 
 ## q057  OK
 Refs: ev1 SRPT/10-Q_2025-11-06:4089; ev2 :9348; ev3 ARWR/10-K_2025-11-25:2984; ev4 SRPT/10-K_2026-03-02:2467
 - The two-filer date discrepancy (Nov 20 vs Nov 24, 2025) is real and
   quoted on both sides. Path is free text; acceptable under DECISIONS #15.
+- APPLIED 2026-08-18 after the user's verification: ev1 extended
+  through the half-cash/half-stock sentence (SRPT/10-Q_2025-11-06:4089-
+  4091); required_core added; free-text path replaced per #23/#29 with
+  the Agreement, two Payment nodes PAID_UNDER it (second milestone dated
+  per both filers), and three Filing nodes.
 
 ## q058  MEDIUM
 Refs: ev1 EXEL/10-K_2026-02-10:7008
