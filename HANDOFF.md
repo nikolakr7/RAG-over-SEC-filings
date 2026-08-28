@@ -29,34 +29,31 @@ config in .env), FastAPI later. Repo: github.com/nikolakr7/baswe-1 (private).
 - Never restructure a file the user is actively editing.
 - No em dashes in any writing.
 
-## Where we are: Phase 1, benchmark verification (last step before freeze)
+## Where we are: Phase 1 COMPLETE. Benchmark v1 FROZEN 2026-08-18.
 
 DONE:
 - Phase 0 complete (databases, SQL/Cypher primers, corpus, Azure).
 - Corpus: 152 filings / 173 files parsed to data/text/ (gitignored, 30 MB).
-- ontology.md v1: 10 entity types, 16 relationship types. Added during
-  verification as live sanity-check findings: PEER_OF (#19); then, from
-  writing q001-q031 paths strictly against the ontology (2026-08-16):
-  Payment node + PAID_UNDER, AFFILIATE_OF, signing_date/effective_date on
-  Agreement, patents[] on LegalCase, stock_purchase type (#25-#30).
-  Status DRAFT until the benchmark freezes.
+- ontology.md v1 FROZEN (2026-08-18): 10 entity types, 16 relationship
+  types. Grown during verification as live sanity-check findings:
+  PEER_OF (#19); Payment node + PAID_UNDER, AFFILIATE_OF,
+  signing_date/effective_date on Agreement, patents[] on LegalCase,
+  stock_purchase and credit_facility types (#25-#30). Changes from here
+  need a DECISIONS entry and create v2.
+- benchmark/questions.json v1 FROZEN: all 80 verified: true, hand-checked
+  by the user quote-by-quote against primary filings. 47 of 68 in-scope
+  questions carry required_core. Every ontology_path follows DECISIONS
+  #23 (directed edges, roles, types, canonical shared instance names;
+  #23(g) count-form for aggregation). Pre-freeze passes: all quotes
+  re-located verbatim, all path terms and directions machine-audited,
+  cross-question consistency read over every recurring fact family.
+  Per-question repair log: benchmark/drafts/precheck-q030-q068.md.
 - DECISIONS.md: 30 logged decisions with rejected alternatives. Read it.
-  #23 (path notation) and #24 (benchmark truth is as of the corpus end,
-  August 2026) govern how remaining questions get fixed.
+  #17 (required_core grading), #23 (path notation), #24 (truth as of the
+  corpus end, August 2026) matter most for Phase 2.
 - docs/sweeps/: machine sweep notes over all 152 filings plus
   cross-company-index.md (leads only, never citable evidence).
-- benchmark/questions.json: 80 questions (20 single-hop, 21 two-hop, 16
-  three-hop, 11 aggregation, 12 out-of-scope), LLM-drafted with grep-
-  verified quotes, rephrased to natural questions, temporally diversified.
-  Methodology and provenance disclosed in benchmark/README.md.
-
-DONE 2026-08-18: all 80 questions are verified: true (the user saw every
-quote in the primary file; repairs along the way are logged per question
-in benchmark/drafts/precheck-q030-q068.md and in DECISIONS #15-30). The
-freeze has NOT happened yet: before the "Freeze benchmark v1" commit, a
-final pass over all 80 ontology_paths (every question now has a
-#23-style path, but they were written across sessions) and a general
-consistency check remain.
+- Methodology and provenance disclosed in benchmark/README.md.
 
 Verification rules established (see DECISIONS #15-22):
 - answer scope == question scope; trim answer or widen question
@@ -79,16 +76,15 @@ calibrated against ~20 hand-graded samples.
 
 ## Next steps, in order
 
-1. Finish verifying q030-q068 (user drives, with the pre-check worksheet
-   open alongside; Claude answers questions, greps on request, never
-   edits questions.json without being asked). Log accepted fixes in
-   DECISIONS.md / README as before.
-2. Ontology sanity check: every multi-hop question expressible through the
-   14 types (mostly done implicitly during verification).
-3. Freeze: all 80 verified:true, commit "Freeze benchmark v1", flip
-   ontology.md status from DRAFT to FROZEN.
-4. Phase 2 begins: embeddings primer, chunking with stable chunk IDs,
-   pgvector + HNSW, eval harness (user-written), vector baseline scored.
+Phase 2 begins:
+1. Embeddings primer (tutor mode).
+2. Chunking with stable chunk IDs; strip the old-format XBRL junk at the
+   top of parsed .txt files first (see open items).
+3. pgvector + HNSW index; embed the corpus.
+4. Eval harness (USER-WRITTEN zone): claim-level binary judge per the
+   agreed grading design below, calibrated against ~20 hand-graded
+   samples; benchmark is frozen input, never edited by the harness.
+5. Vector-only baseline scored against benchmark v1.
 
 ## Known open items
 
