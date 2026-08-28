@@ -1483,17 +1483,30 @@
     "id": "q058",
     "category": "aggregation",
     "question": "As of its FY2025 10-K, which companies had Exelixis sued over generic or 505(b)(2) versions of CABOMETYX in litigation consolidated for the November 2026 trial?",
-    "answer": "Three: MSN, Sun, and Azurity. Their cases were consolidated for a trial scheduled November 2, 2026 (the 'Consolidated Litigation').",
-    "ontology_path": "Company(EXEL) -PARTY_TO{role: plaintiff}-> LegalCase(Consolidated Litigation) <-PARTY_TO{role: defendant}- Company, collect defendants",
+    "answer": "Three: MSN, Sun, and Azurity. On August 8, 2025 the Delaware District Court consolidated Exelixis's MSN, Sun and Azurity cases for a trial scheduled November 2, 2026 (the 'Consolidated Litigation'). Sun then settled with Exelixis in December 2025 and was dismissed from the Consolidated Litigation on December 30, 2025, leaving MSN and Azurity as the defendants heading to trial.",
+    "required_core": "The Consolidated Litigation joined Exelixis's cases against MSN, Sun and Azurity (consolidated August 8, 2025; trial November 2, 2026); Sun settled and was dismissed on December 30, 2025, leaving MSN and Azurity. Naming all three, or naming MSN and Azurity while noting Sun's settlement/dismissal, both count.",
+    "ontology_path": "Company(Exelixis) -PARTY_TO{role: plaintiff}-> LegalCase(Consolidated Litigation, court: Delaware District Court, trial_date: 2026-11-02, status: active) <-PARTY_TO{role: defendant}- Company(X); X = {MSN, Sun (status: settled, end_date: 2025-12-30), Azurity}; LegalCase(MSN ANDA litigation) -CONSOLIDATED_INTO{date: 2025-08-08}-> LegalCase(Consolidated Litigation); LegalCase(Sun ANDA litigation) -CONSOLIDATED_INTO{date: 2025-08-08}-> LegalCase(Consolidated Litigation); LegalCase(Azurity 505(b)(2) NDA litigation) -CONSOLIDATED_INTO{date: 2025-08-08}-> LegalCase(Consolidated Litigation); LegalCase(Consolidated Litigation) -COVERS-> Drug(CABOMETYX)",
     "evidence": [
       {
         "ticker": "EXEL",
         "form": "10-K",
         "date_filed": "2026-02-10",
         "quote": "This litigation has been consolidated with the Sun and Azurity litigations for the trial scheduled for November 2, 2026 (Consolidated Litigation)."
+      },
+      {
+        "ticker": "EXEL",
+        "form": "10-K",
+        "date_filed": "2026-02-10",
+        "quote": "On August 8, 2025, the Delaware District Court ordered that the then-pending abovementioned MSN, Sun, and Azurity district court litigations be consolidated with the trial scheduled for November 2, 2026. On December 30, 2025, in accordance with the Sun Settlement Agreement, Sun was dismissed from the Consolidated Litigation."
+      },
+      {
+        "ticker": "EXEL",
+        "form": "10-K",
+        "date_filed": "2026-02-10",
+        "quote": "In December 2025, we entered into a settlement agreement (Sun Settlement Agreement) with Sun."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q059",
@@ -1533,7 +1546,7 @@
         "quote": "Ernst & Young LLP We have served as the Company’s auditor since 1992."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q060",
@@ -1567,14 +1580,14 @@
         "quote": "We subsequently sold this interest to RPI Finance Trust, an affiliate of Royalty Pharma, in December 2019."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q061",
     "category": "aggregation",
     "question": "How many corpus companies completed a corporate acquisition described in these filings (2025-2026)?",
-    "answer": "3: Halozyme (Elektrofi, closed Nov 18, 2025), Alkermes (Avadel, closed Feb 12, 2026), and Neurocrine (Soleno, closed May 18, 2026).",
-    "ontology_path": "count(Company -PARTY_TO{role: acquirer}-> Agreement(type: acquisition)) over the 8 corpus companies",
+    "answer": "3: Halozyme (Elektrofi, closed Nov 18, 2025; Surf Bio, closed Dec 22, 2025), Alkermes (Avadel, closed Feb 12, 2026), and Neurocrine (Soleno, closed May 18, 2026).",
+    "ontology_path": "count(distinct Company(X)) where Company(X) -PARTY_TO{role: acquirer}-> Agreement(type: acquisition, status: completed, effective_date in 2025-2026) over the 8 corpus companies; X = {Halozyme, Alkermes, Neurocrine}; Company(Halozyme) -PARTY_TO{role: acquirer}-> Agreement(Halozyme-Elektrofi acquisition, type: acquisition, effective_date: 2025-11-18, status: completed) <-PARTY_TO{role: acquired}- Company(Elektrofi); Company(Halozyme) -PARTY_TO{role: acquirer}-> Agreement(Halozyme-Surf Bio acquisition, type: acquisition, signing_date: 2025-12-18, effective_date: 2025-12-22, status: completed) <-PARTY_TO{role: acquired}- Company(Surf Bio); Company(Alkermes) -PARTY_TO{role: acquirer}-> Agreement(Alkermes-Avadel acquisition, type: acquisition, effective_date: 2026-02-12, status: completed) <-PARTY_TO{role: acquired}- Company(Avadel Pharmaceuticals); Company(Neurocrine) -PARTY_TO{role: acquirer}-> Agreement(Neurocrine-Soleno acquisition, type: acquisition, effective_date: 2026-05-18, status: completed) <-PARTY_TO{role: acquired}- Company(Soleno Therapeutics)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -1583,10 +1596,16 @@
         "quote": "the Company completed the acquisition of Elektrofi, Inc. (“Elektrofi”) on November 18, 2025, for total consideration of $810.4 million"
       },
       {
+        "ticker": "HALO",
+        "form": "10-K",
+        "date_filed": "2026-02-17",
+        "quote": "On December 22, 2025, we acquired all outstanding equity interests of Surf Bio, Inc. according to the terms and conditions of the Agreement and Plan of Merger dated as of December 18, 2025 (the \"Surf Bio Merger Agreement\")"
+      },
+      {
         "ticker": "ALKS",
         "form": "10-K",
         "date_filed": "2026-02-25",
-        "quote": "in connection with completion of the Avadel Acquisition and our entry into the Credit Agreement, we terminated the Bridge Credit Agreement"
+        "quote": "On February 12, 2026, the Company successfully completed the Avadel Acquisition, adding both LUMRYZ to the Company's portfolio of proprietary commercial products"
       },
       {
         "ticker": "NBIX",
@@ -1595,7 +1614,7 @@
         "quote": "The Company completed the acquisition of Soleno on May 18, 2026"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q062",
@@ -1629,7 +1648,7 @@
         "quote": "Rose, Snyder & Jacobs LLP"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q063",
@@ -1675,26 +1694,33 @@
         "quote": "Ultragenyx Pharmaceutical (RARE)"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q064",
     "category": "aggregation",
     "question": "Do any individuals hold officer or director roles at two different corpus companies at the same time?",
-    "answer": "2: Richard F. Pops (Alkermes CEO/Chairman and Neurocrine director since April 1998), and Douglas Ingram (Sarepta CEO since June 2017 and Arrowhead director from February 2025 to March 2026).",
-    "ontology_path": "count(distinct Person with two OFFICER_OF edges to different corpus companies)",
+    "answer": "Yes, one at present: Richard F. Pops, Chairman of Alkermes plc (its CEO until his retirement from that role effective July 31, 2026), has served on Neurocrine's board since April 1998. Douglas S. Ingram, Sarepta's CEO, also sat on Arrowhead's board from February 2025 to March 2026, but that overlap has ended.",
+    "required_core": "Yes: Richard F. Pops holds roles at two corpus companies at once, Chairman of Alkermes and a Neurocrine director. (Douglas Ingram's Sarepta CEO / Arrowhead director overlap ran February 2025 to March 2026 and no longer holds.)",
+    "ontology_path": "count(distinct Person(P)) where Person(P) -OFFICER_OF{status: active}-> Company(A) and Person(P) -OFFICER_OF{status: active}-> Company(B), A != B, both corpus companies; P = {Richard F. Pops}; Person(Richard F. Pops) -OFFICER_OF{role: director, start_date: 1998-04, status: active}-> Company(Neurocrine); Person(Richard F. Pops) -OFFICER_OF{role: Chairman of the Board, status: active}-> Company(Alkermes); Person(Richard F. Pops) -OFFICER_OF{role: Chief Executive Officer, end_date: 2026-07-31, status: former}-> Company(Alkermes); Person(Douglas S. Ingram) -OFFICER_OF{role: Chief Executive Officer, start_date: 2017-06, status: active}-> Company(Sarepta); Person(Douglas S. Ingram) -OFFICER_OF{role: director, start_date: 2025-02, end_date: 2026-03, status: former}-> Company(Arrowhead)",
     "evidence": [
       {
         "ticker": "NBIX",
         "form": "DEF14A",
         "date_filed": "2026-04-15",
-        "quote": "has served on the Board of Directors since April 1998. Mr. Pops is the Chairman and Chief Executive Officer of Alkermes plc."
+        "quote": "Richard F. Pops has served on the Board of Directors since April 1998. Mr. Pops is the Chairman and Chief Executive Officer of Alkermes plc."
+      },
+      {
+        "ticker": "ALKS",
+        "form": "8-K",
+        "date_filed": "2026-02-25",
+        "quote": "On February 24, 2026, Richard F. Pops, Chairman and Chief Executive Officer of Alkermes plc ... notified the Company's board ... of his decision to retire from his position of Chief Executive Officer, effective July 31, 2026 ... and will remain on the Board, serving as non-executive Chairman"
       },
       {
         "ticker": "SRPT",
         "form": "DEF14A",
         "date_filed": "2026-04-24",
-        "quote": "has served as our Chief Executive Officer and a member of our Board since June 2017"
+        "quote": "Douglas S. Ingram has served as our Chief Executive Officer and a member of our Board since June 2017"
       },
       {
         "ticker": "SRPT",
@@ -1709,7 +1735,7 @@
         "quote": "Douglas Ingram, a current director, is not standing for re-election and will retire from the Board at the annual meeting"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q065",
@@ -1725,41 +1751,30 @@
         "quote": "the Company has entered into three royalty purchase agreements under which the Company sold its rights to receive royalty payments arising from the net sales of Crysvita ... in exchange for $320 million, $500 million and $400 million"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q066",
     "category": "aggregation",
-    "question": "How many separate generic/follow-on challengers has Exelixis faced over CABOMETYX, per the FY2025 10-K's Legal Proceedings note?",
-    "answer": "4: MSN Pharmaceuticals, Sun Pharmaceutical Industries, Azurity Pharmaceuticals, and Handa Oncology.",
-    "ontology_path": "count(distinct Company -PARTY_TO-> LegalCase -COVERS-> Drug(CABOMETYX))",
+    "question": "How many companies have sent Exelixis Paragraph IV notices over CABOMETYX, per the FY2025 10-K?",
+    "answer": "7: MSN, Teva, Cipla, Sun, and Biocon (Paragraph IV certification notice letters concerning ANDAs for generic CABOMETYX tablets), plus Azurity and Handa (Paragraph IV notice letters concerning 505(b)(2) NDAs for cabozantinib tablets and capsules). Exelixis subsequently sued all of them except Handa, whose notice it was still evaluating.",
+    "required_core": "7: MSN, Teva, Cipla, Sun, Biocon (ANDAs), Azurity and Handa (505(b)(2) NDAs).",
+    "ontology_path": "count(distinct Company(X)) where Company(X) -PARTY_TO{role: defendant or notice sender}-> LegalCase(Y) and LegalCase(Y) -COVERS-> Drug(CABOMETYX), per Filing(EXEL FY2025 10-K); X = {MSN, Teva, Cipla, Sun, Biocon, Azurity, Handa}; Filing(EXEL FY2025 10-K, date_filed: 2026-02-10) -FILED_BY-> Company(Exelixis)",
     "evidence": [
       {
         "ticker": "EXEL",
         "form": "10-K",
         "date_filed": "2026-02-10",
-        "quote": "MSN ANDA Litigation"
+        "quote": "we received Paragraph IV certification notice letters from MSN, Teva, Cipla, Sun, and Biocon concerning the respective ANDAs that each had filed with the FDA seeking approval to market generic versions of CABOMETYX tablets. We have also received Paragraph IV certification notice letters from Azurity and Handa concerning the 505(b)(2) NDA that each has filed with the FDA seeking approval to market cabozantinib tablets and cabozantinib (in the form of cabozantinib lauryl sulfate) capsules"
       },
       {
         "ticker": "EXEL",
         "form": "10-K",
         "date_filed": "2026-02-10",
-        "quote": "Sun ANDA Litigation"
-      },
-      {
-        "ticker": "EXEL",
-        "form": "10-K",
-        "date_filed": "2026-02-10",
-        "quote": "Azurity 505(b)(2) NDA Litigation"
-      },
-      {
-        "ticker": "EXEL",
-        "form": "10-K",
-        "date_filed": "2026-02-10",
-        "quote": "we received a notice letter regarding a 505(b)(2) New Drug Application submitted to the FDA by Handa Oncology, LLC"
+        "quote": "With the exception of Handa (for which we continue to evaluate all legal and strategic options), we have subsequently filed patent infringement lawsuits against these companies."
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q067",
@@ -1799,14 +1814,15 @@
         "quote": "Ultragenyx Pharmaceutical Inc (RARE)"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q068",
     "category": "aggregation",
     "question": "Have any new generic challengers to CABOMETYX emerged since Exelixis's last annual report?",
     "answer": "Yes, two, both first disclosed in the Q2 2026 10-Q (filed August 5, 2026), after the FY2025 10-K (filed February 10, 2026): Intas Pharmaceuticals/Accord Healthcare sent an ANDA Paragraph IV notice for cabozantinib tablets, which Exelixis sued over on July 6, 2026; and Almatica Pharma sent a 505(b)(2) notice letter for cabozantinib tablets in May 2026.",
-    "ontology_path": "LegalCase(Exelixis v. Accord) -PARTY_TO-> Company(EXEL), Company(Accord Healthcare/Intas Pharmaceuticals); -COVERS-> Drug(CABOMETYX); LegalCase(Almatica 505(b)(2) matter) -PARTY_TO-> Company(EXEL), Company(Almatica Pharma); -COVERS-> Drug(CABOMETYX); both filtered to notice/filed dates after the FY2025 10-K's date_filed (2026-02-10)",
+    "required_core": "Yes, two: Accord (Intas Pharmaceuticals Ltd. and Accord Healthcare, Inc., collectively, ANDA with a Paragraph IV certification) and Almatica Pharma (505(b)(2) NDA), both via notice letters received in May 2026. Naming Accord or Intas alone counts as that one challenger.",
+    "ontology_path": "Company(Exelixis) -PARTY_TO{role: plaintiff}-> LegalCase(Exelixis v. Accord, court: Delaware District Court, filed_date: 2026-07-06, notice_date: 2026-05, patents: ['776, '439, '440, '015, '039], status: active) <-PARTY_TO{role: defendant}- Company(Accord (Intas Pharmaceuticals Ltd. and Accord Healthcare, Inc.)); LegalCase(Exelixis v. Accord) -COVERS-> Drug(CABOMETYX); Company(Exelixis) -PARTY_TO{role: notice recipient}-> LegalCase(Almatica 505(b)(2) matter, notice_date: 2026-05, status: active, no complaint filed as of the Q2 2026 10-Q) <-PARTY_TO{role: notice sender}- Company(Almatica Pharma); LegalCase(Almatica 505(b)(2) matter) -COVERS-> Drug(CABOMETYX); Filing(EXEL Q2 2026 10-Q, date_filed: 2026-08-05) -FILED_BY-> Company(Exelixis); Filing(EXEL FY2025 10-K, date_filed: 2026-02-10) -FILED_BY-> Company(Exelixis)",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -1827,7 +1843,7 @@
         "quote": "In May 2026, we received a notice letter regarding a 505(b)(2) NDA submitted to the FDA by Almatica Pharma, LLC (Almatica), requesting approval to market cabozantinib tablets"
       }
     ],
-    "verified": false
+    "verified": true
   },
   {
     "id": "q069",
