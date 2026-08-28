@@ -50,26 +50,13 @@ DONE:
   verified quotes, rephrased to natural questions, temporally diversified.
   Methodology and provenance disclosed in benchmark/README.md.
 
-IN PROGRESS: the user is hand-verifying all 80 questions (flag
-`verified: true` only after seeing each quote in the primary file). As of
-this handoff q001-q057 and the out-of-scope set q069-q080 are verified:
-true (69 of 80); q058-q068 (11 questions: the aggregation set) remain,
-and the user is going in order. The verified set q001-q029
-was re-checked and repaired on 2026-08-16 (quote hygiene, one wrong path
-counterparty, temporal wording per DECISIONS #24, all paths normalized
-per #23). Verification is finding real defects at a steady rate, which is
-the process working. Rules are logged in DECISIONS #15-30 and the README.
-
-Pre-check worksheet for the remaining 39: benchmark/drafts/
-precheck-q030-q068.md (written 2026-08-16 by Claude; not verification,
-an aid). All 113 quotes were located mechanically (file:line refs are in
-the worksheet) and all ontology_path terms checked against ontology.md.
-Content findings: 4 HIGH (q033 Takeda deals under-reported: NBIX and
-ARWR also have direct Takeda deals; q036 original osavampator territory
-misstated; q041 Soleno funding was cash on hand plus securities sales per
-the 10-Q, not the revolver; q066 the same 10-K names seven CABOMETYX
-challengers, not four), 10 MEDIUM (scope/tense/provenance), the rest LOW
-or OK. Near-duplicate pairs still present: q030/q050, q022/q056.
+DONE 2026-08-18: all 80 questions are verified: true (the user saw every
+quote in the primary file; repairs along the way are logged per question
+in benchmark/drafts/precheck-q030-q068.md and in DECISIONS #15-30). The
+freeze has NOT happened yet: before the "Freeze benchmark v1" commit, a
+final pass over all 80 ontology_paths (every question now has a
+#23-style path, but they were written across sessions) and a general
+consistency check remain.
 
 Verification rules established (see DECISIONS #15-22):
 - answer scope == question scope; trim answer or widen question

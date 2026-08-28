@@ -409,6 +409,14 @@ Refs: ev1 EXEL/10-K_2026-02-10:7008
   three-name answer defensible, but a system answering "MSN and Azurity
   (Sun settled and was dismissed)" would be at least as correct. Add the
   dismissal to the answer and quote it, or set required_core.
+- APPLIED 2026-08-18: answer now carries the August 8, 2025 consolidation
+  order and Sun's December 2025 settlement / December 30 dismissal
+  (quotes EXEL/10-K_2026-02-10:7013, 7017); required_core accepts either
+  the three names or MSN + Azurity with Sun's dismissal noted; path per
+  #23 with the variable-bound defendant set (Sun carrying status: settled,
+  end_date: 2025-12-30 on its PARTY_TO), three CONSOLIDATED_INTO edges
+  dated 2025-08-08, and COVERS CABOMETYX (the ontology's own example
+  shape).
 
 ## q059  OK
 Refs: ev1 EXEL:3239; ev2 RARE:5555; ev3 HALO:3876; ev4 IONS:6112; ev5 NBIX:2523 (all latest 10-Ks)
@@ -426,6 +434,12 @@ Refs: ev1 HALO/10-K_2026-02-17:3870; ev2 ALKS/10-K_2026-02-25:4817; ev3 NBIX/8-K
   hit is Amgen acquiring Horizon). Halozyme also closed Surf Bio (Dec
   2025): count of companies stays 3, count of deals would be 4; consider
   noting Surf Bio in the answer.
+- APPLIED 2026-08-18: user swapped ev2 to the direct Avadel sentence and
+  added Surf Bio to the answer; closing date is December 22, 2025 (merger
+  agreement dated December 18, 2025), quoted from HALO/10-K_2026-02-17:
+  5591; path per #23(g): count over completed acquisition Agreements with
+  the four Agreements spelled out (Surf Bio carries signing_date and
+  effective_date), result set {Halozyme, Alkermes, Neurocrine}.
 
 ## q062  OK
 Refs: ev1 EXEL:3239; ev2 SRPT:7612; ev3 ALKS/10-K_2026-02-25:5744; ev4 ARWR/10-K_2025-11-25:4051
@@ -445,6 +459,15 @@ Refs: ev1 NBIX/DEF14A_2026-04-15:721; ev2 SRPT/DEF14A_2026-04-24:991; ev3 :991; 
   DEF14A_2026-04-15). The corpus cannot resolve whether the 2020 months
   overlapped. Decide whether the answer should mention her as not
   counted.
+- APPLIED 2026-08-18 (user: fix the answer, keep the question present
+  tense): answer is now "Yes, one at present: Richard F. Pops (Alkermes
+  Chairman, CEO until July 31, 2026; Neurocrine director since April
+  1998)", with Ingram's Feb 2025 to Mar 2026 overlap noted as ended;
+  required_core added; ALKS 8-K retirement quote added and the Pops /
+  Ingram quotes given subject identity; path per #23(g): count of
+  Persons with two active OFFICER_OF edges to different corpus companies
+  = {Pops}, with the dated edges spelled out. The Sharp edge case (2020)
+  is moot under present tense.
 
 ## q065  OK
 Refs: ev1 RARE/10-K_2026-02-18:5540 (auditor's critical audit matter: "three royalty purchase agreements ... $320 million, $500 million and $400 million")
@@ -467,6 +490,17 @@ Refs: ev1-ev4 EXEL/10-K_2026-02-10:6990, 7009, 7014, 7021
   Azurity, Handa), or rewrite to the still-active set as of the 10-K
   (MSN, Azurity, Handa; Sun settled Dec 30, 2025). Also check q058/q068
   stay consistent with whichever framing is chosen.
+- APPLIED 2026-08-18 (user chose the notice-count framing): question is
+  now "How many companies have sent Exelixis Paragraph IV notices over
+  CABOMETYX, per the FY2025 10-K?"; answer 7 (MSN, Teva, Cipla, Sun,
+  Biocon via ANDAs; Azurity, Handa via 505(b)(2) NDAs), noting all but
+  Handa were subsequently sued; evidence replaced by the two risk-factor
+  sentences (EXEL/10-K_2026-02-10:2356, 2185) that carry all seven names
+  and the Handa exception; required_core added; path per #23(g) with the
+  bound seven-company set. Consistency: q058 counts the Consolidated
+  Litigation defendants (3, Sun dismissed), q068 counts post-10-K
+  arrivals (Accord/Intas, Almatica); the three questions now measure
+  three different, compatible things.
 
 ## q067  OK
 Refs: NBIX/DEF14A_2026-04-15:1871-1884
@@ -481,6 +515,14 @@ Refs: ev1 EXEL/10-Q_2026-08-05:3953; ev2 :3953; ev3 :3955
   2026 10-Q (filed 2026-05-05) has no Accord ANDA or Almatica mention
   (its two "Accord" hits are "Accordingly"); both notice letters arrived
   in May 2026.
+- APPLIED 2026-08-18: required_core added (yes, two; Accord = Intas +
+  Accord Healthcare collectively counts as one challenger, either name
+  accepted; Almatica; both notices May 2026); reversed-direction path
+  replaced per #23: Exelixis plaintiff / Accord defendant on the Delaware
+  case (filed 2026-07-06, notice_date 2026-05, patents[] from the
+  complaint), the Almatica matter as notice sender/recipient with no
+  complaint filed as of the Q2 2026 10-Q, COVERS CABOMETYX on both, and
+  the two Filing nodes carrying the "since" anchor dates.
 
 ---
 
