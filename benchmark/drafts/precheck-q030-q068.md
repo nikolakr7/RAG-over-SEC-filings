@@ -660,3 +660,54 @@ q004, q005, q007, q009, q010, q012, q017, q018, q024, q025, q027, q030,
 q031. Remaining unverified paths pick these up in the freeze sweep (q057
 should get Payment nodes; q034/q045/q049 the SPA and upfront Payments;
 q043/q060 AFFILIATE_OF for the Royalty Pharma vehicles).
+
+## Final pre-freeze pass, steps 1-2 (2026-08-18)
+
+Step 1 (mechanical): 80/80 quotes locate verbatim (one regression fixed:
+q037 ev1 had been extended with the worksheet's paraphrase instead of the
+filing's sentence; now verbatim); all path terms resolve; categories
+20/21/16/11/12; q015 key order normalized (id was last).
+
+Step 2 (#23 audit, parser-checked domain/range/direction/role/type):
+- Rewritten per #23: q032, q034, q035, q036, q037, q039, q043, q048,
+  q049, q054; aggregation paths q059, q060, q062, q063, q065, q067
+  rewritten per #23(g) with bound result sets.
+- Semantic fix: q043 had Royalty Pharma -OWES_ROYALTY_TO-> GSK; now
+  Exelixis owes, US leg pending to GSK after 2026-09, mirroring q026.
+- Labels canonicalized: full company names everywhere (tickers only
+  inside Filing labels); KPMG -> KPMG LLP; Agreement instance names
+  unified: 'Sarepta-Arrowhead exclusive license and collaboration' (now
+  one label across 8 questions), '2020 Takeda Agreement' (3),
+  'Halozyme-Takeda 2007/2025 collaboration' (q033/q035/q048),
+  'GSK-Royalty Pharma cabozantinib royalty purchase' and the Ionis/Akcea
+  royalty purchase reused in q043; Agreement(HALO-/EXEL- prefixes ->
+  Halozyme-/Exelixis-; q017's Arrowhead-Sarepta label -> canonical.
+- Agreement date keys per #25 finished: q008/q026 start_date ->
+  signing_date/effective_date; q038 props no longer contain "; ".
+- Intentionally distinct (checked, not defects): the three Janssen legal
+  entities; Royalty Pharma vs its ICAV/RPI vehicles (AFFILIATE_OF).
+- Auditor's remaining output is by-design: count() clauses with bound
+  sets per #23(g).
+
+## Final pre-freeze pass, step 3 (2026-08-18)
+
+Cross-question consistency read (all clean):
+- CABOMETYX trio q058/q066/q068: three compatible counts (3 consolidated
+  defendants with Sun dismissed; 7 Paragraph IV notice senders per the
+  FY2025 10-K; 2 new arrivals post-10-K).
+- Janssen q030/q050, auditors q001/q002/q021-q023/q049/q056/q059/q062,
+  Pops q006/q013/q019/q053/q064 and Ingram q014/q045/q064 (#24 tense),
+  Royalty Pharma q003/q004/q007/q008/q018/q026/q027/q042/q043/q060/q065,
+  Sarepta-Arrowhead q010/q017/q024/q034/q045/q049/q057, Takeda
+  q015/q033/q035/q036/q048, peer groups q029/q063/q067: facts, dates and
+  amounts agree everywhere they recur.
+
+required_core coverage completed: cores added to q001, q002, q007, q008,
+q010, q016, q018, q031, q032, q034, q037, q040, q060, q061, q065
+(criterion: the answer carries precision parentheticals, provenance
+narration, or background beyond the question's literal ask that
+all-required grading would unfairly demand). 47 of 68 in-scope questions
+now carry cores. Left without cores deliberately, because answer scope
+equals question scope (#16): q003, q004, q005, q009, q011, q012, q015,
+q021, q022, q024, q026, q035, q036, q048, q049, q051, q054, q059, q062,
+q063, q067.

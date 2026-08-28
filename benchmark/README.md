@@ -1,8 +1,11 @@
 # Benchmark question set
 
-Frozen once complete. After the graph exists, questions are never edited,
-added, or removed; git history is the witness. This is what makes the Phase 5
-numbers a benchmark instead of a demo.
+**FROZEN as of 2026-08-18 (benchmark v1).** All 80 questions are
+`verified: true`. From here, questions are never edited, added, or
+removed; git history is the witness. This is what makes the Phase 5
+numbers a benchmark instead of a demo. If a defect is ever found
+post-freeze, it is logged in DECISIONS.md and scored as-is for v1; a fix
+would create v2, never silently amend v1.
 
 ## Methodology and provenance
 
@@ -12,12 +15,19 @@ that every evidence quote be located verbatim in primary filing text before
 a candidate survived (sweep notes were leads only, never quotable). Drafts
 were then deduplicated and balanced to 80.
 
-Verification protocol: every question ships with "verified": false. The
-human author checks each question against the quoted filing in data/text/
-and flips the flag only after seeing the evidence with their own eyes.
-**The set freezes when all 80 are verified: true** (and the ontology
-sanity-check passes). Until then, a question that fails verification is
-fixed or replaced, with the change noted in DECISIONS.md.
+Verification protocol (completed 2026-08-18): every question shipped with
+"verified": false. The human author checked each question against the
+quoted filing in data/text/ and flipped the flag only after seeing the
+evidence with their own eyes. Verification found and fixed real defects
+at a steady rate (wrong-tense answers, under-reported answer sets, one
+funding attribution error, quote-hygiene issues); the per-question repair
+log is benchmark/drafts/precheck-q030-q068.md, the rules it produced are
+DECISIONS.md #15-#30, and the ontology sanity-check (writing every path
+strictly against ontology.md) drove the ontology additions in #25-#30.
+Before the freeze, three mechanical passes ran over all 80: every
+evidence quote re-located verbatim in its named filing, every
+ontology_path term and edge direction checked against ontology.md, and a
+cross-question consistency read over every recurring fact family.
 
 Known bias, disclosed: an LLM drafted these questions and an LLM (Phase 3)
 extracts the graph, so the benchmark may over-represent facts LLMs reliably
@@ -56,7 +66,8 @@ as Ionis).
   "category": "multi_hop_2",
   "question": "Which companies in the corpus share an audit office with Exelixis?",
   "answer": "None. E&Y audits Exelixis from San Mateo and Halozyme from San Diego. Other companies verified individually.",
-  "ontology_path": "Company -AUDITED_BY{office}-> Company <-AUDITED_BY{office}- Company",
+  "required_core": "None share an office with Exelixis.",
+  "ontology_path": "Company(Exelixis) -AUDITED_BY{office: San Mateo, CA}-> Company(Ernst & Young LLP) <-AUDITED_BY{office: San Diego, CA}- Company(Halozyme)",
   "evidence": [
     {
       "ticker": "EXEL",
@@ -81,14 +92,24 @@ as Ionis).
   edges through Agreement/LegalCase nodes.
 - `answer`: hand-verified against filing text. Not from sweeps, not from
   memory, not from the web.
-- `evidence`: at least one quote per fact the answer depends on, from the
-  actual filing in data/text/. For multi-hop questions, one entry per hop.
-- `ontology_path`: required for multi_hop_2 / multi_hop_3 / aggregation.
-  If a question cannot be written as a path through ontology.md's types,
-  stop: it is either a question bug or an ontology bug. Surface it before
-  writing more questions.
+- `required_core` (optional): the pass bar for grading. Present on 47 of
+  the 68 in-scope questions, wherever the full answer carries precision
+  detail, provenance narration, or background beyond the question's
+  literal ask; the judge grades against the core when present and the
+  full answer otherwise (all claims required; DECISIONS.md #17). Extra
+  correct information is never penalized.
+- `evidence`: at least one quote per fact the answer depends on, verbatim
+  from the actual filing in data/text/ (ellipses join fragments of one
+  passage). For multi-hop questions, one entry per hop.
+- `ontology_path`: required for multi_hop_2 / multi_hop_3 / aggregation
+  (single_hop carries one too). Notation per DECISIONS.md #23: directed
+  edges in domain -> range order, roles on every PARTY_TO, `type` on
+  every Agreement, canonical instance names shared across questions, and
+  `count(...) where ...` with a bound result set for aggregation. If a
+  question cannot be written as a path through ontology.md's types, that
+  is a question bug or an ontology gap to surface (#20).
 - `out_of_scope` questions need `answer` set to why the system should
-  refuse, and no ontology_path.
+  refuse (prefixed REFUSE), and no ontology_path or evidence.
 
 ## Targets
 

@@ -1,7 +1,10 @@
 # Ontology v1
 
-Status: DRAFT. Freeze after sanity-check against the benchmark question set.
-Changes after freeze require a DECISIONS.md entry.
+Status: FROZEN as of 2026-08-18, with the benchmark v1 freeze. The
+sanity-check that gated the freeze: every benchmark ontology_path was
+written strictly against this file (DECISIONS.md #20, #23), and every
+gap that surfaced was resolved as #19 and #25-#30. Changes from here
+require a DECISIONS.md entry and create v2.
 
 ## Global conventions
 

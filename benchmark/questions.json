@@ -4,6 +4,7 @@
     "category": "single_hop",
     "question": "Which accounting firm audits Exelixis, and since what year?",
     "answer": "Ernst & Young LLP, since 2002 (San Mateo, California office).",
+    "required_core": "Ernst & Young LLP, since 2002.",
     "ontology_path": "Company(Exelixis) -AUDITED_BY{office: San Mateo, CA, start_year: 2002, status: active}-> Company(Ernst & Young LLP)",
     "evidence": [
       {
@@ -20,6 +21,7 @@
     "category": "single_hop",
     "question": "Who is Arrowhead Pharmaceuticals' current auditor, and did the company use a different auditor before?",
     "answer": "KPMG LLP (San Diego, CA) has been Arrowhead's auditor since 2024, succeeding Rose, Snyder & Jacobs LLP.",
+    "required_core": "KPMG LLP is Arrowhead's current auditor; before that the company used Rose, Snyder & Jacobs LLP.",
     "ontology_path": "Company(Arrowhead) -AUDITED_BY{office: San Diego, CA, start_year: 2024, status: active}-> Company(KPMG LLP); Company(Arrowhead) -AUDITED_BY{office: Encino, CA, start_year: 2004, end_date: 2023, status: former}-> Company(Rose, Snyder & Jacobs LLP)",
     "evidence": [
       {
@@ -125,6 +127,7 @@
     "category": "single_hop",
     "question": "What did Ionis receive when it sold a minority interest in its future SPINRAZA and pelacarsen royalties to Royalty Pharma, and when was the deal dated?",
     "answer": "Ionis received a $500 million upfront payment plus up to $625 million of potential future payments; the Royalty Purchase Agreement (via Akcea) with Royalty Pharma Investments 2019 ICAV is dated January 9, 2023.",
+    "required_core": "A $500 million upfront payment plus up to $625 million in potential future payments; the agreement is dated January 9, 2023.",
     "ontology_path": "Company(Ionis) -PARTY_TO{role: seller}-> Agreement(Ionis/Akcea-Royalty Pharma SPINRAZA and pelacarsen royalty purchase, type: royalty_purchase, signing_date: 2023-01-09) <-PARTY_TO{role: buyer}- Company(Royalty Pharma Investments 2019 ICAV); Company(Akcea Therapeutics) -PARTY_TO{role: seller}-> Agreement(Ionis/Akcea-Royalty Pharma SPINRAZA and pelacarsen royalty purchase); Agreement(Ionis/Akcea-Royalty Pharma SPINRAZA and pelacarsen royalty purchase) -COVERS-> Drug(SPINRAZA); Agreement(Ionis/Akcea-Royalty Pharma SPINRAZA and pelacarsen royalty purchase) -COVERS-> Compound(pelacarsen); Company(Royalty Pharma Investments 2019 ICAV) -PARTY_TO{role: payer}-> Payment(Royalty Pharma upfront to Ionis, kind: upfront, amount: $500M, form: cash, status: paid) <-PARTY_TO{role: payee}- Company(Ionis); Payment(Royalty Pharma upfront to Ionis) -PAID_UNDER-> Agreement(Ionis/Akcea-Royalty Pharma SPINRAZA and pelacarsen royalty purchase); Company(Royalty Pharma Investments 2019 ICAV) -AFFILIATE_OF{basis: referred to as \"Royalty Pharma\" by Ionis}-> Company(Royalty Pharma)",
     "evidence": [
       {
@@ -147,7 +150,8 @@
     "category": "single_hop",
     "question": "How much did Arrowhead receive (up to) from Royalty Pharma for its future olpasiran royalty interest, and when was the deal signed?",
     "answer": "Up to $410.0 million, under a November 2022 agreement between Arrowhead and Royalty Pharma covering Arrowhead's future royalty interest in olpasiran (licensed to Amgen in 2016).",
-    "ontology_path": "Company(Arrowhead) -PARTY_TO{role: seller}-> Agreement(Arrowhead-Royalty Pharma olpasiran royalty purchase, type: royalty_purchase, start_date: 2022-11) <-PARTY_TO{role: buyer}- Company(Royalty Pharma); Agreement(Arrowhead-Royalty Pharma olpasiran royalty purchase) -COVERS-> Compound(olpasiran); Company(Arrowhead) -PARTY_TO{role: licensor}-> Agreement(Arrowhead-Amgen olpasiran license, type: collaboration_license, start_date: 2016-09) <-PARTY_TO{role: licensee}- Company(Amgen); Agreement(Arrowhead-Amgen olpasiran license) -COVERS-> Compound(olpasiran)",
+    "required_core": "Up to $410.0 million, under a November 2022 agreement.",
+    "ontology_path": "Company(Arrowhead) -PARTY_TO{role: seller}-> Agreement(Arrowhead-Royalty Pharma olpasiran royalty purchase, type: royalty_purchase, signing_date: 2022-11) <-PARTY_TO{role: buyer}- Company(Royalty Pharma); Agreement(Arrowhead-Royalty Pharma olpasiran royalty purchase) -COVERS-> Compound(olpasiran); Company(Arrowhead) -PARTY_TO{role: licensor}-> Agreement(Arrowhead-Amgen olpasiran license, type: collaboration_license, signing_date: 2016-09) <-PARTY_TO{role: licensee}- Company(Amgen); Agreement(Arrowhead-Amgen olpasiran license) -COVERS-> Compound(olpasiran)",
     "evidence": [
       {
         "ticker": "ARWR",
@@ -185,6 +189,7 @@
     "category": "single_hop",
     "question": "When did Sarepta and Arrowhead Pharmaceuticals sign their exclusive license and collaboration agreement, and when did it become effective?",
     "answer": "Sarepta and Arrowhead signed the agreement on November 25, 2024; it became effective February 7, 2025, after HSR waiting period expiration.",
+    "required_core": "Signed November 25, 2024; effective February 7, 2025.",
     "ontology_path": "Company(Sarepta) -PARTY_TO{role: licensee}-> Agreement(Sarepta-Arrowhead exclusive license and collaboration, type: collaboration_license, signing_date: 2024-11-25, effective_date: 2025-02-07, status: active) <-PARTY_TO{role: licensor}- Company(Arrowhead)",
     "evidence": [
       {
@@ -287,6 +292,7 @@
     "verified": true
   },
   {
+    "id": "q015",
     "category": "single_hop",
     "question": "Who commercializes cabozantinib outside the United States?",
     "answer": "Ipsen holds all territories outside the U.S. and Japan; Takeda holds Japan.",
@@ -299,14 +305,14 @@
         "quote": "Ipsen is responsible for all territories outside of the U.S. and Japan, and Takeda is responsible for the Japanese market"
       }
     ],
-    "verified": true,
-    "id": "q015"
+    "verified": true
   },
   {
     "id": "q016",
     "category": "single_hop",
     "question": "Who led Neurocrine before its current CEO, and when did the handoff happen?",
     "answer": "Kevin Gorman, Ph.D., retired as CEO effective October 11, 2024. Kyle Gano, Ph.D., Neurocrine's former Chief Business Development and Strategy Officer, succeeded him as CEO and joined the Board that same day; Gorman remained on the Board.",
+    "required_core": "Kevin Gorman, who retired as CEO effective October 11, 2024; Kyle Gano succeeded him as CEO that day.",
     "ontology_path": "Person(Kevin Gorman) -OFFICER_OF{role: Chief Executive Officer, end_date: 2024-10-11, status: former}-> Company(Neurocrine); Person(Kevin Gorman) -OFFICER_OF{role: director, status: active}-> Company(Neurocrine); Person(Kyle Gano) -OFFICER_OF{role: Chief Business Development and Strategy Officer, end_date: 2024-10-11, status: former}-> Company(Neurocrine); Person(Kyle Gano) -OFFICER_OF{role: Chief Executive Officer, start_date: 2024-10-11, status: active}-> Company(Neurocrine); Person(Kyle Gano) -OFFICER_OF{role: director, start_date: 2024-10-11, status: active}-> Company(Neurocrine)",
     "evidence": [
       {
@@ -324,7 +330,7 @@
     "question": "When Arrowhead filed its FY2024 annual report, what had just happened with Sarepta?",
     "answer": "One day earlier, on November 25, 2024, Arrowhead entered into an Exclusive License and Collaboration Agreement with Sarepta Therapeutics plus a related $325.0 million Stock Purchase Agreement. The FY2024 10-K, filed November 26, 2024, describes the private placement as still subject to customary closing conditions and expected to close concurrently with the collaboration agreement.",
     "required_core": "Arrowhead had just signed a license and collaboration agreement with Sarepta, one day before filing.",
-    "ontology_path": "Company(Arrowhead) -PARTY_TO{role: licensor}-> Agreement(Arrowhead-Sarepta Exclusive License and Collaboration Agreement, type: collaboration_license, signing_date: 2024-11-25, status: pending as of 2024-11-26) <-PARTY_TO{role: licensee}- Company(Sarepta); Company(Arrowhead) -PARTY_TO{role: issuer}-> Agreement(Arrowhead-Sarepta Stock Purchase Agreement, type: stock_purchase, signing_date: 2024-11-25, status: pending as of 2024-11-26) <-PARTY_TO{role: purchaser}- Company(Sarepta); Filing(ARWR FY2024 10-K, date_filed: 2024-11-26) -FILED_BY-> Company(Arrowhead)",
+    "ontology_path": "Company(Arrowhead) -PARTY_TO{role: licensor}-> Agreement(Sarepta-Arrowhead exclusive license and collaboration, type: collaboration_license, signing_date: 2024-11-25, status: pending as of 2024-11-26) <-PARTY_TO{role: licensee}- Company(Sarepta); Company(Arrowhead) -PARTY_TO{role: issuer}-> Agreement(Arrowhead-Sarepta Stock Purchase Agreement, type: stock_purchase, signing_date: 2024-11-25, status: pending as of 2024-11-26) <-PARTY_TO{role: purchaser}- Company(Sarepta); Filing(ARWR FY2024 10-K, date_filed: 2024-11-26) -FILED_BY-> Company(Arrowhead)",
     "evidence": [
       {
         "ticker": "ARWR",
@@ -346,6 +352,7 @@
     "category": "single_hop",
     "question": "What was Ultragenyx's most recent Crysvita royalty sale, and when was it first disclosed?",
     "answer": "In November 2025, Ultragenyx sold OMERS the right to an additional 25% of future Crysvita royalty payments on U.S./Canada net sales, starting January 1, 2028, for $400.0 million upfront. It was first disclosed as a Subsequent Event in Ultragenyx's Q3 2025 10-Q, filed November 5, 2025.",
+    "required_core": "The November 2025 royalty purchase agreement with OMERS, under which OMERS paid $400.0 million for additional future Crysvita royalty payments; first disclosed in the Q3 2025 10-Q, filed November 5, 2025.",
     "ontology_path": "Company(Ultragenyx) -PARTY_TO{role: seller}-> Agreement(2025 OMERS Royalty Purchase Agreement, type: royalty_purchase, signing_date: 2025-11, territory: U.S. and Canada) <-PARTY_TO{role: buyer}- Company(OMERS (OCM LS23 Holdings LP)); Agreement(2025 OMERS Royalty Purchase Agreement) -COVERS-> Drug(Crysvita); Company(OMERS (OCM LS23 Holdings LP)) -PARTY_TO{role: payer}-> Payment(2025 OMERS upfront, kind: upfront, amount: $400.0M, form: cash, date: 2025-11, status: paid) <-PARTY_TO{role: payee}- Company(Ultragenyx); Payment(2025 OMERS upfront) -PAID_UNDER-> Agreement(2025 OMERS Royalty Purchase Agreement); Filing(RARE Q3 2025 10-Q, date_filed: 2025-11-05) -FILED_BY-> Company(Ultragenyx)",
     "evidence": [
       {
@@ -520,7 +527,7 @@
     "category": "multi_hop_2",
     "question": "Who receives the royalty Exelixis pays on cabozantinib sales, and how has that changed hands over time?",
     "answer": "October 2002: Exelixis agreed to pay GSK a 3% cabozantinib royalty. Effective January 1, 2021, Royalty Pharma acquired GSK's royalty rights. The U.S. leg of that royalty reverts back to GSK after September 2026.",
-    "ontology_path": "Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-GSK 2002 collaboration, type: collaboration, start_date: 2002-10, status: ended) <-PARTY_TO{role: collaborator}- Company(GSK); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, start_date: 2002-10, end_date: 2021-01-01, status: ended}-> Company(GSK); Company(GSK) -PARTY_TO{role: seller}-> Agreement(GSK-Royalty Pharma cabozantinib royalty purchase, type: royalty_purchase, start_date: 2021-01-01) <-PARTY_TO{role: buyer}- Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: non-U.S., start_date: 2021-01-01, status: active}-> Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: U.S., start_date: 2021-01-01, end_date: 2026-09, status: active}-> Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: U.S., start_date: 2026-09, status: pending}-> Company(GSK)",
+    "ontology_path": "Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-GSK 2002 collaboration, type: collaboration, signing_date: 2002-10, status: ended) <-PARTY_TO{role: collaborator}- Company(GSK); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, start_date: 2002-10, end_date: 2021-01-01, status: ended}-> Company(GSK); Company(GSK) -PARTY_TO{role: seller}-> Agreement(GSK-Royalty Pharma cabozantinib royalty purchase, type: royalty_purchase, effective_date: 2021-01-01) <-PARTY_TO{role: buyer}- Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: non-U.S., start_date: 2021-01-01, status: active}-> Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: U.S., start_date: 2021-01-01, end_date: 2026-09, status: active}-> Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: U.S., start_date: 2026-09, status: pending}-> Company(GSK)",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -578,7 +585,7 @@
     "question": "How are Halozyme and Exelixis each connected to Bristol Myers Squibb?",
     "answer": "Halozyme lists Bristol Myers Squibb as an ENHANZE collaboration and licensing partner and earns royalties on one commercial BMS product. Exelixis's CABOMETYX is approved for advanced renal cell carcinoma in combination with BMS's nivolumab (OPDIVO).",
     "required_core": "Halozyme: BMS is an ENHANZE licensing partner. Exelixis: CABOMETYX is approved in combination with BMS's nivolumab (OPDIVO).",
-    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-BMS ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Bristol Myers Squibb); Agreement(HALO-BMS ENHANZE) -COVERS-> Technology(ENHANZE); Company(Bristol Myers Squibb) -OWES_ROYALTY_TO{basis: sales of one commercial ENHANZE partner product}-> Company(Halozyme); Drug(CABOMETYX) -APPROVED_FOR{jurisdiction: FDA, label: advanced RCC, alone and in combination with BMS's nivolumab (OPDIVO)}-> Indication(renal cell carcinoma); Company(Bristol Myers Squibb) -OWNS-> Compound(nivolumab); Drug(OPDIVO) -CONTAINS-> Compound(nivolumab)",
+    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-BMS ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Bristol Myers Squibb); Agreement(Halozyme-BMS ENHANZE) -COVERS-> Technology(ENHANZE); Company(Bristol Myers Squibb) -OWES_ROYALTY_TO{basis: sales of one commercial ENHANZE partner product}-> Company(Halozyme); Drug(CABOMETYX) -APPROVED_FOR{jurisdiction: FDA, label: advanced RCC, alone and in combination with BMS's nivolumab (OPDIVO)}-> Indication(renal cell carcinoma); Company(Bristol Myers Squibb) -OWNS-> Compound(nivolumab); Drug(OPDIVO) -CONTAINS-> Compound(nivolumab)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -624,7 +631,7 @@
     "question": "How is Janssen connected to Halozyme and to Alkermes?",
     "answer": "Halozyme: Janssen (Janssen Biotech, Inc.) is an ENHANZE licensee; two commercial products from the Janssen collaboration, including DARZALEX FASPRO, are co-formulated with ENHANZE and pay Halozyme royalties, and through the Elektrofi acquisition Halozyme also has a Hypercon collaboration and license agreement with Janssen. Alkermes: Janssen partially terminated an exclusive license to Alkermes's NANOCRYSTAL technology behind the long-acting INVEGA products, Alkermes took Janssen to arbitration, and the May 2023 final award found Alkermes due back royalties of $195.4 million (inclusive of $8.1 million in late-payment interest).",
     "required_core": "Halozyme: Janssen licenses Halozyme drug-delivery technology (ENHANZE; also Hypercon after the Elektrofi acquisition; naming either connection counts). Alkermes: Janssen held an exclusive license to Alkermes's NANOCRYSTAL technology behind the long-acting INVEGA products, partially terminated it, and a May 2023 arbitration award required Janssen to pay Alkermes back royalties.",
-    "ontology_path": "Company(HALO) -PARTY_TO{role: licensor}-> Agreement(HALO-Janssen ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Company(HALO) -PARTY_TO{role: licensor}-> Agreement(HALO-Janssen Hypercon, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Company(ALKS) -PARTY_TO{role: licensor}-> Agreement(NANOCRYSTAL/INVEGA license, type: license, status: active) <-PARTY_TO{role: licensee}- Company(Janssen Pharmaceutica N.V.); Company(ALKS) -PARTY_TO{role: claimant}-> LegalCase(Alkermes v. Janssen arbitration, status: resolved, end_date: 2023-05) <-PARTY_TO{role: respondent}- Company(Janssen Pharmaceutica N.V.); Company(Janssen Pharmaceutica N.V.) -PARTY_TO{role: payer}-> Payment(Final Award back royalties, kind: award, amount: $195.4M incl. $8.1M late-payment interest, form: cash, date: 2023-Q2, status: paid) <-PARTY_TO{role: payee}- Company(ALKS); Payment(Final Award back royalties) -PAID_UNDER-> LegalCase(Alkermes v. Janssen arbitration)",
+    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Janssen ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Janssen Hypercon, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Company(Alkermes) -PARTY_TO{role: licensor}-> Agreement(NANOCRYSTAL/INVEGA license, type: license, status: active) <-PARTY_TO{role: licensee}- Company(Janssen Pharmaceutica N.V.); Company(Alkermes) -PARTY_TO{role: claimant}-> LegalCase(Alkermes v. Janssen arbitration, status: resolved, end_date: 2023-05) <-PARTY_TO{role: respondent}- Company(Janssen Pharmaceutica N.V.); Company(Janssen Pharmaceutica N.V.) -PARTY_TO{role: payer}-> Payment(Final Award back royalties, kind: award, amount: $195.4M incl. $8.1M late-payment interest, form: cash, date: 2023-Q2, status: paid) <-PARTY_TO{role: payee}- Company(Alkermes); Payment(Final Award back royalties) -PAID_UNDER-> LegalCase(Alkermes v. Janssen arbitration)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -658,7 +665,8 @@
     "category": "multi_hop_2",
     "question": "How are Exelixis and Halozyme each partnered with Roche?",
     "answer": "Exelixis collaborates with Roche to combine cabozantinib with Roche's atezolizumab (an anti-PD-L1 antibody). Halozyme licenses its ENHANZE technology to Roche, earning royalties on Roche products including Phesgo, whose Japan approval came via Roche Group member Chugai.",
-    "ontology_path": "Company(EXEL) -PARTY_TO{role: collaborator}-> Agreement(EXEL-Roche cabozantinib + atezolizumab clinical collaboration, type: collaboration) <-PARTY_TO{role: collaborator}- Company(Roche); Agreement(EXEL-Roche cabozantinib + atezolizumab clinical collaboration) -COVERS-> Compound(cabozantinib); Agreement(EXEL-Roche cabozantinib + atezolizumab clinical collaboration) -COVERS-> Compound(atezolizumab); Company(Roche) -OWNS-> Compound(atezolizumab); Company(HALO) -PARTY_TO{role: licensor}-> Agreement(HALO-Roche ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Roche); Agreement(HALO-Roche ENHANZE) -COVERS-> Technology(ENHANZE); Company(Roche) -OWES_ROYALTY_TO{basis: sales of ENHANZE partner products incl. Phesgo}-> Company(HALO); Drug(Phesgo) -USES_TECHNOLOGY-> Technology(ENHANZE); Drug(Phesgo) -APPROVED_FOR{jurisdiction: Japan (MHLW)}-> Indication(HER2-positive breast cancer); Company(Chugai) -AFFILIATE_OF{basis: \"a member of the Roche Group\"}-> Company(Roche)",
+    "required_core": "Exelixis: a clinical collaboration with Roche evaluating cabozantinib in combination with Roche's atezolizumab. Halozyme: licenses its ENHANZE technology to Roche and earns royalties on Roche ENHANZE products such as Phesgo.",
+    "ontology_path": "Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-Roche cabozantinib + atezolizumab clinical collaboration, type: collaboration) <-PARTY_TO{role: collaborator}- Company(Roche); Agreement(Exelixis-Roche cabozantinib + atezolizumab clinical collaboration) -COVERS-> Compound(cabozantinib); Agreement(Exelixis-Roche cabozantinib + atezolizumab clinical collaboration) -COVERS-> Compound(atezolizumab); Company(Roche) -OWNS-> Compound(atezolizumab); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Roche ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Roche); Agreement(Halozyme-Roche ENHANZE) -COVERS-> Technology(ENHANZE); Company(Roche) -OWES_ROYALTY_TO{basis: sales of ENHANZE partner products incl. Phesgo}-> Company(Halozyme); Drug(Phesgo) -USES_TECHNOLOGY-> Technology(ENHANZE); Drug(Phesgo) -APPROVED_FOR{jurisdiction: Japan (MHLW)}-> Indication(HER2-positive breast cancer); Company(Chugai) -AFFILIATE_OF{basis: \"a member of the Roche Group\"}-> Company(Roche)",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -680,7 +688,8 @@
     "category": "multi_hop_2",
     "question": "Do Alkermes and Arrowhead have any leadership connections to Bristol-Myers Squibb?",
     "answer": "Alkermes' CFO held finance and operations roles at Bristol-Myers Squibb earlier in his career. Arrowhead director Dr. Olukotun spent the first 20 years of his career at Pfizer, Bristol-Myers Squibb, and Mallinckrodt.",
-    "ontology_path": "Person(Reed) -OFFICER_OF{status:former}-> Company(BMS); Person(Reed) -OFFICER_OF{role:CFO}-> Company(ALKS); Person(Olukotun) -OFFICER_OF{status:former}-> Company(BMS); Person(Olukotun) -OFFICER_OF{role:director}-> Company(ARWR)",
+    "required_core": "Yes, both: Alkermes's CFO Joshua Reed earlier held finance and operations positions at Bristol-Myers Squibb, and Arrowhead director Adeoye Olukotun spent part of his career at Bristol-Myers Squibb.",
+    "ontology_path": "Person(Joshua Reed) -OFFICER_OF{role: Senior Vice President, Chief Financial Officer, start_date: 2025-09, status: active}-> Company(Alkermes); Person(Joshua Reed) -OFFICER_OF{role: finance and operations positions, status: former}-> Company(Bristol Myers Squibb); Person(Adeoye Olukotun) -OFFICER_OF{role: director, start_date: 2020, status: active}-> Company(Arrowhead); Person(Adeoye Olukotun) -OFFICER_OF{role: clinical development roles, status: former}-> Company(Bristol Myers Squibb)",
     "evidence": [
       {
         "ticker": "ALKS",
@@ -703,7 +712,7 @@
     "question": "Why does Baxalta US appear under the Takeda name in Halozyme's ENHANZE agreement, and which other corpus companies have their own direct Takeda deals?",
     "answer": "Halozyme's 10-K defines its ENHANZE counterparty \"Takeda\" as two legal entities taken together, \"Takeda Pharmaceuticals International AG and Baxalta US Inc.\"; the filing groups Baxalta under the Takeda name as one collaboration partner and does not explain the corporate history behind it. Three other corpus companies have their own direct Takeda deals: Exelixis (a January 2017 collaboration and license agreement giving Takeda exclusive commercialization rights to cabozantinib in Japan), Neurocrine (a 2020 exclusive license agreement under which Neurocrine in-licensed psychiatry compounds including osavampator from Takeda), and Arrowhead (an October 2020 Exclusive License and Co-Funding Agreement with Takeda covering fazirsiran, formerly ARO-AAT).",
     "required_core": "Halozyme's filing treats Takeda Pharmaceuticals International AG and Baxalta US Inc. together as its single ENHANZE partner \"Takeda\". Direct Takeda deals elsewhere in the corpus: Exelixis (cabozantinib, Japan), Neurocrine (osavampator license), Arrowhead (fazirsiran/ARO-AAT).",
-    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-Takeda ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Takeda Pharmaceuticals International AG); Company(Baxalta US Inc.) -PARTY_TO{role: licensee}-> Agreement(HALO-Takeda ENHANZE); Company(Exelixis) -PARTY_TO{role: licensor}-> Agreement(Exelixis-Takeda cabozantinib collaboration, type: collaboration_license, signing_date: 2017-01, territory: Japan) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Exelixis-Takeda cabozantinib collaboration) -COVERS-> Compound(cabozantinib); Company(Neurocrine) -PARTY_TO{role: licensee}-> Agreement(2020 Takeda Agreement, type: license, signing_date: 2020) <-PARTY_TO{role: licensor}- Company(Takeda); Agreement(2020 Takeda Agreement) -COVERS-> Compound(osavampator); Company(Arrowhead) -PARTY_TO{role: licensor}-> Agreement(Arrowhead-Takeda Exclusive License and Co-Funding Agreement, type: collaboration_license, signing_date: 2020-10) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Arrowhead-Takeda Exclusive License and Co-Funding Agreement) -COVERS-> Compound(fazirsiran)",
+    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Takeda 2007 collaboration, type: collaboration_license, signing_date: 2007-09) <-PARTY_TO{role: licensee}- Company(Takeda Pharmaceuticals International AG); Company(Baxalta US Inc.) -PARTY_TO{role: licensee}-> Agreement(Halozyme-Takeda 2007 collaboration); Company(Exelixis) -PARTY_TO{role: licensor}-> Agreement(Exelixis-Takeda cabozantinib collaboration, type: collaboration_license, signing_date: 2017-01, territory: Japan) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Exelixis-Takeda cabozantinib collaboration) -COVERS-> Compound(cabozantinib); Company(Neurocrine) -PARTY_TO{role: licensee}-> Agreement(2020 Takeda Agreement, type: license, signing_date: 2020) <-PARTY_TO{role: licensor}- Company(Takeda); Agreement(2020 Takeda Agreement) -COVERS-> Compound(osavampator); Company(Arrowhead) -PARTY_TO{role: licensor}-> Agreement(Arrowhead-Takeda Exclusive License and Co-Funding Agreement, type: collaboration_license, signing_date: 2020-10) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Arrowhead-Takeda Exclusive License and Co-Funding Agreement) -COVERS-> Compound(fazirsiran)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -737,7 +746,8 @@
     "category": "multi_hop_2",
     "question": "What did Sarepta pay Arrowhead when their collaboration closed, and how much revenue did Arrowhead recognize from the deal in fiscal 2025?",
     "answer": "Sarepta paid $500.0 million in cash plus a $325.0 million equity investment (11,926,301 Arrowhead shares) at the February 7, 2025 closing. Arrowhead recorded $696.8 million in revenue under the Sarepta Collaboration Agreement during the year ended September 30, 2025.",
-    "ontology_path": "Company(SRPT) -PARTY_TO{role:licensee}-> Agreement(Sarepta Collaboration Agreement, 2024-11-25) <-PARTY_TO{role:licensor}- Company(ARWR)",
+    "required_core": "Sarepta paid a $500.0 million upfront cash payment plus $325.0 million for Arrowhead common stock at the February 2025 closing; Arrowhead recognized $696.8 million in revenue under the deal in fiscal 2025.",
+    "ontology_path": "Company(Sarepta) -PARTY_TO{role: licensee}-> Agreement(Sarepta-Arrowhead exclusive license and collaboration, type: collaboration_license, signing_date: 2024-11-25, effective_date: 2025-02-07) <-PARTY_TO{role: licensor}- Company(Arrowhead); Company(Sarepta) -PARTY_TO{role: payer}-> Payment(Sarepta upfront to Arrowhead, kind: upfront, amount: $500.0M, form: cash, date: 2025-02, status: paid) <-PARTY_TO{role: payee}- Company(Arrowhead); Payment(Sarepta upfront to Arrowhead) -PAID_UNDER-> Agreement(Sarepta-Arrowhead exclusive license and collaboration); Company(Sarepta) -PARTY_TO{role: purchaser}-> Agreement(Arrowhead-Sarepta Stock Purchase Agreement, type: stock_purchase, signing_date: 2024-11-25) <-PARTY_TO{role: issuer}- Company(Arrowhead); Company(Sarepta) -PARTY_TO{role: payer}-> Payment(Sarepta purchase of 11,926,301 Arrowhead shares, kind: consideration, amount: $325.0M, form: cash, date: 2025-02-07, status: paid) <-PARTY_TO{role: payee}- Company(Arrowhead); Payment(Sarepta purchase of 11,926,301 Arrowhead shares) -PAID_UNDER-> Agreement(Arrowhead-Sarepta Stock Purchase Agreement); Filing(ARWR FY2025 10-K, date_filed: 2025-11-25) -FILED_BY-> Company(Arrowhead)",
     "evidence": [
       {
         "ticker": "SRPT",
@@ -765,7 +775,7 @@
     "category": "multi_hop_2",
     "question": "Halozyme has two separate agreements with Takeda signed 18 years apart. What does each cover?",
     "answer": "September 2007: a worldwide exclusive collaboration and license for combinations of rHuPH20 with GAMMAGARD LIQUID (the HYQVIA franchise). December 2025: a new global collaboration and exclusive license giving Takeda access to ENHANZE for use with vedolizumab (ENTYVIO).",
-    "ontology_path": "Company(HALO) -PARTY_TO-> Agreement(2007) <-PARTY_TO- Company(Takeda); Company(HALO) -PARTY_TO-> Agreement(2025) <-PARTY_TO- Company(Takeda)",
+    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Takeda 2007 collaboration, type: collaboration_license, signing_date: 2007-09, territory: worldwide, status: active) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Halozyme-Takeda 2007 collaboration) -COVERS-> Compound(rHuPH20); Agreement(Halozyme-Takeda 2007 collaboration) -COVERS-> Drug(HYQVIA); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Takeda 2025 collaboration, type: collaboration_license, signing_date: 2025-12, territory: global, status: active) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Halozyme-Takeda 2025 collaboration) -COVERS-> Technology(ENHANZE); Agreement(Halozyme-Takeda 2025 collaboration) -COVERS-> Drug(ENTYVIO)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -787,7 +797,7 @@
     "category": "multi_hop_2",
     "question": "How did Neurocrine's osavampator arrangement with Takeda change in January 2025?",
     "answer": "Originally in-licensed in 2020 with exclusive rights under a profit-and-loss-sharing structure; in January 2025 the deal was amended and restated: profit-sharing became a royalty-bearing license and Japan rights returned to Takeda, leaving Neurocrine worldwide rights except Japan.",
-    "ontology_path": "Company(NBIX) -PARTY_TO-> Agreement(2020 Takeda license, amended 2025-01) <-PARTY_TO- Company(Takeda)",
+    "ontology_path": "Company(Neurocrine) -PARTY_TO{role: licensee}-> Agreement(2020 Takeda Agreement, type: license, signing_date: 2020, amended and restated: 2025-01 (profit-sharing converted to royalty-bearing license, Japan rights returned to Takeda), status: active) <-PARTY_TO{role: licensor}- Company(Takeda); Agreement(2020 Takeda Agreement) -COVERS-> Compound(osavampator)",
     "evidence": [
       {
         "ticker": "NBIX",
@@ -809,13 +819,14 @@
     "category": "multi_hop_2",
     "question": "What happened to Neurocrine's epilepsy collaboration with Idorsia?",
     "answer": "Neurocrine licensed NBI-827104 from Idorsia in 2020 to develop and commercialize it for a rare pediatric epilepsy. In the fourth quarter of 2024 Neurocrine gave Idorsia written notice of termination, and the FY2024 10-K confirms the termination became effective in January 2025; the deal is no longer mentioned in the FY2025 10-K.",
-    "ontology_path": "Agreement(NBIX-Idorsia License, type: license) -PARTY_TO-> Company(NBIX), Company(Idorsia); -COVERS-> Compound(NBI-827104); {start_date: 2020, end_date: 2025-01, status: terminated}",
+    "required_core": "Neurocrine ended it: having licensed NBI-827104 from Idorsia in 2020, Neurocrine gave written notice of termination in the fourth quarter of 2024, and the termination became effective in January 2025.",
+    "ontology_path": "Company(Neurocrine) -PARTY_TO{role: licensee}-> Agreement(Neurocrine-Idorsia collaboration and license, type: collaboration_license, signing_date: 2020, end_date: 2025-01, status: terminated) <-PARTY_TO{role: licensor}- Company(Idorsia); Agreement(Neurocrine-Idorsia collaboration and license) -COVERS-> Compound(NBI-827104)",
     "evidence": [
       {
         "ticker": "NBIX",
         "form": "10-Q",
         "date_filed": "2024-10-30",
-        "quote": "In 2020, we entered into a collaboration and license agreement with Idorsia, pursuant to which we acquired the exclusive rights to develop and commercialize NBI-827104 ... In the fourth quarter of 2024 Neurocrine gave Idorsia written notice"
+        "quote": "In 2020, we entered into a collaboration and license agreement with Idorsia, pursuant to which we acquired the exclusive rights to develop and commercialize NBI-827104 ... In the fourth quarter of 2024, we provided Idorsia with written notice of termination of the license agreement to develop and commercialize NBI-827104"
       },
       {
         "ticker": "NBIX",
@@ -832,7 +843,7 @@
     "question": "How did Sarepta's description of ELEVIDYS change between its FY2024 and FY2025 annual reports?",
     "answer": "The FY2024 10-K (filed February 28, 2025) describes ELEVIDYS as an FDA-approved gene therapy for ambulatory Duchenne patients at least four years old (with non-ambulatory patients covered under accelerated approval) and mentions no patient deaths, shipment suspension, or boxed warning. The FY2025 10-K (filed March 2, 2026) discloses two non-ambulatory patient deaths from acute liver failure (announced March 18 and June 15, 2025), a temporary suspension of all U.S. ELEVIDYS shipments effective July 22, 2025, and a November 2025 boxed warning for acute liver injury and acute liver failure with removal of the non-ambulatory population from the indication.",
     "required_core": "FY2024 10-K: ELEVIDYS described as an FDA-approved gene therapy for ambulatory Duchenne patients, with no mention of deaths, a shipment suspension, or a boxed warning. FY2025 10-K: patient deaths from acute liver failure (March and June 2025), a U.S. shipment suspension (July 2025), and a boxed warning (November 2025).",
-    "ontology_path": "Drug(ELEVIDYS) -APPROVED_FOR{jurisdiction: FDA, approved_date: 2024-06, label: ambulatory patients at least four years old with Duchenne, non-ambulatory patients under accelerated approval (per FY2024 10-K); boxed warning for ALI/ALF added and non-ambulatory population removed 2025-11 (per FY2025 10-K)}-> Indication(Duchenne muscular dystrophy); Company(Sarepta) -OWNS-> Drug(ELEVIDYS); Filing(SRPT FY2024 10-K, date_filed: 2025-02-28) -FILED_BY-> Company(Sarepta); Filing(SRPT FY2025 10-K, date_filed: 2026-03-02) -FILED_BY-> Company(Sarepta)",
+    "ontology_path": "Drug(ELEVIDYS) -APPROVED_FOR{jurisdiction: FDA, approved_date: 2024-06, label: ambulatory patients at least four years old with Duchenne, non-ambulatory patients under accelerated approval (per FY2024 10-K), boxed warning for ALI/ALF added and non-ambulatory population removed 2025-11 (per FY2025 10-K)}-> Indication(Duchenne muscular dystrophy); Company(Sarepta) -OWNS-> Drug(ELEVIDYS); Filing(SRPT FY2024 10-K, date_filed: 2025-02-28) -FILED_BY-> Company(Sarepta); Filing(SRPT FY2025 10-K, date_filed: 2026-03-02) -FILED_BY-> Company(Sarepta)",
     "evidence": [
       {
         "ticker": "SRPT",
@@ -861,7 +872,7 @@
     "question": "Has VUMERITY, which Alkermes licenses to Biogen, faced generic challenges?",
     "answer": "Yes. Alkermes's FY2024 10-K (filed February 12, 2025) discloses that Biogen and Alkermes Pharma Ireland sued Zydus in July 2023 over an ANDA for generic diroximel fumarate (VUMERITY) capsules, with a bench trial set for July 28, 2025. The Q3 2025 10-Q (filed October 28, 2025) reports the parties settled on July 21, 2025, with Zydus receiving a license to sell a generic VUMERITY near patent expiration and the case dismissed; the litigation is no longer mentioned in the FY2025 10-K.",
     "required_core": "Yes. Zydus filed an ANDA for a generic version of VUMERITY; Biogen and Alkermes Pharma Ireland sued Zydus for patent infringement in July 2023, and the parties settled in July 2025, with Zydus granted a license to sell a generic VUMERITY near patent expiration and the case dismissed.",
-    "ontology_path": "LegalCase(Biogen/APIL v. Zydus, VUMERITY ANDA Litigation) -PARTY_TO-> Company(Biogen), Company(Alkermes Pharma Ireland Limited), Company(Zydus); -COVERS-> Drug(VUMERITY); {filed_date: 2023-07, end_date: 2025-07-21, status: resolved}",
+    "ontology_path": "Company(Biogen) -PARTY_TO{role: plaintiff}-> LegalCase(VUMERITY ANDA Litigation, court: DE District Court, filed_date: 2023-07, patents: [8,669,281, 9,090,558, 10,080,733], end_date: 2025-07-21, status: resolved) <-PARTY_TO{role: defendant}- Company(Zydus); Company(Alkermes Pharma Ireland Limited) -PARTY_TO{role: plaintiff}-> LegalCase(VUMERITY ANDA Litigation); LegalCase(VUMERITY ANDA Litigation) -COVERS-> Drug(VUMERITY); Company(Zydus) -PARTY_TO{role: licensee}-> Agreement(Zydus VUMERITY settlement and license, type: license, signing_date: 2025-07-21) <-PARTY_TO{role: licensor}- Company(Biogen)",
     "evidence": [
       {
         "ticker": "ALKS",
@@ -883,7 +894,8 @@
     "category": "multi_hop_2",
     "question": "How did Ionis's big cardiomyopathy trial for eplontersen turn out? Did Ionis change its 2026 guidance afterward?",
     "answer": "It missed. Ionis announced on July 9, 2026 that the Phase 3 CARDIO-TTRansform trial of eplontersen in ATTR-CM patients did not meet its primary composite endpoint of CV mortality and recurrent CV events versus placebo, though a prespecified monotherapy subgroup showed a nominally significant benefit. The next day, Ionis reaffirmed that its full-year 2026 financial guidance was unchanged.",
-    "ontology_path": "Compound(eplontersen) -IN_DEVELOPMENT_FOR{phase: 3, label: \"CARDIO-TTRansform trial for ATTR-CM\", status: primary endpoint not met}-> Indication(transthyretin amyloid cardiomyopathy); Filing(IONS 8-K 2026-07-09) -FILED_BY-> Company(IONS); Filing(IONS 8-K 2026-07-10) -FILED_BY-> Company(IONS)",
+    "required_core": "The trial missed its primary endpoint (announced July 9, 2026); Ionis reaffirmed its 2026 financial guidance, unchanged.",
+    "ontology_path": "Compound(eplontersen) -IN_DEVELOPMENT_FOR{phase: 3, label: \"CARDIO-TTRansform trial for ATTR-CM\", status: primary endpoint not met}-> Indication(transthyretin amyloid cardiomyopathy); Filing(IONS 8-K 2026-07-09) -FILED_BY-> Company(Ionis); Filing(IONS 8-K 2026-07-10) -FILED_BY-> Company(Ionis)",
     "evidence": [
       {
         "ticker": "IONS",
@@ -953,7 +965,7 @@
     "question": "Is any ENHANZE collaboration partner of Halozyme majority-owned by a company that formerly collaborated with Exelixis?",
     "answer": "Yes. ViiV Healthcare, an ENHANZE partner since June 2021, is majority owned by GlaxoSmithKline (GSK). GSK had a product development and commercialization collaboration with Exelixis established in October 2002, now historical; a 3% cabozantinib royalty obligation survives it.",
     "required_core": "Yes. ViiV Healthcare, a Halozyme ENHANZE partner, is majority owned by GSK, and GSK had a collaboration with Exelixis (established October 2002, since ended).",
-    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-ViiV ENHANZE, type: collaboration_license, signing_date: 2021-06) <-PARTY_TO{role: licensee}- Company(ViiV Healthcare); Agreement(HALO-ViiV ENHANZE) -COVERS-> Technology(ENHANZE); Company(ViiV Healthcare) -SUBSIDIARY_OF{status: active}-> Company(GSK); Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-GSK 2002 collaboration, type: collaboration, signing_date: 2002-10, status: ended) <-PARTY_TO{role: collaborator}- Company(GSK); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, basis: total net sales of any product containing cabozantinib, status: active}-> Company(Royalty Pharma)",
+    "ontology_path": "Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-ViiV ENHANZE, type: collaboration_license, signing_date: 2021-06) <-PARTY_TO{role: licensee}- Company(ViiV Healthcare); Agreement(Halozyme-ViiV ENHANZE) -COVERS-> Technology(ENHANZE); Company(ViiV Healthcare) -SUBSIDIARY_OF{status: active}-> Company(GSK); Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-GSK 2002 collaboration, type: collaboration, signing_date: 2002-10, status: ended) <-PARTY_TO{role: collaborator}- Company(GSK); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, basis: total net sales of any product containing cabozantinib, status: active}-> Company(Royalty Pharma)",
     "evidence": [
       {
         "ticker": "HALO",
@@ -988,7 +1000,7 @@
     "question": "Royalty Pharma holds royalty interests originating from both Ionis and Exelixis. Does it keep the Exelixis stream permanently?",
     "answer": "No. In a January 2023 deal, Royalty Pharma paid Ionis $500 million upfront for a minority interest in future SPINRAZA and pelacarsen royalties. Separately, effective January 1, 2021, Royalty Pharma acquired Exelixis's cabozantinib royalty from GSK, but the U.S. leg of that royalty reverts back to GSK after September 2026.",
     "required_core": "No. The U.S. leg of the cabozantinib royalty reverts to GSK after September 2026 (non-U.S. is for the full term).",
-    "ontology_path": "Company(IONS) -PARTY_TO-> Agreement(royalty monetization) <-PARTY_TO- Company(Royalty Pharma) -PARTY_TO-> Agreement(cabozantinib royalty purchase) <-PARTY_TO- Company(EXEL); Company(Royalty Pharma) -OWES_ROYALTY_TO{territory: US, status: pending}-> Company(GSK)",
+    "ontology_path": "Company(Ionis) -PARTY_TO{role: seller}-> Agreement(Ionis/Akcea-Royalty Pharma SPINRAZA and pelacarsen royalty purchase, type: royalty_purchase, signing_date: 2023-01-09) <-PARTY_TO{role: buyer}- Company(Royalty Pharma Investments 2019 ICAV); Company(Royalty Pharma Investments 2019 ICAV) -AFFILIATE_OF{basis: referred to as \"Royalty Pharma\" by Ionis}-> Company(Royalty Pharma); Company(GSK) -PARTY_TO{role: seller}-> Agreement(GSK-Royalty Pharma cabozantinib royalty purchase, type: royalty_purchase, effective_date: 2021-01-01) <-PARTY_TO{role: buyer}- Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: non-U.S., start_date: 2021-01-01, status: active}-> Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: U.S., start_date: 2021-01-01, end_date: 2026-09, status: active}-> Company(Royalty Pharma); Company(Exelixis) -OWES_ROYALTY_TO{royalty_rate: 3%, territory: U.S., start_date: 2026-09, status: pending}-> Company(GSK)",
     "evidence": [
       {
         "ticker": "IONS",
@@ -1099,7 +1111,7 @@
     "question": "An Ionis director used to run Janssen Biotech. Does Janssen also do business with any other companies in this corpus?",
     "answer": "Yes, two. Ionis director Michael Yang was President of Janssen Biotech Inc. (one of the Janssen Pharmaceutical Companies of Johnson & Johnson). Halozyme: Janssen Biotech is an ENHANZE licensee, and Janssen's DARZALEX FASPRO (daratumumab and hyaluronidase-fihj) is co-formulated with ENHANZE technology. Alkermes: Janssen (Janssen Pharmaceutica N.V. and affiliates) holds an exclusive license to Alkermes's NANOCRYSTAL technology, which was used to develop the long-acting INVEGA products, and Alkermes's collaborative arrangements with Janssen accounted for about 9%, 17% and 31% of its revenues in 2025, 2024 and 2023.",
     "required_core": "Yes: Halozyme (Janssen is an ENHANZE licensee; DARZALEX FASPRO is co-formulated with ENHANZE) and Alkermes (Janssen licenses Alkermes's NANOCRYSTAL technology behind the long-acting INVEGA products, a royalty-bearing collaborative arrangement).",
-    "ontology_path": "Person(Michael Yang) -OFFICER_OF{role: director, start_date: 2023-12, status: active}-> Company(Ionis); Person(Michael Yang) -OFFICER_OF{role: President, status: former}-> Company(Janssen Biotech, Inc.); Company(Janssen Biotech, Inc.) -AFFILIATE_OF{basis: \"Janssen Pharmaceutical Companies of Johnson & Johnson\"}-> Company(Johnson & Johnson); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-Janssen ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Agreement(HALO-Janssen ENHANZE) -COVERS-> Technology(ENHANZE); Drug(DARZALEX FASPRO) -USES_TECHNOLOGY-> Technology(ENHANZE); Company(Alkermes) -PARTY_TO{role: licensor}-> Agreement(NANOCRYSTAL/INVEGA license, type: license, status: active) <-PARTY_TO{role: licensee}- Company(Janssen Pharmaceutica N.V.); Agreement(NANOCRYSTAL/INVEGA license) -COVERS-> Technology(NANOCRYSTAL); Company(Janssen Pharmaceutica N.V.) -OWES_ROYALTY_TO{basis: net sales of the long-acting INVEGA products, status: active}-> Company(Alkermes)",
+    "ontology_path": "Person(Michael Yang) -OFFICER_OF{role: director, start_date: 2023-12, status: active}-> Company(Ionis); Person(Michael Yang) -OFFICER_OF{role: President, status: former}-> Company(Janssen Biotech, Inc.); Company(Janssen Biotech, Inc.) -AFFILIATE_OF{basis: \"Janssen Pharmaceutical Companies of Johnson & Johnson\"}-> Company(Johnson & Johnson); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Janssen ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Agreement(Halozyme-Janssen ENHANZE) -COVERS-> Technology(ENHANZE); Drug(DARZALEX FASPRO) -USES_TECHNOLOGY-> Technology(ENHANZE); Company(Alkermes) -PARTY_TO{role: licensor}-> Agreement(NANOCRYSTAL/INVEGA license, type: license, status: active) <-PARTY_TO{role: licensee}- Company(Janssen Pharmaceutica N.V.); Agreement(NANOCRYSTAL/INVEGA license) -COVERS-> Technology(NANOCRYSTAL); Company(Janssen Pharmaceutica N.V.) -OWES_ROYALTY_TO{basis: net sales of the long-acting INVEGA products, status: active}-> Company(Alkermes)",
     "evidence": [
       {
         "ticker": "IONS",
@@ -1146,7 +1158,7 @@
     "question": "An Ionis director previously worked at GSK, and GSK's ViiV subsidiary partners with a corpus company. Which one, and what does that partnership cover?",
     "answer": "Ionis director Allene M. Diaz was Senior Vice President, R&D Portfolio Management at GlaxoSmithKline from September 2019 to June 2020. ViiV Healthcare, majority owned by GSK, has a global collaboration and license agreement with Halozyme giving ViiV exclusive access to Halozyme's ENHANZE drug delivery technology.",
     "required_core": "Halozyme. ViiV Healthcare (majority owned by GSK) has a global collaboration and license agreement with Halozyme giving ViiV exclusive access to Halozyme's ENHANZE drug-delivery technology.",
-    "ontology_path": "Person(Allene M. Diaz) -OFFICER_OF{role: director, start_date: 2021-06, status: active}-> Company(Ionis); Person(Allene M. Diaz) -OFFICER_OF{role: Senior Vice President, Research and Development Portfolio Management, start_date: 2019-09, end_date: 2020-06, status: former}-> Company(GSK); Company(ViiV Healthcare) -SUBSIDIARY_OF{status: active}-> Company(GSK); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-ViiV ENHANZE, type: collaboration_license, signing_date: 2021-06) <-PARTY_TO{role: licensee}- Company(ViiV Healthcare); Agreement(HALO-ViiV ENHANZE) -COVERS-> Technology(ENHANZE)",
+    "ontology_path": "Person(Allene M. Diaz) -OFFICER_OF{role: director, start_date: 2021-06, status: active}-> Company(Ionis); Person(Allene M. Diaz) -OFFICER_OF{role: Senior Vice President, Research and Development Portfolio Management, start_date: 2019-09, end_date: 2020-06, status: former}-> Company(GSK); Company(ViiV Healthcare) -SUBSIDIARY_OF{status: active}-> Company(GSK); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-ViiV ENHANZE, type: collaboration_license, signing_date: 2021-06) <-PARTY_TO{role: licensee}- Company(ViiV Healthcare); Agreement(Halozyme-ViiV ENHANZE) -COVERS-> Technology(ENHANZE)",
     "evidence": [
       {
         "ticker": "IONS",
@@ -1174,7 +1186,7 @@
     "category": "multi_hop_3",
     "question": "Neurocrine licensed osavampator from Takeda. Does Takeda also have a deal with Halozyme, and what drug does that deal involve?",
     "answer": "Yes. In December 2025, Takeda and Halozyme entered a global collaboration and exclusive license agreement giving Takeda access to ENHANZE for use with vedolizumab, marketed as ENTYVIO.",
-    "ontology_path": "Company(NBIX) -PARTY_TO-> Agreement(2020 Takeda license) <-PARTY_TO- Company(Takeda) -COVERS-> Compound(osavampator); Company(Takeda) -PARTY_TO-> Agreement(Dec 2025 ENHANZE license) <-PARTY_TO- Company(HALO) -COVERS-> Drug(ENTYVIO)",
+    "ontology_path": "Company(Neurocrine) -PARTY_TO{role: licensee}-> Agreement(2020 Takeda Agreement, type: license, signing_date: 2020) <-PARTY_TO{role: licensor}- Company(Takeda); Agreement(2020 Takeda Agreement) -COVERS-> Compound(osavampator); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Takeda 2025 collaboration, type: collaboration_license, signing_date: 2025-12) <-PARTY_TO{role: licensee}- Company(Takeda); Agreement(Halozyme-Takeda 2025 collaboration) -COVERS-> Technology(ENHANZE); Agreement(Halozyme-Takeda 2025 collaboration) -COVERS-> Drug(ENTYVIO)",
     "evidence": [
       {
         "ticker": "NBIX",
@@ -1196,7 +1208,7 @@
     "category": "multi_hop_3",
     "question": "Sarepta and Arrowhead are both audited by KPMG LLP, though from different offices. Do the two companies also have a direct business relationship with each other?",
     "answer": "Yes: a licensing and collaboration agreement, signed November 25, 2024.",
-    "ontology_path": "Company(SRPT) -AUDITED_BY{office: Boston}-> Company(KPMG); Company(ARWR) -AUDITED_BY{office: San Diego}-> Company(KPMG); Company(ARWR) -PARTY_TO-> Agreement(Nov 2024 collaboration) <-PARTY_TO- Company(SRPT)",
+    "ontology_path": "Company(Sarepta) -AUDITED_BY{office: Boston, MA, start_year: 2002, status: active}-> Company(KPMG LLP); Company(Arrowhead) -AUDITED_BY{office: San Diego, CA, start_year: 2024, status: active}-> Company(KPMG LLP); Company(Sarepta) -PARTY_TO{role: licensee}-> Agreement(Sarepta-Arrowhead exclusive license and collaboration, type: collaboration_license, signing_date: 2024-11-25) <-PARTY_TO{role: licensor}- Company(Arrowhead)",
     "evidence": [
       {
         "ticker": "SRPT",
@@ -1225,7 +1237,7 @@
     "question": "What are Janssen's connections to Alkermes and to Halozyme, including at the leadership level?",
     "answer": "Alkermes: Janssen holds an exclusive license to Alkermes's NanoCrystal technology, used to develop the long-acting INVEGA products; after Janssen partially terminated that license, Alkermes took it to arbitration and the May 2023 final award found Alkermes due $195.4 million in back royalties (inclusive of $8.1 million in late-payment interest). Halozyme: Janssen is an ENHANZE licensee, and Janssen's DARZALEX FASPRO is co-formulated with Halozyme's ENHANZE technology. At the leadership level, Halozyme's Chief Financial Officer since June 8, 2026, Darren Snellgrove, joined from Johnson & Johnson after 27 years there, including service as CFO of Janssen Alzheimer Immunotherapy.",
     "required_core": "Alkermes: Janssen licenses Alkermes's NanoCrystal technology behind the long-acting INVEGA products and, after Janssen's partial termination, a 2023 arbitration award required Janssen to pay Alkermes back royalties. Halozyme: Janssen is an ENHANZE licensee (DARZALEX FASPRO co-formulated with ENHANZE), and Halozyme's CFO Darren Snellgrove came from Johnson & Johnson, where he had been CFO of Janssen Alzheimer Immunotherapy.",
-    "ontology_path": "Company(Alkermes) -PARTY_TO{role: licensor}-> Agreement(NANOCRYSTAL/INVEGA license, type: license, status: active) <-PARTY_TO{role: licensee}- Company(Janssen Pharmaceutica N.V.); Agreement(NANOCRYSTAL/INVEGA license) -COVERS-> Technology(NANOCRYSTAL); Company(Alkermes) -PARTY_TO{role: claimant}-> LegalCase(Alkermes v. Janssen arbitration, status: resolved, end_date: 2023-05) <-PARTY_TO{role: respondent}- Company(Janssen Pharmaceutica N.V.); Company(Janssen Pharmaceutica N.V.) -PARTY_TO{role: payer}-> Payment(Final Award back royalties, kind: award, amount: $195.4M incl. $8.1M late-payment interest, form: cash, date: 2023-Q2, status: paid) <-PARTY_TO{role: payee}- Company(Alkermes); Payment(Final Award back royalties) -PAID_UNDER-> LegalCase(Alkermes v. Janssen arbitration); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-Janssen ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Agreement(HALO-Janssen ENHANZE) -COVERS-> Technology(ENHANZE); Drug(DARZALEX FASPRO) -USES_TECHNOLOGY-> Technology(ENHANZE); Person(Darren Snellgrove) -OFFICER_OF{role: Chief Financial Officer, start_date: 2026-06-08, status: active}-> Company(Halozyme); Person(Darren Snellgrove) -OFFICER_OF{role: finance leadership positions incl. CFO of J&J's Pharmaceutical sector, end_date: 2026, status: former}-> Company(Johnson & Johnson); Person(Darren Snellgrove) -OFFICER_OF{role: CFO, status: former}-> Company(Janssen Alzheimer Immunotherapy)",
+    "ontology_path": "Company(Alkermes) -PARTY_TO{role: licensor}-> Agreement(NANOCRYSTAL/INVEGA license, type: license, status: active) <-PARTY_TO{role: licensee}- Company(Janssen Pharmaceutica N.V.); Agreement(NANOCRYSTAL/INVEGA license) -COVERS-> Technology(NANOCRYSTAL); Company(Alkermes) -PARTY_TO{role: claimant}-> LegalCase(Alkermes v. Janssen arbitration, status: resolved, end_date: 2023-05) <-PARTY_TO{role: respondent}- Company(Janssen Pharmaceutica N.V.); Company(Janssen Pharmaceutica N.V.) -PARTY_TO{role: payer}-> Payment(Final Award back royalties, kind: award, amount: $195.4M incl. $8.1M late-payment interest, form: cash, date: 2023-Q2, status: paid) <-PARTY_TO{role: payee}- Company(Alkermes); Payment(Final Award back royalties) -PAID_UNDER-> LegalCase(Alkermes v. Janssen arbitration); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Janssen ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Janssen Biotech, Inc.); Agreement(Halozyme-Janssen ENHANZE) -COVERS-> Technology(ENHANZE); Drug(DARZALEX FASPRO) -USES_TECHNOLOGY-> Technology(ENHANZE); Person(Darren Snellgrove) -OFFICER_OF{role: Chief Financial Officer, start_date: 2026-06-08, status: active}-> Company(Halozyme); Person(Darren Snellgrove) -OFFICER_OF{role: finance leadership positions incl. CFO of J&J's Pharmaceutical sector, end_date: 2026, status: former}-> Company(Johnson & Johnson); Person(Darren Snellgrove) -OFFICER_OF{role: CFO, status: former}-> Company(Janssen Alzheimer Immunotherapy)",
     "evidence": [
       {
         "ticker": "ALKS",
@@ -1288,7 +1300,7 @@
     "question": "Exelixis has a profit-sharing collaboration with Genentech over cobimetinib. Is Genentech also a Halozyme ENHANZE partner, and which of its products uses that technology?",
     "answer": "Yes, through Roche: Exelixis's 10-K describes Genentech as \"a member of the Roche Group,\" and Halozyme's ENHANZE licensee is Roche (F. Hoffmann-La Roche, Ltd. and Hoffmann-La Roche, Inc.). Roche's Phesgo (the fixed-dose Perjeta/Herceptin subcutaneous combination) uses ENHANZE technology and is one of Halozyme's royalty-paying ENHANZE partner products; Roche's Herceptin SC, MabThera SC and OCREVUS ZUNOVO are ENHANZE products too.",
     "required_core": "Yes, via Roche (Genentech is a member of the Roche Group; Roche is Halozyme's ENHANZE licensee). Any Roche product using ENHANZE answers the second half: Phesgo, Herceptin SC/Hylecta, MabThera SC, or OCREVUS ZUNOVO.",
-    "ontology_path": "Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-Genentech cobimetinib collaboration, type: collaboration) <-PARTY_TO{role: collaborator}- Company(Genentech); Agreement(Exelixis-Genentech cobimetinib collaboration) -COVERS-> Compound(cobimetinib); Company(Genentech) -AFFILIATE_OF{basis: \"a member of the Roche Group\"}-> Company(Roche); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(HALO-Roche ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Roche); Agreement(HALO-Roche ENHANZE) -COVERS-> Technology(ENHANZE); Drug(Phesgo) -USES_TECHNOLOGY-> Technology(ENHANZE); Company(Roche) -OWNS-> Drug(Phesgo); Company(Roche) -OWES_ROYALTY_TO{basis: sales of ENHANZE partner products incl. Phesgo}-> Company(Halozyme)",
+    "ontology_path": "Company(Exelixis) -PARTY_TO{role: collaborator}-> Agreement(Exelixis-Genentech cobimetinib collaboration, type: collaboration) <-PARTY_TO{role: collaborator}- Company(Genentech); Agreement(Exelixis-Genentech cobimetinib collaboration) -COVERS-> Compound(cobimetinib); Company(Genentech) -AFFILIATE_OF{basis: \"a member of the Roche Group\"}-> Company(Roche); Company(Halozyme) -PARTY_TO{role: licensor}-> Agreement(Halozyme-Roche ENHANZE, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Roche); Agreement(Halozyme-Roche ENHANZE) -COVERS-> Technology(ENHANZE); Drug(Phesgo) -USES_TECHNOLOGY-> Technology(ENHANZE); Company(Roche) -OWNS-> Drug(Phesgo); Company(Roche) -OWES_ROYALTY_TO{basis: sales of ENHANZE partner products incl. Phesgo}-> Company(Halozyme)",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -1363,7 +1375,7 @@
     "category": "multi_hop_3",
     "question": "Biogen works with both Alkermes and Ionis. What drug does each partnership cover, and what royalties does Ionis earn on its drug?",
     "answer": "Alkermes granted Biogen a worldwide exclusive license to develop, manufacture and commercialize VUMERITY. Separately, Ionis and Biogen have collaborated since 2012 on SPINRAZA, on which Ionis earns tiered royalties ranging from 11 percent to 15 percent of sales.",
-    "ontology_path": "Company(ALKS) -PARTY_TO-> Agreement(VUMERITY license) <-PARTY_TO- Company(Biogen); Company(Biogen) -PARTY_TO-> Agreement(SPINRAZA collaboration, 2012) <-PARTY_TO- Company(IONS); Company(Biogen) -OWES_ROYALTY_TO{royalty_rate: 11-15%}-> Company(IONS)",
+    "ontology_path": "Company(Alkermes) -PARTY_TO{role: licensor}-> Agreement(Alkermes-Biogen VUMERITY license and collaboration, type: collaboration_license) <-PARTY_TO{role: licensee}- Company(Biogen); Agreement(Alkermes-Biogen VUMERITY license and collaboration) -COVERS-> Drug(VUMERITY); Company(Ionis) -PARTY_TO{role: collaborator}-> Agreement(Ionis-Biogen SPINRAZA collaboration, type: collaboration, signing_date: 2012) <-PARTY_TO{role: collaborator}- Company(Biogen); Agreement(Ionis-Biogen SPINRAZA collaboration) -COVERS-> Drug(SPINRAZA); Company(Biogen) -OWES_ROYALTY_TO{royalty_rate: 11-15% tiered, basis: sales of SPINRAZA, status: active}-> Company(Ionis)",
     "evidence": [
       {
         "ticker": "ALKS",
@@ -1513,7 +1525,7 @@
     "category": "aggregation",
     "question": "How many of the 8 corpus companies are audited by Ernst & Young LLP?",
     "answer": "5 of 8: Exelixis, Ultragenyx, Halozyme, Ionis, and Neurocrine.",
-    "ontology_path": "count(Company -AUDITED_BY-> Company(Ernst & Young LLP)) over the 8 corpus companies",
+    "ontology_path": "count(distinct Company(X)) where Company(X) -AUDITED_BY{status: active}-> Company(Ernst & Young LLP), over the 8 corpus companies; X = {Exelixis, Ultragenyx, Halozyme, Ionis, Neurocrine}",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -1553,7 +1565,8 @@
     "category": "aggregation",
     "question": "Which corpus companies have sold or owe royalty streams to Royalty Pharma entities (including RPI Finance Trust)?",
     "answer": "4 of 8: Exelixis (owes cabozantinib royalty), Ionis (sold SPINRAZA/pelacarsen royalty interest), Arrowhead (sold olpasiran royalty interest), and Ultragenyx (sold Crysvita European royalty to RPI Finance Trust, a Royalty Pharma affiliate).",
-    "ontology_path": "collect(Company -OWES_ROYALTY_TO-> Company(Royalty Pharma family)) over the 8 corpus companies",
+    "required_core": "Four: Exelixis, Ionis, Arrowhead, and Ultragenyx.",
+    "ontology_path": "count(distinct Company(X)) where Company(X) -OWES_ROYALTY_TO-> Company(Y) or Company(X) -PARTY_TO{role: seller}-> Agreement(type: royalty_purchase) <-PARTY_TO{role: buyer}- Company(Y), with Company(Y) being Company(Royalty Pharma) or an affiliate, over the 8 corpus companies; X = {Exelixis, Ionis, Arrowhead, Ultragenyx}; Company(RPI Finance Trust) -AFFILIATE_OF{basis: \"an affiliate of Royalty Pharma\"}-> Company(Royalty Pharma); Company(Royalty Pharma Investments 2019 ICAV) -AFFILIATE_OF{basis: referred to as \"Royalty Pharma\" by Ionis}-> Company(Royalty Pharma)",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -1587,6 +1600,7 @@
     "category": "aggregation",
     "question": "How many corpus companies completed a corporate acquisition described in these filings (2025-2026)?",
     "answer": "3: Halozyme (Elektrofi, closed Nov 18, 2025; Surf Bio, closed Dec 22, 2025), Alkermes (Avadel, closed Feb 12, 2026), and Neurocrine (Soleno, closed May 18, 2026).",
+    "required_core": "Three: Halozyme, Alkermes, and Neurocrine.",
     "ontology_path": "count(distinct Company(X)) where Company(X) -PARTY_TO{role: acquirer}-> Agreement(type: acquisition, status: completed, effective_date in 2025-2026) over the 8 corpus companies; X = {Halozyme, Alkermes, Neurocrine}; Company(Halozyme) -PARTY_TO{role: acquirer}-> Agreement(Halozyme-Elektrofi acquisition, type: acquisition, effective_date: 2025-11-18, status: completed) <-PARTY_TO{role: acquired}- Company(Elektrofi); Company(Halozyme) -PARTY_TO{role: acquirer}-> Agreement(Halozyme-Surf Bio acquisition, type: acquisition, signing_date: 2025-12-18, effective_date: 2025-12-22, status: completed) <-PARTY_TO{role: acquired}- Company(Surf Bio); Company(Alkermes) -PARTY_TO{role: acquirer}-> Agreement(Alkermes-Avadel acquisition, type: acquisition, effective_date: 2026-02-12, status: completed) <-PARTY_TO{role: acquired}- Company(Avadel Pharmaceuticals); Company(Neurocrine) -PARTY_TO{role: acquirer}-> Agreement(Neurocrine-Soleno acquisition, type: acquisition, effective_date: 2026-05-18, status: completed) <-PARTY_TO{role: acquired}- Company(Soleno Therapeutics)",
     "evidence": [
       {
@@ -1621,7 +1635,7 @@
     "category": "aggregation",
     "question": "How many distinct accounting firms serve as auditor across the 8 corpus companies, counting Arrowhead's former auditor?",
     "answer": "4: Ernst & Young LLP, KPMG LLP, PricewaterhouseCoopers LLP, and Rose, Snyder & Jacobs LLP (Arrowhead's auditor before KPMG).",
-    "ontology_path": "count(distinct Company objects of AUDITED_BY edges) over the 8 corpus companies, including former (status=former) edges",
+    "ontology_path": "count(distinct Company(Y)) where Company(X) -AUDITED_BY{status: active or former}-> Company(Y), X over the 8 corpus companies; Y = {\"Ernst & Young LLP\", \"KPMG LLP\", \"PricewaterhouseCoopers LLP\", \"Rose, Snyder & Jacobs LLP\"}",
     "evidence": [
       {
         "ticker": "EXEL",
@@ -1655,7 +1669,7 @@
     "category": "aggregation",
     "question": "How many other corpus companies appear in Ionis's 2025 executive-compensation peer group?",
     "answer": "6: Alkermes, Exelixis, Halozyme, Neurocrine, Sarepta, and Ultragenyx.",
-    "ontology_path": "count(Company -PEER_OF-> Company) intersected with corpus companies, for Ionis's peer group",
+    "ontology_path": "count(distinct Company(X)) where Company(Ionis) -PEER_OF{year: 2025}-> Company(X), X a corpus company; X = {Alkermes, Exelixis, Halozyme, Neurocrine, Sarepta, Ultragenyx}",
     "evidence": [
       {
         "ticker": "IONS",
@@ -1742,7 +1756,8 @@
     "category": "aggregation",
     "question": "How many separate royalty purchase agreements has Ultragenyx entered into for its Crysvita royalties?",
     "answer": "3, for $320 million, $500 million, and $400 million respectively.",
-    "ontology_path": "count(Company(Ultragenyx) -PARTY_TO-> Agreement(type: royalty_purchase, covers: Crysvita))",
+    "required_core": "Three.",
+    "ontology_path": "count(distinct Agreement(A)) where Company(Ultragenyx) -PARTY_TO{role: seller}-> Agreement(A, type: royalty_purchase) and Agreement(A) -COVERS-> Drug(Crysvita); A = {Ultragenyx-RPI Crysvita European royalty purchase, 2022 OMERS Royalty Purchase Agreement, 2025 OMERS Royalty Purchase Agreement}",
     "evidence": [
       {
         "ticker": "RARE",
@@ -1781,7 +1796,7 @@
     "category": "aggregation",
     "question": "Which other corpus companies does Neurocrine name in its executive-compensation peer group?",
     "answer": "5: Alkermes, Exelixis, Ionis, Sarepta, and Ultragenyx.",
-    "ontology_path": "count(Company -PEER_OF-> Company) intersected with corpus companies, for Neurocrine's peer group",
+    "ontology_path": "count(distinct Company(X)) where Company(Neurocrine) -PEER_OF{year: 2025}-> Company(X), X a corpus company; X = {Alkermes, Exelixis, Ionis, Sarepta, Ultragenyx}",
     "evidence": [
       {
         "ticker": "NBIX",
