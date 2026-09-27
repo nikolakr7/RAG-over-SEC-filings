@@ -105,10 +105,14 @@ DONE:
 
 NEXT (in order):
 1. HNSW index + tune and measure (M, ef_construction, ef_search; the plan
-   calls this the hardest step, sit with it). PENDING TUTOR QUESTION the
-   user owes an answer to: "at 17,311 rows the exact scan is already
-   fast; why build an approximate index at all, and what concretely do we
-   risk losing?" plus guesses at what M/ef_construction/ef_search control.
+   calls this the hardest step, sit with it). Teach HNSW from ZERO,
+   picture first, before any parameter talk: the user flagged (correctly)
+   that predict-then-check is useless without a mental model to bet from,
+   so no parameter guessing. One pending question the user does have
+   footing for: "the exact scan compares against all rows; why build an
+   approximate index at all, and what do we risk losing?" (answer: scan
+   cost grows with corpus size and this corpus is a miniature; risk is
+   recall, which is why it gets measured next, never assumed).
 2. recall@k measured against a gold set we already effectively have: the
    chunking acceptance test maps every benchmark evidence quote to its
    gold chunk ID(s) (whitespace-tolerant matching; logic described in the
