@@ -2,13 +2,15 @@
 
 Schema per the approved Phase 2 design: chunk metadata columns for
 filtered retrieval, text_sha256 as the DECISIONS #32 integrity column,
-and a vector(1536) embedding. The HNSW index is deliberately NOT built
-here; index construction and tuning (M, ef_construction, ef_search) is
-its own step with its own measurements.
+and a vector(1536) embedding, then the HNSW index chosen by the sweep in
+hnsw_sweep.py (DECISIONS #34): M=16, ef_construction=64, with
+hnsw.ef_search=80 set as the database default so every new connection
+gets it.
 
 Idempotent: the table is created if absent and the load is a full
 replace (TRUNCATE + COPY), so re-running after a chunker-accepted change
-cannot leave a half-updated store.
+cannot leave a half-updated store. The index is dropped before the COPY and
+built after it: one bulk build instead of 17k incremental inserts.
 
 Run (postgres container up: docker compose up -d postgres):
     python src/vectorstore/load_pgvector.py
@@ -25,6 +27,15 @@ import psycopg
 from pgvector.psycopg import register_vector
 
 DSN = "host=localhost port=5432 dbname=kgrag user=kgrag password=localdev"
+
+# DECISIONS #34. ef_search=80 is also the highest value at which the
+# planner still chose the index over a seq scan on this corpus; above it
+# queries silently fall back to the exact scan. Re-check the plan if the
+# corpus or these parameters change.
+INDEX = "chunks_embedding_hnsw"
+HNSW_M = 16
+HNSW_EF_CONSTRUCTION = 64
+HNSW_EF_SEARCH = 80
 
 CHUNKS = Path("data/chunks/chunks.jsonl")
 EMB = Path("data/chunks/embeddings.npy")
@@ -66,6 +77,7 @@ def main() -> None:
     with psycopg.connect(DSN) as conn:
         conn.execute(SCHEMA)
         register_vector(conn)
+        conn.execute(f"DROP INDEX IF EXISTS {INDEX}")
         conn.execute("TRUNCATE chunks")
         with conn.cursor() as cur:
             with cur.copy(
@@ -78,6 +90,18 @@ def main() -> None:
                         r["date_filed"], r["source_file"], r["seq"],
                         r["n_tokens"], r["text_sha256"], r["text"], vec,
                     ))
+        conn.commit()
+
+        # The index holds its own copy of every vector (~128 MB here). A
+        # parallel build would put that memory in /dev/shm, which Docker
+        # caps at 64 MB, so build serially.
+        conn.execute("SET maintenance_work_mem = '1GB'")
+        conn.execute("SET max_parallel_maintenance_workers = 0")
+        conn.execute(
+            f"CREATE INDEX {INDEX} ON chunks USING hnsw (embedding vector_cosine_ops) "
+            f"WITH (m = {HNSW_M}, ef_construction = {HNSW_EF_CONSTRUCTION})"
+        )
+        conn.execute(f"ALTER DATABASE kgrag SET hnsw.ef_search = {HNSW_EF_SEARCH}")
         conn.commit()
 
         n = conn.execute("SELECT count(*) FROM chunks").fetchone()[0]
