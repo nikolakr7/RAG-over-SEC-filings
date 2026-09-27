@@ -19,15 +19,17 @@ config in .env), FastAPI later. Repo: github.com/nikolakr7/baswe-1 (private).
 
 ## How we work (also saved in Claude's persistent memory)
 
-- Tutor mode by default: user types the six write-it-yourself zones
-  (ontology, benchmark questions, entity resolution, Cypher templates,
-  citation validator, eval harness). Claude writes infrastructure.
-- Predict-then-check; user keeps notes in a Google Doc (NOTES.md is a stub).
-- Cost discipline: Sonnet/Opus subagents only, hard tool budgets, batches
-  of 3-5, cost estimate stated before any fan-out. (A 30-agent Fable
-  fan-out once exhausted the user's token limit.)
-- Never restructure a file the user is actively editing.
-- No em dashes in any writing.
+- PRIORITY SHIFT 2026-09-27: finishing fast is now the top priority.
+  Minimize friction: no quizzes or predict-then-check; Claude writes the
+  remaining formerly user-owned zones (entity resolution, Cypher
+  templates, citation validator, eval harness) unless the user asks for
+  one back; pick defaults and state them, ask only when blocked.
+- Still in force: cost discipline (Sonnet/Opus subagents only, hard tool
+  budgets, batches of 3-5, cost estimate before any fan-out or big API
+  spend); never restructure a file the user is actively editing; no em
+  dashes in any writing; DECISIONS entries for real design choices.
+- The original phase plan file (~/.claude/plans/...jaunty-flame.md) no
+  longer exists; the plan of record is "Remaining plan" below.
 
 ## Where we are: Phase 1 COMPLETE. Benchmark v1 FROZEN 2026-08-18.
 
@@ -74,7 +76,7 @@ binary pass/fail per question; extra correct info unpenalized;
 contradiction fails; out-of-scope passes only on refusal; LLM judge
 calibrated against ~20 hand-graded samples.
 
-## Phase 2 progress (as of 2026-09-26)
+## Phase 2 progress (as of 2026-09-27)
 
 DONE:
 1. Embeddings primer: user wrote src/primers/similarity_lab.py by hand
@@ -103,25 +105,50 @@ DONE:
    sampled hash verification). Smoke test: retrieval returns topically
    correct chunks; the evidence-bearing chunk is not always in top-3.
 
-NEXT (in order):
-1. HNSW index + tune and measure (M, ef_construction, ef_search; the plan
-   calls this the hardest step, sit with it). Teach HNSW from ZERO,
-   picture first, before any parameter talk: the user flagged (correctly)
-   that predict-then-check is useless without a mental model to bet from,
-   so no parameter guessing. One pending question the user does have
-   footing for: "the exact scan compares against all rows; why build an
-   approximate index at all, and what do we risk losing?" (answer: scan
-   cost grows with corpus size and this corpus is a miniature; risk is
-   recall, which is why it gets measured next, never assumed).
-2. recall@k measured against a gold set we already effectively have: the
-   chunking acceptance test maps every benchmark evidence quote to its
-   gold chunk ID(s) (whitespace-tolerant matching; logic described in the
-   worksheet and DECISIONS #33).
-3. Eval-metrics primer, then eval harness (USER-WRITTEN zone):
-   claim-level binary judge per the grading design above, calibrated
-   against ~20 hand-graded samples; benchmark is frozen input.
-4. Vector-only baseline scored against benchmark v1; record the "before"
-   column.
+4. HNSW index DONE (DECISIONS #34): M=16, ef_construction=64,
+   hnsw.ef_search=80 as the database default, built by load_pgvector.py.
+   Sweep in src/vectorstore/hnsw_sweep.py. Index recall@10 vs exact scan
+   0.973 to 0.989 across identical builds (random layers); ~2 ms vs 81 ms.
+   Above ef_search 80 the planner silently falls back to the seq scan.
+   Docker caps /dev/shm at 64 MB, so builds run serially.
+5. Retrieval recall MEASURED (src/vectorstore/retrieval_recall.py; gold
+   mapping at data/gold_chunks.json, reproduces the acceptance test
+   288/2/0). Exact scan, 68 in-scope questions: any-hit@10 0.41, all-hit
+   @10 0.10, quotes found 0.21 (strict, filing-specific gold); lenient
+   (quote text in any filing) any-hit@10 0.57. The index lost nothing vs
+   the exact scan at any k. Diagnosis: a ranking problem, not coverage:
+   the first answer-bearing chunk is in the top 10 for 57% of questions,
+   top 100 for 90%, top 500 for 100%. Cross-year duplicate passages take
+   ~2 of 10 slots but collapsing them only moves 0.57 to 0.59. Implication:
+   rerank a wide top-100 net (quick win), and the graph path.
+6. Vector-only baseline SCORED, the "before" column (src/rag/pipeline.py,
+   src/eval/judge.py; answers and verdicts cached in data/runs/, never
+   re-billed). In-scope pass rate: vector top-10 0.29 (20/68), LLM rerank
+   of top-100 0.47 (32/68). Rerank by category: single_hop 0.75,
+   multi_hop_2 0.24, multi_hop_3 0.38, aggregation 0.55; out_of_scope
+   11/12 (q077 answered "No" instead of refusing). Multi-hop is the gap
+   the graph must close. Spend: vector ~330k in tokens, rerank ~3.0M.
+   Judge spot-check files data/runs/*.spotcheck.md (Claude agreed with
+   all 10 vector verdicts; user review optional).
+
+## Remaining plan (lean, set 2026-09-27)
+
+1. DONE. Vector-only RAG baseline: retrieve top-k, chat model answers citing
+   chunk IDs, refuses out-of-scope. Variant: LLM rerank of top 100.
+2. DONE. Eval harness (Claude-written): LLM judge, claim-level binary per
+   question against required_core (else answer); extra correct info
+   unpenalized; contradiction fails; out-of-scope passes only on
+   refusal. Calibration reduced to the user spot-checking ~10 verdicts.
+   Score the baseline: the "before" column.
+3. Graph extraction (Phase 3): LLM extracts ontology v1 entities/edges
+   with source_chunk_id into Neo4j; entity resolution. Raise the chat
+   deployment TPM first. Cost estimate before running; scope cuts to
+   the filings/sections the ontology needs if the full corpus is costly.
+4. Hybrid retrieval (Phase 4): question -> entity linking -> Cypher
+   templates + vector chunks -> answer with citations; citation
+   validator (adjacent-pair fallback per #33).
+5. Score hybrid vs baseline on benchmark v1 (Phase 5), README write-up.
+   Minimal API/demo only if time allows.
 
 ## Ops notes (hard-won this phase, do not relearn)
 
