@@ -5,3 +5,5 @@ python-dotenv>=1.0
 openai>=1.50
 numpy>=2.0
 tiktoken>=0.7
+psycopg[binary]>=3.2
+pgvector>=0.3
