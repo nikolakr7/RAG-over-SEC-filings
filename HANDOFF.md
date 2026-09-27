@@ -140,11 +140,26 @@ DONE:
    unpenalized; contradiction fails; out-of-scope passes only on
    refusal. Calibration reduced to the user spot-checking ~10 verdicts.
    Score the baseline: the "before" column.
-3. Graph extraction (Phase 3): LLM extracts ontology v1 entities/edges
+3. IN PROGRESS (2026-09-27). Pipeline built and pilot-tested:
+   src/graph/extract.py (ontology.md as instructions, 8 chunks/call,
+   validated against v1 types and domain/range; cached per batch in
+   data/graph/full.jsonl, resumable: re-run `python src/graph/extract.py
+   full` to continue), resolve.py (conservative merging; alias guard
+   keeps Royalty Pharma vehicles and the Mercks apart), load_neo4j.py.
+   Full run: 2,234 batches at ~16/min (chat TPM rate-limited), est.
+   $40-80. Then: resolve.py full, load_neo4j.py full.
+   Original plan text: Graph extraction (Phase 3): LLM extracts ontology v1 entities/edges
    with source_chunk_id into Neo4j; entity resolution. Raise the chat
    deployment TPM first. Cost estimate before running; scope cuts to
    the filings/sections the ontology needs if the full corpus is costly.
-4. Hybrid retrieval (Phase 4): question -> entity linking -> Cypher
+4. BUILT, awaiting the full graph: src/rag/hybrid.py (LLM entity
+   linking -> Cypher neighbourhood expansion incl. through event nodes
+   and people -> graph facts with source chunk IDs + reranked top-10
+   chunks -> answer). Chose neighbourhood expansion over per-question
+   Cypher templates / text-to-Cypher: no query-generation failures, and
+   it covers every hop pattern in the benchmark. src/eval/citations.py
+   validates cited IDs (exist, were in context, hit gold).
+   Original plan text: Hybrid retrieval (Phase 4): question -> entity linking -> Cypher
    templates + vector chunks -> answer with citations; citation
    validator (adjacent-pair fallback per #33).
 5. Score hybrid vs baseline on benchmark v1 (Phase 5), README write-up.
