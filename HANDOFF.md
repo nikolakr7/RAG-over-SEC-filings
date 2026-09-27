@@ -74,24 +74,72 @@ binary pass/fail per question; extra correct info unpenalized;
 contradiction fails; out-of-scope passes only on refusal; LLM judge
 calibrated against ~20 hand-graded samples.
 
-## Next steps, in order
+## Phase 2 progress (as of 2026-09-26)
 
-Phase 2 begins:
-1. Embeddings primer (tutor mode).
-2. Chunking with stable chunk IDs; strip the old-format XBRL junk at the
-   top of parsed .txt files first (see open items).
-3. pgvector + HNSW index; embed the corpus.
-4. Eval harness (USER-WRITTEN zone): claim-level binary judge per the
-   agreed grading design below, calibrated against ~20 hand-graded
-   samples; benchmark is frozen input, never edited by the harness.
-5. Vector-only baseline scored against benchmark v1.
+DONE:
+1. Embeddings primer: user wrote src/primers/similarity_lab.py by hand
+   (cosine, l2, 20x20 matrix, top-3 neighbors, metric-equivalence proof).
+   Findings the user has internalized and noted: negation is invisible to
+   embeddings (opposite-meaning pair scored 0.96, the matrix maximum,
+   vs 0.69 for a true paraphrase); entity-name overlap is a retrieval
+   magnet (the two cross-topic "Merck" sentences pick each other);
+   same-register unrelated text floors at ~0.3 cosine (thresholds must be
+   calibrated in-domain); on unit vectors cosine and L2 rank identically
+   (l2^2 = 2 - 2cos, holding to the vectors' actual ~1e-4 unit precision;
+   np.isclose default tolerance is an opinion, pick one that matches the
+   data).
+2. Chunking DONE and the chunker is FROZEN (src/chunking/chunk_corpus.py;
+   DECISIONS #31-#33): 17,311 chunks, IDs {accession}#{seq:04d} with
+   text_sha256 integrity column, ~400-token target / 800 hard max at
+   structural seams, NO overlap. XBRL head junk stripped (prefix-only,
+   pattern-gated). Acceptance test: 288/290 benchmark evidence-quote
+   fragments contained in a single chunk, 2 split across adjacent pairs
+   (citation validator must fall back to adjacent-pair matching), 0
+   missing. Output: data/chunks/chunks.jsonl (gitignored, reproducible).
+3. Corpus embedded and loaded: text-embedding-3-small, 6,499,219 tokens,
+   $0.13 actual (matched estimate). Vectors at data/chunks/embeddings.npy
+   (kept so schema iterations never re-bill). pgvector `chunks` table
+   loaded via src/vectorstore/load_pgvector.py (idempotent TRUNCATE+COPY,
+   sampled hash verification). Smoke test: retrieval returns topically
+   correct chunks; the evidence-bearing chunk is not always in top-3.
+
+NEXT (in order):
+1. HNSW index + tune and measure (M, ef_construction, ef_search; the plan
+   calls this the hardest step, sit with it). PENDING TUTOR QUESTION the
+   user owes an answer to: "at 17,311 rows the exact scan is already
+   fast; why build an approximate index at all, and what concretely do we
+   risk losing?" plus guesses at what M/ef_construction/ef_search control.
+2. recall@k measured against a gold set we already effectively have: the
+   chunking acceptance test maps every benchmark evidence quote to its
+   gold chunk ID(s) (whitespace-tolerant matching; logic described in the
+   worksheet and DECISIONS #33).
+3. Eval-metrics primer, then eval harness (USER-WRITTEN zone):
+   claim-level binary judge per the grading design above, calibrated
+   against ~20 hand-graded samples; benchmark is frozen input.
+4. Vector-only baseline scored against benchmark v1; record the "before"
+   column.
+
+## Ops notes (hard-won this phase, do not relearn)
+
+- Azure embedding deployment TPM: was ~70k and PACED requests (looks like
+  a hang: no errors, batches just take ~47s); user raised it to 1M in
+  Foundry (project -> Models + endpoints -> deployment -> Edit -> TPM
+  slider). Do the same for the CHAT deployment before Phase 3 extraction.
+- Azure Foundry account: NOT the user's Gmail; a dedicated account whose
+  alias appears in the resource name (nokiarokia7-3684-resource). If lost
+  again, the resource name carries the hint.
+- Docker Desktop on this machine lives at
+  C:\Users\nkrai\AppData\Local\Programs\DockerDesktop\Docker Desktop.exe
+  (per-user install, not Program Files). Its update restarted the engine
+  and stopped containers: `docker compose up -d postgres` brings kgrag-
+  postgres back; named volumes preserve data.
+- Postgres DSN: host=localhost port=5432 dbname=kgrag user=kgrag
+  password=localdev (docker-compose.yml).
 
 ## Known open items
 
 - NOTES.md in repo is empty (user keeps notes in Google Doc; consider a
   snapshot before phase end).
-- Old-format XBRL junk at the top of parsed .txt files: strip before
-  chunking in Phase 2 (noted for DECISIONS).
 - Sarepta Therapeutics Investments Inc. absent from every SRPT Exhibit 21
   (a real-world gap, not a downloader bug).
 - Corpus quirks worth remembering for entity resolution: three distinct
