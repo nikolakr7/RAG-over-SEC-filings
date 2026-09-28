@@ -1,10 +1,29 @@
 # Hybrid knowledge-graph + vector RAG over biotech SEC filings
 
+**Status: complete (September 2026).**
+
 Question answering over 152 SEC filings (10-K, 10-Q, 8-K, DEF 14A) from
 eight mid-cap biotechs (EXEL, HALO, SRPT, ALKS, IONS, RARE, ARWR, NBIX),
 comparing plain vector retrieval against a hybrid that adds a knowledge
 graph extracted from the same filings. Scored on a frozen, hand-verified
-80-question benchmark.
+80-question benchmark built before any system existed.
+
+**Headline results** (in-scope pass rate, 68 questions):
+
+- Vector top-10: **0.29**. Adding an LLM reranker over the top 100:
+  **0.47**. Adding the knowledge graph: **0.50-0.53**. Rerank and hybrid
+  both beat vector-only decisively (paired sign tests, p = 0.01 and
+  p <= 0.001).
+- The graph's gain over the reranker alone is **not established** at
+  this sample size: two runs with identical inputs flip about 15% of
+  verdicts. It is clearest on aggregation questions (0.55 -> 0.73).
+- Out-of-scope questions are refused 12/12, and 99-100% of cited chunk
+  IDs are real and were in the answerer's context.
+- Multi-hop questions remain the open problem (roughly 30-45% pass).
+
+**Stack:** Python 3.13, Postgres 17 + pgvector (HNSW), Neo4j 5, Azure
+OpenAI (a GPT-5-class chat deployment for extraction, reranking,
+answering and judging; text-embedding-3-small), Docker Compose.
 
 ## Architecture
 
@@ -19,8 +38,10 @@ filings -> parse -> chunk (17,311 chunks, ~400 tokens, IDs {accession}#{seq})
 
 question -> vector top-100 -> LLM rerank to 10 chunks --------------+
          -> LLM entity linking -> Cypher neighbourhood expansion     |
-            (through reified Agreement/LegalCase/Payment nodes      +-> answer with
-             and shared people) -> facts ranked by similarity ------+    chunk-ID citations
+            (through reified Agreement/LegalCase/Payment nodes,     +-> answer with
+             shared people, and shared companies such as a common   |   chunk-ID citations
+             auditor) -> facts ranked by similarity ----------------+
+         -> (optional) split into sub-questions, answer each, combine
 ```
 
 Key design decisions, each with rejected alternatives, are in
@@ -53,7 +74,7 @@ In-scope pass rate (68 questions) and out-of-scope refusals (12):
 | Vector top-100, LLM rerank to 10 | 0.75 | 0.24 | 0.38 | 0.55 | **0.47** | 11/12 |
 | Hybrid (graph + rerank), run 1 | 0.70 | 0.33 | 0.44 | 0.73 | **0.53** | 12/12 |
 | Hybrid (graph + rerank), run 2 | 0.80 | 0.24 | 0.31 | 0.73 | **0.50** | 12/12 |
-| Hybrid + question splitting + shared-neighbour hop | 0.75 | 0.38 | 0.38 | 0.64 | **0.53** | 12/12 |
+| Hybrid + question splitting + shared-company hop (1 run) | 0.75 | 0.38 | 0.38 | 0.64 | **0.53** | 12/12 |
 
 Paired sign tests over the 80 questions:
 
@@ -101,27 +122,58 @@ cited IDs exist and were in the answerer's context
 ## Cost
 
 Azure OpenAI tokens: corpus embedding 6.5M ($0.13); graph extraction
-17.1M in / 3.3M out; benchmark runs 0.3M (vector), 3.0M (rerank), 3.9M +
-1.0M (hybrid runs, the second reusing run 1's reranked chunks). All
-outputs are cached per chunk, batch, or question, so re-scoring never
-re-bills.
+17.1M in / 3.3M out (the largest item); benchmark answering 0.3M
+(vector), 3.0M (rerank), 3.9M + 1.0M (hybrid runs, the second reusing
+run 1's reranked chunks), about 3.8M for the multi-hop experiments, plus
+LLM judging. All outputs are cached per chunk, batch or question, so
+re-scoring never re-bills.
 
 ## Reproduce
 
+Prerequisites: Python 3.13, Docker, an Azure OpenAI resource with a chat
+deployment and a text-embedding-3-small deployment.
+
 ```bash
-docker compose up -d                        # Postgres+pgvector, Neo4j
-python src/chunking/chunk_corpus.py         # needs data/text from src/ingest
-python src/vectorstore/embed_corpus.py
+python -m venv .venv && .venv/Scripts/activate   # source .venv/bin/activate on macOS/Linux
+pip install -r requirements.txt
+cp .env.example .env                        # fill in SEC_USER_AGENT and the Azure values
+docker compose up -d                        # Postgres+pgvector (5432), Neo4j (7474/7687)
+
+python src/ingest/download.py               # ~150 filings from EDGAR into data/raw
+python src/ingest/parse.py                  # -> data/text
+python src/chunking/chunk_corpus.py         # -> data/chunks/chunks.jsonl
+python src/vectorstore/embed_corpus.py      # -> data/chunks/embeddings.npy
 python src/vectorstore/load_pgvector.py     # table + HNSW index
-python src/rag/pipeline.py vector
+
+python src/rag/pipeline.py vector           # baseline answers
 python src/rag/pipeline.py rerank
-python src/run_graph_and_score.py           # extract, resolve, load, hybrid, judge, citations
+python src/run_graph_and_score.py           # extract, resolve, load Neo4j, hybrid, judge, citations
+python src/rag/hybrid.py --mode decomp --reuse-chunks hybrid --name decomp   # best multi-hop config
+python src/eval/judge.py vector rerank hybrid decomp
 ```
 
-Azure settings go in `.env` (see `.env.example`). The chat deployment
-needs a few hundred thousand tokens per minute for extraction to finish
-in about an hour; `src/rag/pipeline.py` throttles to the deployment's
-reported limit.
+`data/` is gitignored and fully regenerated by these steps. Extraction
+needs a chat deployment with a few hundred thousand tokens per minute to
+finish in about an hour; `src/rag/pipeline.py` throttles to the
+deployment's reported limit. Diagnostics: `src/vectorstore/hnsw_sweep.py`
+(index tuning) and `src/vectorstore/retrieval_recall.py` (does the gold
+evidence chunk get retrieved).
+
+## Repository layout
+
+```
+benchmark/            questions.json (frozen v1) and its methodology README
+ontology.md           graph schema: 10 entity types, 16 relationship types
+DECISIONS.md          37 design decisions with rejected alternatives
+src/ingest/           EDGAR download and HTML-to-text parsing
+src/chunking/         structure-aware chunker (frozen; chunk IDs are provenance keys)
+src/vectorstore/      embedding, pgvector load + HNSW, index and retrieval diagnostics
+src/graph/            LLM extraction, entity resolution, Neo4j loader
+src/rag/              pipeline.py (vector, rerank), hybrid.py (graph + chunks)
+src/eval/             judge.py (LLM grader), citations.py (citation validator)
+src/primers/          embedding-similarity exercises from the learning phase
+docs/                 per-company filing sweeps used to draft the benchmark
+```
 
 ## Limitations
 
@@ -135,3 +187,19 @@ reported limit.
 - The graph keeps every dated claim; resolving "former vs current" is
   left to the answerer, which uses filing dates and effective dates
   (DECISIONS #24).
+- The graph inherits extraction errors (e.g. an auditor start year
+  recorded as the report year); nothing re-verifies extracted facts
+  against their source chunk.
+
+## What I would do next
+
+1. **Settle the graph's value with repeated runs**: three or more runs
+   per variant to shrink the noise band below the gap being measured.
+2. **Verify extracted facts**: a second LLM pass that checks each edge
+   against its source chunk, targeting dates and amounts, where the
+   known extraction errors are.
+3. **Hand-calibrate the judge** on ~20 answers and report agreement.
+4. **Graph-first answering for aggregation**: the graph already holds
+   the complete set for questions like "which companies owe royalties to
+   Royalty Pharma entities"; a Cypher template for set-valued questions
+   could answer them exactly instead of via the LLM.

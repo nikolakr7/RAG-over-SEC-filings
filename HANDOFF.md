@@ -131,6 +131,12 @@ DONE:
    Judge spot-check files data/runs/*.spotcheck.md (Claude agreed with
    all 10 vector verdicts; user review optional).
 
+## PROJECT COMPLETE (2026-09-28). The user closed it out.
+
+README.md is the finished write-up (status, results, reproduction,
+layout, limitations, next steps). Nothing is in flight. If the project
+is ever reopened, start from README "What I would do next".
+
 ## Status as of 2026-09-28: pipeline COMPLETE and scored
 
 All five lean-plan steps are done. README.md has the architecture,
