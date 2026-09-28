@@ -40,7 +40,7 @@ ONTOLOGY = Path("ontology.md")
 OUT_DIR = Path("data/graph")
 
 BATCH = 8
-WORKERS = 12
+WORKERS = 16
 PILOT_CHUNKS = 48
 
 FILERS = {

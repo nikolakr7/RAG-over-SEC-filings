@@ -131,39 +131,31 @@ DONE:
    Judge spot-check files data/runs/*.spotcheck.md (Claude agreed with
    all 10 vector verdicts; user review optional).
 
-## Remaining plan (lean, set 2026-09-27)
+## Status as of 2026-09-28: pipeline COMPLETE and scored
 
-1. DONE. Vector-only RAG baseline: retrieve top-k, chat model answers citing
-   chunk IDs, refuses out-of-scope. Variant: LLM rerank of top 100.
-2. DONE. Eval harness (Claude-written): LLM judge, claim-level binary per
-   question against required_core (else answer); extra correct info
-   unpenalized; contradiction fails; out-of-scope passes only on
-   refusal. Calibration reduced to the user spot-checking ~10 verdicts.
-   Score the baseline: the "before" column.
-3. IN PROGRESS (2026-09-27). Pipeline built and pilot-tested:
-   src/graph/extract.py (ontology.md as instructions, 8 chunks/call,
-   validated against v1 types and domain/range; cached per batch in
-   data/graph/full.jsonl, resumable: re-run `python src/graph/extract.py
-   full` to continue), resolve.py (conservative merging; alias guard
-   keeps Royalty Pharma vehicles and the Mercks apart), load_neo4j.py.
-   Full run: 2,234 batches at ~16/min (chat TPM rate-limited), est.
-   $40-80. Then: resolve.py full, load_neo4j.py full.
-   Original plan text: Graph extraction (Phase 3): LLM extracts ontology v1 entities/edges
-   with source_chunk_id into Neo4j; entity resolution. Raise the chat
-   deployment TPM first. Cost estimate before running; scope cuts to
-   the filings/sections the ontology needs if the full corpus is costly.
-4. BUILT, awaiting the full graph: src/rag/hybrid.py (LLM entity
-   linking -> Cypher neighbourhood expansion incl. through event nodes
-   and people -> graph facts with source chunk IDs + reranked top-10
-   chunks -> answer). Chose neighbourhood expansion over per-question
-   Cypher templates / text-to-Cypher: no query-generation failures, and
-   it covers every hop pattern in the benchmark. src/eval/citations.py
-   validates cited IDs (exist, were in context, hit gold).
-   Original plan text: Hybrid retrieval (Phase 4): question -> entity linking -> Cypher
-   templates + vector chunks -> answer with citations; citation
-   validator (adjacent-pair fallback per #33).
-5. Score hybrid vs baseline on benchmark v1 (Phase 5), README write-up.
-   Minimal API/demo only if time allows.
+All five lean-plan steps are done. README.md has the architecture,
+results, costs, reproduction steps and limitations.
+
+- Graph: full-corpus extraction (2,234 batches; 17.1M in / 3.3M out
+  tokens), resolved to 3,266 nodes / 7,687 edges, loaded into Neo4j.
+  Spot checks passed (filers deduplicated, NBIX 2025 peer group, the four
+  Royalty Pharma counterparties, Mercks and RP vehicles kept apart).
+- Scores (in-scope pass rate, 68 questions): vector 0.29, rerank 0.47,
+  hybrid 0.53 (run 1) / 0.50 (run 2). Rerank and hybrid beat vector
+  decisively; hybrid vs rerank not established (DECISIONS #36: two runs
+  with identical chunks flip 12/80 verdicts). Hybrid design: DECISIONS #35.
+- Runs and verdicts cached in data/runs/ (vector, rerank, hybrid_v1,
+  hybrid = v2). `python src/run_graph_and_score.py` re-runs everything
+  after extraction (cached steps are free).
+
+Possible next steps, none required:
+- Repeat each variant 3x (answer + judge only, ~1M tokens per hybrid run
+  with --reuse-chunks) to shrink the noise band and settle hybrid vs
+  rerank.
+- Remaining hybrid failures are mostly the answerer declining or
+  answering half of a two-part question with the facts in context: a
+  prompt that decomposes multi-part questions is the cheapest next lever.
+- User review of data/runs/hybrid.spotcheck.md (judge calibration).
 
 ## Ops notes (hard-won this phase, do not relearn)
 
