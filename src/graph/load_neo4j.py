@@ -97,7 +97,7 @@ def main() -> None:
                 s.run(f"UNWIND $rows AS r MATCH (a:Entity {{id: r.a}}), (b:Entity {{id: r.b}}) "
                       f"CREATE (a)-[x:{typ}]->(b) SET x = r.p", rows=rows[i:i + 2000])
 
-        counts = s.run("MATCH (n) RETURN [l IN labels(n) WHERE l <> "Entity"][0] AS t, count(*) AS c ORDER BY c DESC").data()
+        counts = s.run("MATCH (n) RETURN [l IN labels(n) WHERE l <> 'Entity'][0] AS t, count(*) AS c ORDER BY c DESC").data()
         rels = s.run("MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS c ORDER BY c DESC").data()
     drv.close()
     print("filers linked:", sorted(ticker_of.values()), "missing:", sorted(set(FILERS) - set(ticker_of.values())))

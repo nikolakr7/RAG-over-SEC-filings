@@ -25,6 +25,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 import re
 import threading
 import time
@@ -91,18 +92,45 @@ def conn() -> psycopg.Connection:
     return _local.conn
 
 
+_tpm = {"limit": 150_000}  # tokens/min; updated from Azure's x-ratelimit-limit-tokens header
+_window: list[tuple[float, int]] = []
+_tpm_lock = threading.Lock()
+OUTPUT_ALLOWANCE = 2_500  # reserve for output + reasoning tokens per call
+
+
+def _throttle(est: int) -> None:
+    """Client-side token bucket at 90% of the deployment's TPM, so parallel
+    workers queue locally instead of overrunning the limit together and
+    stalling each other in synchronized 429 retries."""
+    while True:
+        with _tpm_lock:
+            now = time.time()
+            while _window and now - _window[0][0] > 60:
+                _window.pop(0)
+            if not _window or sum(t for _, t in _window) + est <= 0.9 * _tpm["limit"]:
+                _window.append((now, est))
+                return
+            wait = 60 - (now - _window[0][0]) + 0.1
+        time.sleep(min(max(wait, 0.2), 5))
+
+
 def llm(instructions: str, text: str) -> tuple[str, dict]:
-    """One Responses API call with retry on rate limits and transient errors."""
+    """One Responses API call, throttled, with jittered retry on 429/5xx."""
     load_dotenv()
-    for attempt in range(8):
+    _throttle((len(instructions) + len(text)) // 3 + OUTPUT_ALLOWANCE)
+    for attempt in range(10):
         try:
-            r = client().responses.create(
+            raw = client().responses.with_raw_response.create(
                 model=os.environ["AZURE_OPENAI_CHAT_DEPLOYMENT"], instructions=instructions, input=text,
             )
+            limit = raw.headers.get("x-ratelimit-limit-tokens")
+            if limit and limit.isdigit():
+                _tpm["limit"] = int(limit)
+            r = raw.parse()
             return r.output_text, {"in": r.usage.input_tokens, "out": r.usage.output_tokens}
         except Exception as e:  # 429 / 5xx / network
-            wait = min(2 ** attempt * 2, 60)
-            print(f"  llm error ({type(e).__name__}: {str(e)[:80]}); retry in {wait}s")
+            wait = random.uniform(1, min(2 ** attempt * 2, 60))
+            print(f"  llm error ({type(e).__name__}: {str(e)[:80]}); retry in {wait:.0f}s")
             time.sleep(wait)
     raise RuntimeError("llm call failed after retries")
 
