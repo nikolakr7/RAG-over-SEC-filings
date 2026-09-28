@@ -25,6 +25,29 @@ graph extracted from the same filings. Scored on a frozen, hand-verified
 OpenAI (a GPT-5-class chat deployment for extraction, reranking,
 answering and judging; text-embedding-3-small), Docker Compose.
 
+## How this was built
+
+This was a learning project, built with an AI coding assistant (Claude,
+via Claude Code) in two modes:
+
+- **Learning phase:** I wrote the parts that decide what "correct" means:
+  the graph ontology ([ontology.md](ontology.md)), the benchmark
+  verification, and the embedding exercises in `src/primers/`. The
+  assistant wrote infrastructure (downloader, parser, chunker, loaders)
+  and explained it, and the design decisions were argued out and logged in
+  [DECISIONS.md](DECISIONS.md).
+- **Finishing phase:** to finish, I handed the remaining components to the
+  assistant: entity resolution, the hybrid retriever, the citation
+  validator and the evaluation harness. I directed the experiments and
+  reviewed the results.
+
+The benchmark questions were **drafted by an LLM and verified by me**,
+quote by quote against the primary filings, and frozen before any system
+was scored; the disclosure and its known biases are in
+[benchmark/README.md](benchmark/README.md). Separately, the system itself
+uses an LLM at run time for graph extraction, reranking, answering and
+judging (see Stack above).
+
 ## Architecture
 
 ```
