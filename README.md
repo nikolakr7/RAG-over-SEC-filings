@@ -24,7 +24,7 @@ question -> vector top-100 -> LLM rerank to 10 chunks --------------+
 ```
 
 Key design decisions, each with rejected alternatives, are in
-[DECISIONS.md](DECISIONS.md) (36 entries); the graph schema is
+[DECISIONS.md](DECISIONS.md) (37 entries); the graph schema is
 [ontology.md](ontology.md).
 
 ## Benchmark
@@ -53,6 +53,7 @@ In-scope pass rate (68 questions) and out-of-scope refusals (12):
 | Vector top-100, LLM rerank to 10 | 0.75 | 0.24 | 0.38 | 0.55 | **0.47** | 11/12 |
 | Hybrid (graph + rerank), run 1 | 0.70 | 0.33 | 0.44 | 0.73 | **0.53** | 12/12 |
 | Hybrid (graph + rerank), run 2 | 0.80 | 0.24 | 0.31 | 0.73 | **0.50** | 12/12 |
+| Hybrid + question splitting + shared-neighbour hop | 0.75 | 0.38 | 0.38 | 0.64 | **0.53** | 12/12 |
 
 Paired sign tests over the 80 questions:
 
@@ -80,14 +81,22 @@ cited IDs exist and were in the answerer's context
    lost a benchmark evidence chunk the exact scan found (DECISIONS #34).
 3. **The graph helps where facts are spread across filings** (aggregation
    0.55 -> 0.73 in both hybrid runs; peer groups, royalty counterparties),
-   but multi-hop questions stay hard. Splitting questions into
-   sub-questions with graph facts treated as first-class evidence
-   (`hybrid.py --mode decomp`) moved multi-hop from 12 to 13.5 of 37 on
-   average over two runs each (questions passing in both runs: 8 -> 11),
-   within noise. The remaining failures are mostly retrieval gaps: the
-   fact for the last hop never reaches the answerer, notably hops through
-   a shared company (same auditor, same peer group), which the graph
-   expansion does not traverse yet.
+   but multi-hop questions stay hard. Two answer-side and retrieval-side
+   fixes were tested on the 37 multi-hop questions, two runs each with
+   the same reranked chunks (`hybrid.py --mode decomp`):
+
+   | multi-hop passes (of 37) | run 1 | run 2 | pass in both |
+   |---|---|---|---|
+   | hybrid | 14 | 10 | 8 |
+   | + split into sub-questions, graph facts as evidence | 12 | 15 | 11 |
+   | + hop through shared companies (auditor, peer group, royalty buyer, parent) | 14 | 16 | 12 |
+
+   A consistent upward trend (per question over both runs: 9 better, 4
+   worse, p = 0.27), not established, and the overall in-scope rate is
+   unchanged at 0.53 because single-hop and aggregation moved within
+   noise. What still fails: extraction errors in the graph (Ultragenyx's
+   auditor start year recorded as the 2026 report year instead of 2012,
+   q022) and required details that never reach the answerer.
 
 ## Cost
 
