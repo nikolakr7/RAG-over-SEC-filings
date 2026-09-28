@@ -76,7 +76,9 @@ DECOMPOSE_INSTRUCTIONS = """\
 Split the question into the smallest set of self-contained sub-questions \
 that together answer it (1 to 4). Each must name its entities explicitly \
 (no "it", "each", "the other company"). A single-fact question stays one \
-sub-question. Return JSON only: {"subquestions": ["...", "..."]}"""
+sub-question. Use ONLY information stated in the question: never add \
+names, places, dates, amounts or other facts it does not state, even if \
+you believe them true. Return JSON only: {"subquestions": ["...", "..."]}"""
 
 DECOMP_INSTRUCTIONS = ANSWER_INSTRUCTIONS + """
 
@@ -103,7 +105,24 @@ OPTIONAL MATCH (m)-[r2]-(o) WHERE (m:Agreement OR m:LegalCase OR m:Payment OR m:
 WITH r1, collect(DISTINCT r2) AS r2s
 UNWIND r1 + r2s AS r
 WITH DISTINCT r WHERE r IS NOT NULL
-RETURN startNode(r).id AS a, labels(startNode(r)) AS la, startNode(r).name AS an,
+RETURN elementId(r) AS rid, startNode(r).id AS a, labels(startNode(r)) AS la, startNode(r).name AS an,
+       type(r) AS t, properties(r) AS p,
+       endNode(r).id AS b, labels(endNode(r)) AS lb, endNode(r).name AS bn
+"""
+
+# Shared-neighbour hop: from a linked entity through a Company on a
+# low-fan-out edge type to that Company's other edges of the SAME type
+# (Exelixis -AUDITED_BY-> Ernst & Young <-AUDITED_BY- Ultragenyx; peers of
+# peers; other payers to the same royalty buyer; sibling subsidiaries).
+HUB_TYPES = ["AUDITED_BY", "PEER_OF", "OWES_ROYALTY_TO", "SUBSIDIARY_OF", "AFFILIATE_OF"]
+HUB_BONUS = 0.05
+MAX_BRIDGE = 40
+EXPAND_HUB = """
+MATCH (s:Entity) WHERE s.id IN $ids
+MATCH (s)-[r1]-(m:Company) WHERE type(r1) IN $hub AND NOT m.id IN $ids
+MATCH (m)-[r]-(o) WHERE type(r) = type(r1) AND o <> s
+WITH DISTINCT r
+RETURN elementId(r) AS rid, startNode(r).id AS a, labels(startNode(r)) AS la, startNode(r).name AS an,
        type(r) AS t, properties(r) AS p,
        endNode(r).id AS b, labels(endNode(r)) AS lb, endNode(r).name AS bn
 """
@@ -181,7 +200,18 @@ def facts_for(ids: list[str], qvec: np.ndarray, extra: list[str] | None = None) 
         return []
     with driver().session() as s:
         rows = s.run(EXPAND, ids=ids).data()
+        seen = {r["rid"] for r in rows}
+        hub = [r for r in s.run(EXPAND_HUB, ids=ids, hub=HUB_TYPES).data() if r["rid"] not in seen]
+    rows += hub
     seeds = set(ids)
+    # a bridge fact is the FAR edge of a shared-neighbour path: a hub-type
+    # edge that does not touch a seed but touches a Company a seed reaches
+    # through the same edge type (Ultragenyx -AUDITED_BY-> Ernst & Young)
+    hubs = {(r["t"], r["b"] if r["a"] in seeds else r["a"]) for r in rows
+            if r["t"] in HUB_TYPES and (r["a"] in seeds) != (r["b"] in seeds)}
+    for r in rows:
+        r["hub"] = (r["t"] in HUB_TYPES and r["a"] not in seeds and r["b"] not in seeds
+                    and ((r["t"], r["a"]) in hubs or (r["t"], r["b"]) in hubs))
     for r in rows:
         r["both"] = r["a"] in seeds and r["b"] in seeds
         r["date"] = r["p"].get("latest_filed", "")
@@ -193,9 +223,26 @@ def facts_for(ids: list[str], qvec: np.ndarray, extra: list[str] | None = None) 
         qs += [_fact_vecs[t] for t in extra]
     Q = np.stack(qs)
     for r in rows:
-        r["score"] = float((Q @ _fact_vecs[r["text"]]).max()) + (BOTH_SEEDS_BONUS if r["both"] else 0.0)
+        r["score"] = (float((Q @ _fact_vecs[r["text"]]).max()) + (BOTH_SEEDS_BONUS if r["both"] else 0.0)
+                      + (HUB_BONUS if r["hub"] else 0.0))
     rows.sort(key=lambda r: r["score"], reverse=True)
-    return rows[:MAX_FACTS]
+    # bridge facts get reserved slots: similarity to a question about the
+    # far end ("...and what disease does that company's product treat?")
+    # can rank the one connecting edge in the hundreds
+    # round-robin across bridge groups (one per shared Company and edge
+    # type), so a big group (a peer's own peer list) cannot crowd out a
+    # small one (the other companies Ernst & Young audits)
+    groups: dict[tuple, list[dict]] = {}
+    for r in rows:  # rows are score-sorted, so each group is too
+        if r["hub"]:
+            key = (r["t"], r["a"] if (r["t"], r["a"]) in hubs else r["b"])
+            groups.setdefault(key, []).append(r)
+    bridge, depth = [], 0
+    while len(bridge) < MAX_BRIDGE and any(len(g) > depth for g in groups.values()):
+        bridge += [g[depth] for g in groups.values() if len(g) > depth][: MAX_BRIDGE - len(bridge)]
+        depth += 1
+    rest = [r for r in rows if not r["hub"]][: MAX_FACTS - len(bridge)]
+    return sorted(bridge + rest, key=lambda r: r["score"], reverse=True)
 
 
 def fmt_fact(r: dict, with_sources: bool = True) -> str:

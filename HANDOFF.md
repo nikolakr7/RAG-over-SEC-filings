@@ -152,15 +152,14 @@ Possible next steps, none required:
 - Repeat each variant 3x (answer + judge only, ~1M tokens per hybrid run
   with --reuse-chunks) to shrink the noise band and settle hybrid vs
   rerank.
-- 2026-09-28: question decomposition + graph-facts-as-evidence prompt
-  (`--mode decomp`) tested on the 37 multi-hop questions, two runs each:
-  avg 12 -> 13.5 passes, pass-in-both 8 -> 11; not established. Earlier
-  claim that failures were mostly answer-side was overstated: most
-  3-hop failures are retrieval gaps. Next lever: let EXPAND hop through
-  Company nodes on low-fan-out edges (AUDITED_BY, PEER_OF,
-  OWES_ROYALTY_TO, SUBSIDIARY_OF, AFFILIATE_OF), and forbid the
-  decomposer from adding facts (it wrote Exelixis's HQ city, Alameda,
-  into q056's sub-question in place of the San Mateo audit office).
+- 2026-09-28: tested on the 37 multi-hop questions, two runs each, same
+  chunks: question decomposition + graph-facts-as-evidence (`--mode
+  decomp`), then + shared-neighbour hop with reserved round-robin bridge
+  slots (DECISIONS #37). Multi-hop passes 12 -> 13.5 -> 15 average,
+  pass-in-both 8 -> 11 -> 12; not established (p = 0.27). Full 80 with
+  both: in-scope 0.53, single-hop and refusals unchanged. Runs: fix_a
+  (all 80), fix_b (multi-hop). Remaining known issue: extraction date
+  errors (Ultragenyx auditor start_year 2026 instead of 2012, q022).
 - User review of data/runs/hybrid.spotcheck.md (judge calibration).
 
 ## Ops notes (hard-won this phase, do not relearn)

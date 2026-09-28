@@ -29,6 +29,8 @@ RUNS = Path("data/runs")
 CHUNKS = Path("data/chunks/chunks.jsonl")
 GOLD = Path("data/gold_chunks.json")
 CITE = re.compile(r"\d{10}-\d{2}-\d{6}#\d{4}")
+# a refusal leads the answer, or leads its "Final answer:" (decomp mode)
+REFUSAL = re.compile(r"^\s*(\d+\.\s*)?REFUSE|Final answer:\s*REFUSE", re.I)
 
 
 def neighbours(cid: str) -> set[str]:
@@ -43,7 +45,7 @@ def main() -> None:
     print(f"{'variant':<10}{'cites any':>11}{'IDs valid':>11}{'all valid':>11}{'cites gold':>12}")
     for v in variants:
         rows = [json.loads(l) for l in (RUNS / f"{v}.jsonl").open(encoding="utf-8")]
-        answered = [r for r in rows if not r["answer"].lstrip().upper().startswith("REFUSE")]
+        answered = [r for r in rows if not REFUSAL.search(r["answer"])]
         n_ids = n_valid = all_valid = with_cite = gold_hit = in_scope = 0
         for r in answered:
             ids = CITE.findall(r["answer"])
