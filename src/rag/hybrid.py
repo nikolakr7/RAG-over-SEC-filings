@@ -72,6 +72,28 @@ over time (e.g. an older filing calling someone CEO): prefer the newest \
 filing and any stated effective dates. Graph facts are extracted by a \
 model and can be incomplete; the excerpts are the primary text."""
 
+DECOMPOSE_INSTRUCTIONS = """\
+Split the question into the smallest set of self-contained sub-questions \
+that together answer it (1 to 4). Each must name its entities explicitly \
+(no "it", "each", "the other company"). A single-fact question stays one \
+sub-question. Return JSON only: {"subquestions": ["...", "..."]}"""
+
+DECOMP_INSTRUCTIONS = ANSWER_INSTRUCTIONS + """
+
+You also get GRAPH FACTS extracted from the same filings. They are \
+evidence exactly like the excerpts: if a graph fact answers part of the \
+question, use it and cite its source chunk IDs. Never say the filings do \
+not state something that a graph fact or an excerpt states. Facts from \
+different filings can conflict over time (e.g. an older filing calling \
+someone CEO): prefer the newest filing and any stated effective dates.
+
+The question has been split into SUB-QUESTIONS. Work through them in \
+order: for each, give a short answer from the facts and excerpts with \
+citations, or say precisely what is missing. Then write "Final answer:" \
+followed by a complete answer to the original question that combines \
+every sub-answer; do not drop a part you answered above. Refuse only if \
+no fact or excerpt addresses any part of the question."""
+
 EXPAND = """
 MATCH (s:Entity) WHERE s.id IN $ids
 MATCH (s)-[r]-(m) WHERE NOT m:Filing
@@ -152,7 +174,9 @@ def embed_many(texts: list[str]) -> None:
             _fact_vecs[t] = v / np.linalg.norm(v)
 
 
-def facts_for(ids: list[str], qvec: np.ndarray) -> list[dict]:
+def facts_for(ids: list[str], qvec: np.ndarray, extra: list[str] | None = None) -> list[dict]:
+    """extra: sub-question texts; a fact scores its best similarity over the
+    question and every sub-question, so each part gets its own facts."""
     if not ids:
         return []
     with driver().session() as s:
@@ -163,9 +187,13 @@ def facts_for(ids: list[str], qvec: np.ndarray) -> list[dict]:
         r["date"] = r["p"].get("latest_filed", "")
         r["text"] = fmt_fact(r, with_sources=False)
     embed_many([r["text"] for r in rows])
-    q = qvec / np.linalg.norm(qvec)
+    qs = [qvec / np.linalg.norm(qvec)]
+    if extra:
+        embed_many(extra)
+        qs += [_fact_vecs[t] for t in extra]
+    Q = np.stack(qs)
     for r in rows:
-        r["score"] = float(_fact_vecs[r["text"]] @ q) + (BOTH_SEEDS_BONUS if r["both"] else 0.0)
+        r["score"] = float((Q @ _fact_vecs[r["text"]]).max()) + (BOTH_SEEDS_BONUS if r["both"] else 0.0)
     rows.sort(key=lambda r: r["score"], reverse=True)
     return rows[:MAX_FACTS]
 
@@ -187,20 +215,40 @@ def chunks_by_id(ids: list[str]) -> list[dict]:
     return [by[i] for i in ids if i in by]
 
 
-def answer(question: str, vec: np.ndarray, reuse: list[str] | None = None) -> dict:
+def decompose(question: str) -> tuple[list[str], dict]:
+    text, usage = llm(DECOMPOSE_INSTRUCTIONS, question)
+    m = re.search(r"\{.*\}", text, re.S)
+    try:
+        subs = [s for s in json.loads(m.group(0))["subquestions"] if isinstance(s, str) and s.strip()]
+    except Exception:
+        subs = []
+    return (subs or [question])[:4], usage
+
+
+def answer(question: str, vec: np.ndarray, reuse: list[str] | None = None, mode: str = "plain") -> dict:
+    """mode "plain": one answer call (hybrid v1/v2). mode "decomp": split the
+    question into sub-questions, rank facts against each, and answer them in
+    turn under instructions that treat graph facts as first-class evidence."""
     build_index()
+    zero = {"in": 0, "out": 0}
+    subs, u_d = decompose(question) if mode == "decomp" else ([], zero)
     ids, found, u0 = link(question)
-    facts = facts_for(ids, vec)
+    facts = facts_for(ids, vec, extra=subs if len(subs) > 1 else None)
     if reuse:
-        chunks, u1 = chunks_by_id(reuse), {"in": 0, "out": 0}
+        chunks, u1 = chunks_by_id(reuse), zero
     else:
         chunks, u1 = rerank(question, search(vec, K_WIDE))
     fact_text = "\n".join(fmt_fact(f) for f in facts) or "(no graph facts found)"
-    text, u2 = llm(HYBRID_INSTRUCTIONS,
-                   f"Question: {question}\n\nGRAPH FACTS:\n{fact_text}\n\nExcerpts:\n\n{fmt(chunks)}")
+    if mode == "decomp":
+        sub_text = "\n".join(f"{i}. {s}" for i, s in enumerate(subs, 1))
+        text, u2 = llm(DECOMP_INSTRUCTIONS, f"Question: {question}\n\nSUB-QUESTIONS:\n{sub_text}\n\n"
+                                            f"GRAPH FACTS:\n{fact_text}\n\nExcerpts:\n\n{fmt(chunks)}")
+    else:
+        text, u2 = llm(HYBRID_INSTRUCTIONS,
+                       f"Question: {question}\n\nGRAPH FACTS:\n{fact_text}\n\nExcerpts:\n\n{fmt(chunks)}")
     context = {c["chunk_id"] for c in chunks} | {c for f in facts for c in f["p"].get("source_chunk_ids", [])[:3]}
-    usage = {k: u0[k] + u1[k] + u2[k] for k in ("in", "out")}
-    return {"answer": text, "retrieved": [c["chunk_id"] for c in chunks], "linked": found,
+    usage = {k: u_d[k] + u0[k] + u1[k] + u2[k] for k in ("in", "out")}
+    return {"answer": text, "retrieved": [c["chunk_id"] for c in chunks], "linked": found, "subquestions": subs,
             "n_facts": len(facts), "context_ids": sorted(context), "usage": usage}
 
 
@@ -209,6 +257,8 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--name", default="hybrid")
     ap.add_argument("--reuse-chunks", default=None)
+    ap.add_argument("--mode", choices=["plain", "decomp"], default="plain")
+    ap.add_argument("--categories", default=None, help="comma-separated, e.g. multi_hop_2,multi_hop_3")
     args = ap.parse_args()
     reuse = {}
     if args.reuse_chunks:
@@ -217,12 +267,14 @@ def main() -> None:
             reuse[r["id"]] = r["retrieved"]
     questions = json.loads(QUESTIONS.read_text(encoding="utf-8"))
     qvecs = np.load(QEMB)
+    cats = set(args.categories.split(",")) if args.categories else None
     out = RUNS / f"{args.name}.jsonl"
     done = {json.loads(l)["id"] for l in out.open(encoding="utf-8")} if out.exists() else set()
-    todo = [(q, qvecs[i]) for i, q in enumerate(questions) if q["id"] not in done][: args.limit]
+    todo = [(q, qvecs[i]) for i, q in enumerate(questions)
+            if q["id"] not in done and (cats is None or q["category"] in cats)][: args.limit]
     print(f"{args.name}: {len(done)} cached, {len(todo)} to run")
     with ThreadPoolExecutor(WORKERS) as pool, out.open("a", encoding="utf-8") as f:
-        futs = {pool.submit(answer, q["question"], v, reuse.get(q["id"])): q for q, v in todo}
+        futs = {pool.submit(answer, q["question"], v, reuse.get(q["id"]), args.mode): q for q, v in todo}
         for n, fut in enumerate(as_completed(futs), 1):
             q = futs[fut]
             rec = {"id": q["id"], "category": q["category"], "question": q["question"], **fut.result()}

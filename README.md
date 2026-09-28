@@ -80,9 +80,14 @@ cited IDs exist and were in the answerer's context
    lost a benchmark evidence chunk the exact scan found (DECISIONS #34).
 3. **The graph helps where facts are spread across filings** (aggregation
    0.55 -> 0.73 in both hybrid runs; peer groups, royalty counterparties),
-   but multi-hop questions stay hard: most remaining failures are an
-   answerer declining or omitting half of a two-part answer even when the
-   needed facts are in context.
+   but multi-hop questions stay hard. Splitting questions into
+   sub-questions with graph facts treated as first-class evidence
+   (`hybrid.py --mode decomp`) moved multi-hop from 12 to 13.5 of 37 on
+   average over two runs each (questions passing in both runs: 8 -> 11),
+   within noise. The remaining failures are mostly retrieval gaps: the
+   fact for the last hop never reaches the answerer, notably hops through
+   a shared company (same auditor, same peer group), which the graph
+   expansion does not traverse yet.
 
 ## Cost
 

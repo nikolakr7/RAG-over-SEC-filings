@@ -143,6 +143,9 @@ def main() -> None:
             rs = [r for r in results[v] if r["category"] == cat or cat == "ALL"
                   or (cat == "ALL in-scope" and r["category"] != "out_of_scope")]
             n = len(rs)
+            if n == 0:  # a run over a subset of categories
+                row += f"{'-':>15}{'-':>12}"
+                continue
             passed = sum(r["verdict"] == "PASS" for r in rs)
             hits = [any_hit(r["retrieved"], gold.get(r["id"])) for r in rs]
             hits = [h for h in hits if h is not None]
